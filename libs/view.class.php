@@ -26,16 +26,27 @@ class View {
     }
 
     public function __construct($data=array(),$path = null) {
+        
+        if(!$path || ($path==null) || trim($path)==""){
+            $this->path = self::getDefaultViewPath();  
+        }
+        else{
+            $this->path = $path;
+        }
+        if(!file_exists($this->path)){
+            throw new Exception("Template file is not found in the path: ".$path);
+        }
         $this->data = $data;
-        $this->path = $path;
     }
     
     public function render(){
-        $data = $this->data;
         ob_start();
+        $data = $this->data;
+        
         if(file_exists($this->path)){
-            include_once ($this->path);
+            include($this->path);
         }
-        ob_get_clean();
+        $content = ob_get_clean();
+        return $content;
     }
 }

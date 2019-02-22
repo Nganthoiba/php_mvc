@@ -23,10 +23,24 @@ class App {
         /*** Controller Object ***/
         $obj = new $controller();
         if(method_exists($obj, $method)){
-            $result = $obj->$method();
+            //Controller Action may return view path
+            $view_path = $obj->$method();
+            
+             
+            $view_obj = new View($obj->getData(),$view_path);
+            $content = $view_obj->render();
+            //print_r(array($content));
+            
+            $layout = self::$router->getRoute();
+            $layout_path = VIEWS_PATH.DS.$layout.'.html';
+            $layout_view_obj = new View(array("content"=>$content),$layout_path);
+            echo $layout_view_obj->render();
         }
         else {
             throw new Exception("Method '".$method."' of controller class '".$controller."' does not exist.");
         }
+       
+        
+        
     }
 }

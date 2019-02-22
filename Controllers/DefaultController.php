@@ -14,6 +14,10 @@
 
 class DefaultController extends Controller{
     public function index(){
-        echo 'Hello this is the index action of default controller.';
+        $this->data['content'] = 'Hello this is the index action of default controller.';
     }
+    public function contact(){
+        $this->data['content'] = 'Hello this is the contact action of default controller.';
+    }
+    
 }
