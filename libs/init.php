@@ -1,6 +1,7 @@
 <?php
 
 require_once ROOT.DS.'Config'.DS.'config.php';
+require_once ROOT.DS.'libs'.DS.'special_functions.php';
 
 function __autoload($classname){
     /* All the class files in the libs directory to be included */

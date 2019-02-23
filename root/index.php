@@ -4,6 +4,8 @@ define('DS', '/');
 define('ROOT', '../');
 define('VIEWS_PATH', ROOT.DS.'Views');
 require_once ROOT.DS.'libs/init.php';
-$uri = $_GET['uri'];
-//$router = new Router($uri);
+
+//$uri = trim($_SERVER['REQUEST_URI'], '/');
+$uri = filter('uri', "GET");
+
 App::run($uri);

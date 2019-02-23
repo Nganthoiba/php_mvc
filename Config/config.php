@@ -7,5 +7,6 @@ Config::set('routes', array(
 Config::set('default_route', 'default');
 Config::set('default_controller', 'Default');
 Config::set('default_action', 'index');
+Config::set('default_language', 'en');
 
 
