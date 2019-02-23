@@ -19,5 +19,19 @@ class DefaultController extends Controller{
     public function contact(){
         $this->data['content'] = 'Hello this is the contact action of default controller.';
     }
+    public function about(){
+        $this->data['content'] = 'Hello this is the about action of default controller.';
+    }
+    /*** just for testing ***/
+    public function add(){
+        $params = $this->getParams(); 
+        $sum = 0;
+        foreach ($params as $val){
+            if(is_numeric($val)){
+                $sum += $val;
+            }
+        }
+        $this->send_data(array("Sum"=>$sum));
+    }
     
 }

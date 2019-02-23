@@ -30,3 +30,13 @@ function filter($key,$method){
     return trim($value);
 }
 
+function isLinkActive($link){
+    $current_link = filter("uri", "GET");
+    if(trim($link, '/') == trim($current_link,'/')){
+        return "active";
+    }
+    else{
+        return "";
+    }
+}
+

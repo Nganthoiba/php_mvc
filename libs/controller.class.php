@@ -29,4 +29,10 @@ class Controller {
         $this->data = $data;
         $this->params = App::getRouter()->getParams();
     }
+    
+    public function send_data($data = array()){
+        header("Content-Type: application/json");
+        echo json_encode($data);
+        exit();
+    }
 }
