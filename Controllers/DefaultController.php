@@ -33,5 +33,8 @@ class DefaultController extends Controller{
         }
         $this->send_data(array("Sum"=>$sum));
     }
+    public function testing(){
+        //return 6;
+    }
     
 }
