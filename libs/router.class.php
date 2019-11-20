@@ -59,7 +59,7 @@ class Router {
                array_shift($path_parts);
             }
             if(current($path_parts)){
-                $this->controller = current($path_parts); 
+                $this->controller = strtolower(current($path_parts)); 
                 array_shift($path_parts);
             }
             if(current($path_parts)){

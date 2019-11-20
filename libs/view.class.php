@@ -21,7 +21,7 @@ class View {
             return false;
         }
         $controller = $router->getController();
-        $template_name = $router->getMethodPrefix().$router->getAction().'.html';
+        $template_name = $router->getMethodPrefix().$router->getAction().'.view.php';
         return VIEWS_PATH.DS.$controller.DS.$template_name;
     }
 
@@ -34,7 +34,7 @@ class View {
             $this->path = $path;
         }
         if(!file_exists($this->path)){
-            throw new Exception("Template file is not found in the path: ".$path);
+            throw new Exception("View file is not found in the path: ".$path);
         }
         $this->data = $data;
     }
@@ -42,10 +42,10 @@ class View {
     public function render(){
         ob_start();
         $data = $this->data;
-        
         if(file_exists($this->path)){
-            include($this->path);
+            include_once($this->path);
         }
+        //Get current buffer contents and delete current output buffer.Returns the contents of the output buffer and end output buffering. If output buffering isn't active then FALSE is returned. 
         $content = ob_get_clean();
         return $content;
     }

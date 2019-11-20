@@ -13,23 +13,20 @@
         <h5 class="card-header info-color white-text text-center py-4">
           <strong>Sign in</strong>
         </h5>
-
         <!--Card content-->
         <div class="card-body px-lg-5 pt-0">
-
             <!-- Form -->
-            <form class="text-center" style="color: #757575;">
-
+            <form class="text-center" style="color: #757575;" method="POST" autocomplete="off">
                 <!-- Email -->
                 <div class="md-form">
-                  <input type="email" id="materialLoginFormEmail" class="form-control">
-                  <label for="materialLoginFormEmail">E-mail</label>
+                    <input type="text" id="email" autocomplete="false" name="email" value="<?= $data['email'] ?>" class="form-control">
+                    <label for="email">E-mail</label>
                 </div>
 
                 <!-- Password -->
                 <div class="md-form">
-                  <input type="password" id="materialLoginFormPassword" class="form-control">
-                  <label for="materialLoginFormPassword">Password</label>
+                    <input type="password" id="password" autocomplete="new-password" name="password" value="<?= $data['password'] ?>" class="form-control">
+                    <label for="password">Password</label>
                 </div>
 
                 <div class="d-flex justify-content-around">
@@ -45,16 +42,15 @@
                         <a href="">Forgot password?</a>
                     </div>
                 </div>
-
                 <!-- Sign in button -->
                 <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
 
                 <!-- Register -->
                 <p>Not a member?
-                    <a href="<?=Config::get('host')?>/account/register">Register</a>
+                    <a href="<?=Config::get('host')?>/account/register">Sign Up</a>
                 </p>
-
-                <!-- Social login -->
+                <p style="color: red"><?= $data['login_response'] ?></p>
+                <!-- Social login 
                 <p>or sign in with:</p>
                 
                 <a type="button" class="btn-floating btn-fb btn-sm">
@@ -69,7 +65,7 @@
                 <a type="button" class="btn-floating btn-git btn-sm">
                   <i class="fab fa-github"></i>
                 </a>
-
+                -->
             </form>
             <!-- Form -->
 

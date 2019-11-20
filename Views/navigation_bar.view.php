@@ -4,7 +4,7 @@
             <div class="container">
 
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="<?=Config::get('host')?>/default/">MODEL VIEW CONTROLLER</a>
+                <a class="navbar-brand" href="<?=Config::get('host')?>/default/">[Your Project Title] </a>
 
                 <!-- Collapse button -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -53,10 +53,24 @@
               <!-- Collapsible content -->
 
             </div>
-            <a id="navbar-static-login" class="btn btn-info btn-rounded btn-sm waves-effect waves-light" 
-               href="<?= COnfig::get('host')?>/account/login">Log In
-                <i class="fas fa-sign-in-alt ml-2"></i>
-            </a>
+            <?php 
+                if(Logins::isAuthenticated()){
+            ?>
+                <a id="navbar-static-logout" class="btn btn-info btn-rounded btn-sm waves-effect waves-light" 
+                   href="<?= Config::get('host')?>/account/logout">Log out
+                    <i class="fas fa-sign-in-alt ml-2"></i>
+                </a>
+            <?php
+                }
+                else{
+            ?>
+                <a id="navbar-static-login" class="btn btn-info btn-rounded btn-sm waves-effect waves-light" 
+                   href="<?= Config::get('host')?>/account/login">Log In
+                    <i class="fas fa-sign-in-alt ml-2"></i>
+                </a>
+            <?php
+                } 
+            ?>
         </nav>
         <!--/.Navbar-->
 

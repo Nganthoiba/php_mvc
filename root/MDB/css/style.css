@@ -1,0 +1,46 @@
+.small_font{
+    font-size: 11pt;
+}
+body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 50px;
+}
+
+.signup_card{
+    margin-top: 6px;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.row {
+    margin-top: 10px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.nav_heading_text{
+    
+}
+.control-label{
+    float: right;
+    font-weight: bold;
+}
+
+.custom_invalid_field{
+    border-color:#dc3545;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: center right calc(2.25rem / 4);
+    background-size: calc(2.25rem / 2) calc(2.25rem / 2);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23d9534f' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+}
+@media only screen and (max-width: 600px){
+    .nav_heading_text{
+        font-size: 14pt;
+        font-weight: bold;
+    }
+}
