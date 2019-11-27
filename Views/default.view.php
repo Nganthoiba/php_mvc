@@ -15,19 +15,46 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         <link href="<?=Config::get('host')?>/root/MDB/css/font_awesome_4.7.0/css/font-awesome.css" 
               rel="stylesheet" type="text/css"/>
+        
         <!-- Bootstrap core CSS -->
         <link href="<?=Config::get('host')?>/root/MDB/css/bootstrap.css" rel="stylesheet">
+        
         <!-- Material Design Bootstrap -->
         <link href="<?=Config::get('host')?>/root/MDB/css/mdb.css" rel="stylesheet">
         <link href="<?=Config::get('host')?>/root/MDB/css/style.css" rel="stylesheet">
+        
+        <link href="<?=Config::get('host')?>/root/MDB/css/datepicker.css" rel="stylesheet">
+        
         <!-- JQuery -->
-        <script type="text/javascript" src="<?=Config::get('host')?>/root/MDB/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="<?=Config::get('host')?>/root/MDB/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?=Config::get('host')?>/root/MDB/js/custom.js"></script>
+        <script type="text/javascript" src="<?=Config::get('host')?>/root/MDB/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="<?=Config::get('host')?>/root/MDB/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+        
+        <!-- Tiny MCE -->
+        <script src="<?=Config::get('host')?>/root/MDB/tinymce/jquery.tinymce.min.js" type="text/javascript"></script>
+        <script src="<?=Config::get('host')?>/root/MDB/tinymce/tinymce.min.js" type="text/javascript"></script>
+        
+        <!-- Sweet Alert -->
+        <link href="<?=Config::get('host')?>/root/MDB/sweetalert2/sweetalert2.css" rel="stylesheet" type="text/css"/>
+        <script src="<?=Config::get('host')?>/root/MDB/sweetalert2/sweetalert2.js" type="text/javascript"></script>
     </head>
     <body>
-        <?php include_once('navigation_bar.view.php'); ?>
+        <?php 
+            include_once('navigation_bar.view.php'); 
+        ?>
+        <div class="wrapper" style="margin-top: 70px">
+            <?php 
+            if(Logins::isAuthenticated()){
+                include_once ('side_navbar.view.php');
+            }
+            ?>
+            <!-- Page Content  -->
+            <div id="content" style="padding: 5px">
+                <div class="" ><?= $data['content'] ?></div>
+            </div>
+        </div>
         
-        <div class="container-fluid" style="margin-top: 70px"><?= $data['content'] ?></div>
         
         <?php //include_once('footer.view.php'); ?>
         <!-- SCRIPTS -->

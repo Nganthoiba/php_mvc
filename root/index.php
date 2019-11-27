@@ -17,6 +17,10 @@ $uri = filter('uri', "GET");
 try{
     App::run($uri);
 }catch(Exception $e){
-    echo $e->getMessage();
+    //echo $e->getMessage();
+    $error = array("content"=>"404 Error: The resource you have requested is not found.","detail"=>$e->getMessage());
+    $controller = new Controller($error);
+    $controller->setRouter(new Router($uri));
+    echo $controller->view('error');
 }
  

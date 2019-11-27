@@ -1,76 +1,56 @@
 <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark default-color fixed-top">
-
+        <nav class="navbar navbar-expand-lg navbar-dark custom-nav-color fixed-top">
+            <?php 
+                if(Logins::isAuthenticated()){
+            ?>
+            <span class="navbar-toggler-icon" id="sidebarCollapse"></span>
+            <?php } ?>
             <div class="container">
-
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="<?=Config::get('host')?>/default/">[Your Project Title] </a>
-
-                <!-- Collapse button -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-                  aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Collapsible content -->
-                <div class="collapse navbar-collapse" id="basicExampleNav">
-
-                    <!-- Links -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item <?= isLinkActive('default/index') ?><?= isLinkActive('default') ?><?= isLinkActive('') ?>">
-                            <a class="nav-link" href="<?=Config::get('host')?>/default/index">Home
-                          </a>
-                        </li>
-                        <li class="nav-item <?= isLinkActive('default/contact') ?>">
-                            <a class="nav-link" href="<?=Config::get('host')?>/default/contact">Contact</a>
-                        </li>
-                        <li class="nav-item <?= isLinkActive('default/about') ?>">
-                          <a class="nav-link" href="<?=Config::get('host')?>/default/about">About</a>
-                        </li>
-
-                        <!-- Dropdown
-                        <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">Dropdown</a>
-                          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </li> 
-                        -->
-
-                    </ul>
-                <!-- Links -->
-
-                <form class="form-inline">
-                  <div class="md-form my-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                  </div>
-                </form>
-                
-              </div>
-              <!-- Collapsible content -->
-
+                <a class="navbar-brand" href="#"><?= Config::get('app_name') ?></a>
             </div>
             <?php 
                 if(Logins::isAuthenticated()){
             ?>
-                <a id="navbar-static-logout" class="btn btn-info btn-rounded btn-sm waves-effect waves-light" 
+                <ul class="navbar-nav">
+                    
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        
+                        <a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown" style="min-width: 250px;text-align: right">
+                            <span style="font-size: 10pt;color:#FFFFFF;">
+                                <?php 
+                                if(Logins::isAuthenticated()){
+                                    $user_info = $_SESSION['user_info'];
+                                    echo $user_info['full_name'];
+                                } 
+                                ?>
+                            </span>
+                            <span class="fa fa-angle-down"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="<?= Config::get('host')?>/account/manageAccount">Manage Account</a>
+                            <a class="dropdown-item" href="#">Setting</a>
+                            <a class="dropdown-item" href="<?= Config::get('host')?>/account/logout">Log out</a>
+                        </div>
+                    </li>
+                </ul>
+                <!--
+                <a id="navbar-static-logout" class="btn btn-default btn-rounded btn-sm waves-effect waves-light" 
                    href="<?= Config::get('host')?>/account/logout">Log out
-                    <i class="fas fa-sign-in-alt ml-2"></i>
                 </a>
+                -->
             <?php
                 }
                 else{
             ?>
-                <a id="navbar-static-login" class="btn btn-info btn-rounded btn-sm waves-effect waves-light" 
+                <a id="navbar-static-login" class="btn btn-default btn-rounded btn-sm waves-effect waves-light" 
                    href="<?= Config::get('host')?>/account/login">Log In
-                    <i class="fas fa-sign-in-alt ml-2"></i>
                 </a>
             <?php
                 } 
             ?>
+            <!-- Links -->
         </nav>
         <!--/.Navbar-->
 

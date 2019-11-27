@@ -10,7 +10,7 @@
     <!-- Material form login -->
     <div class="card">
 
-        <h5 class="card-header info-color white-text text-center py-4">
+        <h5 class="card-header default-color white-text text-center py-4">
           <strong>Sign in</strong>
         </h5>
         <!--Card content-->
@@ -39,7 +39,7 @@
                     </div>
                     <div>
                         <!-- Forgot password -->
-                        <a href="">Forgot password?</a>
+                        <a href="forgotPassword">Forgot password?</a>
                     </div>
                 </div>
                 <!-- Sign in button -->
@@ -47,7 +47,7 @@
 
                 <!-- Register -->
                 <p>Not a member?
-                    <a href="<?=Config::get('host')?>/account/register">Sign Up</a>
+                    <a href="<?=Config::get('host')?>/account/signup">Sign Up</a>
                 </p>
                 <p style="color: red"><?= $data['login_response'] ?></p>
                 <!-- Social login 

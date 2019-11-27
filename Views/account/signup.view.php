@@ -1,11 +1,10 @@
 <div class="container">
             <div class="card signup_card">
-                
-                <h5 class="card-header info-color white-text text-center py-4">
-                    <strong>User Sign up</strong>
-                </h5>
+                <h6 style="padding: 10px">
+                    <strong>Sign up below:</strong>
+                </h6>
                 <div class="card-body">
-                    <form name="sign_up" method="POST" class="needs-validation" novalidate action="register">
+                    <form name="sign_up" method="POST" class="needs-validation" novalidate action="signup">
                         <input type="hidden" name="action" value="sign_up" />
                         <div class="row">
                             <div class="col-sm-4">
@@ -99,8 +98,6 @@
                             </div>
                             <div class="col-sm-6" style="text-align: center">
                                 <button type="submit" class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0">Sign Up</button>
-                                
-                                <a class="btn btn-link" href="<?=Config::get('host')?>/account/login">Back to login</a>
                             </div>
                         </div>
                     </form>
@@ -216,7 +213,7 @@
                         $("#signup_response").html("Please wait ...");
                         var applnForm = new FormData(document.forms["sign_up"]);
                         $.ajax({
-                            url: "register",
+                            url: "signup",
                             data: applnForm,
                             type: "POST",
                             contentType: false,       // The content type used when sending data to the server.
@@ -228,7 +225,7 @@
                                 $("#signup_response").html(resp.msg);
                                 if(resp.status === true){
                                     $("#signup_response").attr("class","alert alert-success");
-                                    document.forms['sign_up'].reset();
+                                    //document.forms['sign_up'].reset();
                                 }
                                 else{
                                     $("#signup_response").attr("class","alert alert-warning");

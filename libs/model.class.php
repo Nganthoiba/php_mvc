@@ -1,14 +1,14 @@
 <?php
 /**
- * Description of model
- * This class has been designed so that developer does not have to write the underlying database queries 
- * The CRUDE operations are defined in this class as methods as create, read, update and delete
+ * Description of model:
+ * This based class has been designed so that developer does not have to write the underlying database queries 
+ * The basic CRUDE operations are defined in this class as methods as create, read, update and delete
  *
  * @author Nganthoiba
  */
 class model {
     public static $conn;
-    public $table_name;//table name
+    private $table_name;//table name
     private $key; //name of the column which is primary key
     protected $response;//output
     
@@ -115,7 +115,16 @@ class model {
             $this->response['status'] = true;
             $this->response['status_code'] = 200;
             $this->response['msg'] = "Record found";
-            $this->response['data'] = $stmt->fetchall(PDO::FETCH_ASSOC);
+            $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
+            $data =array();
+            foreach ($rows as $row){
+                $obj = new $this->table_name();
+                foreach ($row as $key=>$val){
+                    $obj->$key = $val;
+                }
+                $data[] = $obj;
+            }
+            $this->response['data'] = $data;
         }
         return $this->response;
     }
@@ -131,11 +140,25 @@ class model {
             //update sub query
             $updates = $this->getUpdateStatement($params);    
             //getting where condition clause
+            if(sizeof($cond) == 0){
+                if($this->getKey()==="" || $this->{$this->getKey()}===""){
+                    $this->response['status'] = false;
+                    $this->response['msg'] = "Failed to update record, object key is not set.";
+                    $this->response['status_code'] = 500;
+                    return $this->response;
+                }
+                
+                $cond = array(
+                    "".$this->getKey() => $this->{$this->getKey()}
+                );
+            }
             $where = $this->getWhereStatement($cond);
             $qry = "update ".$this->table_name." set ". $updates." ". $where;
+            //return $qry;
             $stmt = self::$conn->prepare($qry);
             //binding parameters
             $bindParams = array_merge($params,$cond);
+            //return $bindParams;
             /*
             foreach ($bindParams as $col_name=>$value){
                 $stmt->bindParam(":".$col_name, $value);
@@ -158,6 +181,12 @@ class model {
     }
     //Delete record from table
     public function delete($cond = array()){
+        if(sizeof($cond)==0){
+            $this->response['status'] = false;
+            $this->response['msg'] = "Condition parameters are not set";
+            $this->response['status_code'] = 403;
+            return $this->response;
+        }
         $where = $this->getWhereStatement($cond);
         $qry = "delete from ".$this->table_name." ".$where;
         $stmt = self::$conn->prepare($qry);
@@ -177,11 +206,12 @@ class model {
             $this->response['error'] = $stmt->errorInfo();
             $this->response['status_code'] = 500;
         }
+        return $this->response;
     }
     
     public function find($value){
         if($this->key === "") return null;
-        $m = new $this->table_name();//dynamic model
+        //$m = new $this->table_name();//dynamic model
         $qry = "select * from ".$this->table_name. " where $this->key = :val";
         $stmt = self::$conn->prepare($qry);
         $stmt->bindParam(":val",$value);
@@ -189,13 +219,13 @@ class model {
         if($stmt->rowCount() == 1){
             $res = $stmt->fetch(PDO::FETCH_ASSOC);
             foreach ($res as $col_name=>$val){
-                $m->$col_name = $val;
+                $this->$col_name = $val;
             }
         }
         else{
-            $m = null;
+            return null;
         }
-        return $m;
+        return $this;
     }
     
     //getting where sub-clause statement

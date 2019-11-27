@@ -74,7 +74,7 @@ function fn_change(){
 <div>
 
 <ul id="sortable1" class="connectedSortable" >
-EXCLUDED MEMBER
+    EXCLUDED MEMBER
   <li class="ui-state-default" data-value="1" >Operator</li>
   <li class="ui-state-default" data-value="2" >Copying Section</li>
   <li class="ui-state-default"  data-value="3" >Registrar General</li>

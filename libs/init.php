@@ -4,7 +4,6 @@ require_once ROOT.DS.'Config'.DS.'config.php';
 require_once ROOT.DS.'libs'.DS.'special_functions.php';
 try{
     spl_autoload_register(function($classname) {
-        //echo $classname."<br/>";
         $lib_path = ROOT.DS.'libs'.DS.strtolower($classname).'.class.php';
         $controller_path = ROOT.DS.'Controllers'.DS. str_replace('controller','',strtolower($classname)).'Controller.php';
         $model_path = ROOT.DS.'Models'.DS.($classname).'.php';

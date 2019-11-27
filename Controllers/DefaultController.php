@@ -14,26 +14,19 @@
 
 class DefaultController extends Controller{
     public function index(){
-        $dateTime = date('Y-m-d H:i:sP a');
-        $Timestamp = strtotime($dateTime);
-        /*
-
-         * mins
-         * hours
-         * days         */
-        $TotalTimeStamp = strtotime('+ 2 hours', $Timestamp);//after 2 hours of the current timestamp
-        
         Config::set('site_name', 'index');
-        $this->data['content'] = 'Hello this is the index action of default controller.'
-                . '<br/> Todays date: '.$dateTime.' After 2 hours, date: '.date('Y-m-d H:i:sP a', $TotalTimeStamp);
+        $this->data['content'] = 'Hello this is the index action of default controller.';
+        return $this->view();
     }
     public function contact(){
         Config::set('site_name', 'contact');
         $this->data['content'] = 'Hello this is the contact action of default controller.';
+        return $this->view();
     }
     public function about(){
         Config::set('site_name', 'about');
-        $this->data['content'] = 'Hello this is the about action of default controller.';
+        //$this->data['content'] = 'Hello this is the about action of default controller.';
+        return $this->view();
     }
     /*** just for testing ***/
     public function add(){
@@ -52,6 +45,7 @@ class DefaultController extends Controller{
             session_destroy();//destroy the existing session information
             header("Location: ".Config::get('host')."/account/login");            
         }
+        return $this->view();
     }
     
     public function captcha(){
@@ -59,5 +53,4 @@ class DefaultController extends Controller{
         //$captcha->getCaptchaCode();
         $captcha->phpcaptcha('#171a17','#f7e80b',80,30,2,5,'#162453');
     }
-    
 }

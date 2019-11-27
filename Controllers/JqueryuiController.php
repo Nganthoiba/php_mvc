@@ -15,5 +15,6 @@ class JqueryuiController extends Controller{
     //put your code here
     public function index(){
         Config::set('site_name', "Testing Jquery UI");
+        return $this->view();
     }
 }

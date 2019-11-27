@@ -12,10 +12,9 @@
  * @author Nganthoiba
  */
 class AccountController extends Controller{
-    protected $model;
+    
     public function __construct($data = array()) {
         parent::__construct($data);
-        $this->modal = new Users();
         $this->data['login_response']="";
         $this->data['email']="";
         $this->data['password']="";
@@ -23,12 +22,14 @@ class AccountController extends Controller{
     public function index(){
         $this->data['content'] = "Hello! This is index file of AccountController";
         $this->data['test'] = "Hello! This is test file";
+        return $this->view();
     }
     //login action
     public function login(){
         //first check whether a user is already logged in, if someone logged in then redirect the page to the home page  
         if(Logins::isAuthenticated()){
-            header("Location: ".Config::get('host')."/default/testing");
+            //redirecting to the proper page if already logded in
+            $this->redirectTo();
         }
         $data = $this->_cleanInputs($_POST);
         if(sizeof($data)){
@@ -42,7 +43,8 @@ class AccountController extends Controller{
                 //echo json_encode($resLogin); exit();
                 if($resLogin['status'] === true){
                     $_SESSION['user_info'] = $resLogin['data'];
-                    header("Location: ".Config::get('host')."/default/testing");
+                    //redirecting to the proper page after login
+                    $this->redirectTo();
                 }
                 else{
                     $this->data['login_response'] = "Login failed, please try with proper credentials";
@@ -52,6 +54,7 @@ class AccountController extends Controller{
                 $this->data['login_response'] = $res['msg'];
             }  
         }
+        return $this->view();
     }
     
     //logout action
@@ -59,26 +62,31 @@ class AccountController extends Controller{
         if(isset($_SESSION['user_info'])){
             $info = $_SESSION['user_info'];
             $login_id = $info['login_id'];
-            if(Logins::isUserLoggedIn($login_id)){
+            if(Logins::isValidLogin($login_id)){
                 $logins = new Logins();
                 $resLogout=$logins->logout($login_id);
             }
         }
-        session_destroy();
+        if (session_status() !== PHP_SESSION_NONE){
+            // If there is session
+            session_destroy();
+        }
         $this->data['content'] ="<center>You have successfully logged out</center>";
+        return $this->view();
     }
+    
     //signup action
-    public function register(){
+    public function signup(){
         //first check whether a user is already logged in, if someone logged in then redirect the page to the home page
         if(Logins::isAuthenticated()){
-            header("Location: ".Config::get('host')."/default/testing");
+            $this->redirectTo();
         }
         $data = $this->_cleanInputs($_POST);
         if(sizeof($data)){
             //captcha validation
             $captcha_code = isset($data['captcha_code'])?$data['captcha_code']:"";
             if(!$this->isValidCaptchaCode($captcha_code)){
-                $this->sendResponse(false,"Captcha code is invalid",403);
+                return $this->sendResponse(false,"Captcha code is invalid",403);
             }
             $users = new Users($data);//creating user model
             $users->role_id = 14;//For applicants
@@ -86,41 +94,16 @@ class AccountController extends Controller{
             if($resp['status_code'] == 200){
                 $resp['msg'] = "You have successfully signed up. Thank you.";
             }
-            $this->sendResponse($resp['status'],$resp['msg'],$resp['status_code'],$resp['error']);
+            return $this->sendResponse($resp['status'],$resp['msg'],$resp['status_code'],$resp['error']);
         }
-        
+        //if no data is sent from client
+        return $this->view("");
     }
     
-    public function getUsers(){
-        $params = $this->getParams();
-        $user_id = isset($params[0])?$params[0]:"";
-        $users = new Users();//creating user model
-        if($user_id == ""){
-            $columns = array(
-                'users_id',
-                'full_name',
-                'email',
-                'phone_no',
-                'role_id',
-                'verify',
-                'created_at',
-                'update_at',
-                'delete_at',
-                'aadhaar',
-                'updated_by');
-            $cond = array();
-            $resp = $users->read($columns,$cond, "full_name");
-            $this->sendResponse($resp['status'],$resp['msg'],$resp['status_code'],$resp['error'],$resp['data']);
-        }
-        else{
-            $users = $users->find($user_id);
-            if($users == null){
-                $this->sendResponse(false,"User not found",404,array(),$users);
-            }
-            $this->sendResponse(true,"User found",200,array(),$users);
-        }
+    //forgot password
+    public function forgotPassword(){
+        return $this->view();
     }
-
     /*** function to check whether captcha code is valid or not ***/
     private function isValidCaptchaCode($captcha_code){
         if(empty($_SESSION['captcha_code'] ) || strcasecmp($_SESSION['captcha_code'], $captcha_code) != 0){  
@@ -131,7 +114,58 @@ class AccountController extends Controller{
             return true;
 	}
     }
+    //Manage Account
+    public function manageAccount(){
+        if(!Logins::isAuthenticated()){
+            $this->redirect("account", "login");
+        }
+        $info = $_SESSION['user_info'];
+        $users_id = $info['users_id'];
+        $user = new Users();
+        $user=$user->find($users_id);
+        $this->data['user'] = $user;
+        $this->data['update_response'] = "";
+        $input_data = $this->_cleanInputs($_POST);
+        if(sizeof($input_data)){
+            /* validation for updating user information */
+            if(!isset($input_data['full_name']) || $input_data['full_name']=== ""){
+                $this->data['update_response'] = "Missing your full name.";
+            }
+            else if(!isset($input_data['email']) || $input_data['email']=== ""){
+                $this->data['update_response'] = "Missing your email.";
+            }
+            else if(!filter_var($input_data['email'], FILTER_VALIDATE_EMAIL)){
+                $this->data['update_response'] = "Your email is invalid.";
+            }
+            else if($this->isEmailExist($user->users_id,$input_data['email'])){
+                $this->data['update_response'] = "Your new email '".$input_data['email']."' already exist with another account try another.";
+            }
+            else if(!isset($input_data['phone_no']) || $input_data['phone_no']=== ""){
+                $this->data['update_response'] = "Missing your phone number";
+            }
+            else if(isset($input_data['aadhaar']) && $this->isAadhaarExist($user->users_id, $input_data['aadhaar'])){
+                $this->data['update_response'] = "Please check your aadhaar, aadhaar no already exists with another account.";
+            }
+            else
+            {
+                $user->full_name = $input_data['full_name'];
+                $user->email = $input_data['email'];
+                $user->phone_no = $input_data['phone_no'];
+                $user->aadhaar = $input_data['aadhaar']==""?null:$input_data['aadhaar'];
+                $user->update_at = date('Y-m-d H:i:s');
+                $user->updated_by = $user->users_id;
+                try{
+                    $res = $user->save();//saving user details
+                    $this->data['update_response'] = $res['msg'];//json_encode($res);
+                }catch(Exception $e){
+                    $this->data['update_response'] = $e->getMessage();
+                }
+            }
+        }
+        return $this->view();
+    }
     
+    //Validating login information
     private function isLoginDataValid($data = array()){
     
         if(!isset($data['email']) || $data['email']==="")
@@ -147,5 +181,18 @@ class AccountController extends Controller{
         }
         return array("status"=>true,"msg"=>"Validated");
     }
-    
+    /*function to check whether an email to be updated already exists with another account*/
+    private function isEmailExist($users_id,$email){
+        $model = new model();
+        $qry = "select * from users where users_id!='$users_id' and email='$email'";
+        $res = $model::$conn->query($qry);
+        return $res->rowCount()>0;
+    }
+    /*function to check whether an email to be updated already exists with another account*/
+    private function isAadhaarExist($users_id,$aadhaar){
+        $model = new model();
+        $qry = "select * from users where users_id!='$users_id' and aadhaar='$aadhaar'";
+        $res = $model::$conn->query($qry);
+        return $res->rowCount()>0;
+    }
 }

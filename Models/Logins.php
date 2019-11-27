@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,12 +21,11 @@ class Logins extends model{
     public function __construct($users_id="") {
         parent::__construct();
         /*** default values ***/
-        $this->table_name = "logins";
-        /**** table data ****/
-        $this->users_id = $users_id;
         $key = "login_id";// setting the key of this model
+        $this->setTable("logins");
         $this->setKey($key);
-        
+        /**** table data ****/
+        $this->users_id = $users_id;        
     }
 
     //Adding user login details
@@ -38,7 +36,7 @@ class Logins extends model{
         $this->login_time = date('Y-m-d H:i:s');
         $Timestamp = strtotime($this->login_time);
         $TotalTimeStamp = strtotime('+ 2 hours', $Timestamp);//timestamp after 2 hours
-        $this->expiry = date('Y-m-d H:i:s',$TotalTimeStamp);//expiry date time set just at two hours after login
+        $this->expiry = date('Y-m-d H:i:s',$TotalTimeStamp);//expiry date time set just at 2 hours after login
         
         $data = array(
             "login_id"=>$this->login_id,
@@ -51,18 +49,36 @@ class Logins extends model{
         return parent::create($data);
     }
     
+    //getting role name
+    public static function getRoleName(){
+        if(self::isAuthenticated()){
+            $user_info = $_SESSION['user_info'];
+            $role_id = $user_info['role_id'];
+            $role = new roles();
+            $role = $role->find($role_id);
+            return $role==null?"not_found":$role->role_name;
+        }
+        return "";
+    }
     //To check whether someone is logged in
     public static function isAuthenticated(){
         if(!isset($_SESSION['user_info'])){
             return false;
         }
         $user_info = $_SESSION['user_info'];
-        return (self::isUserLoggedIn($user_info['login_id']));
+        $isValid = self::isValidLogin($user_info['login_id']);
+        if(!$isValid){
+            if (session_status() !== PHP_SESSION_NONE){
+                // If there is session
+                session_destroy();
+            }
+        }
+        return ($isValid);
         //return true;
     }
     /*this function checks whether login id is valid which means user is logged in 
      * otherwise the user is not logged in */
-    public static function isUserLoggedIn($login_id){
+    public static function isValidLogin($login_id){
         
         /* this method is static, so it is required to check the connection */
         if(self::$conn == null || !self::$conn){

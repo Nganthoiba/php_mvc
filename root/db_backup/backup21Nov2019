@@ -1,0 +1,902 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.14
+-- Dumped by pg_dump version 10.5
+
+-- Started on 2019-11-21 11:24:07
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12387)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2200 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 185 (class 1259 OID 49154)
+-- Name: applications; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.applications (
+    applications_id character varying(40) NOT NULL,
+    aadhaar character(12) DEFAULT NULL::character varying NOT NULL,
+    app_for character varying(30) DEFAULT NULL::character varying,
+    case_type integer,
+    case_no integer,
+    case_year integer,
+    petitioner character varying(300),
+    respondent character varying(300),
+    certificate_type character varying(300),
+    document character varying(300) DEFAULT NULL::character varying,
+    read_by character varying(300) DEFAULT NULL::character varying,
+    compared_by character varying(300) DEFAULT NULL::character varying,
+    appln_det text,
+    order_date date,
+    create_at timestamp without time zone,
+    withdraw_at timestamp without time zone,
+    withdraw_reason character varying(300) DEFAULT NULL::character varying,
+    appln_src_ip character varying(30) DEFAULT NULL::character varying,
+    rejected_at timestamp without time zone,
+    rejected_by character varying(430),
+    reason_of_reject character varying(100) DEFAULT NULL::character varying,
+    users_id character varying(40)
+);
+
+
+ALTER TABLE public.applications OWNER TO postgres;
+
+--
+-- TOC entry 2201 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.applications_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.applications_id IS 'this is primary key';
+
+
+--
+-- TOC entry 2202 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.aadhaar; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.aadhaar IS 'applicant''s Aadhaar Number';
+
+
+--
+-- TOC entry 2203 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.app_for; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.app_for IS 'Whether urgent or ordinary';
+
+
+--
+-- TOC entry 2204 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.case_type; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.case_type IS 'case type
+';
+
+
+--
+-- TOC entry 2205 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.petitioner; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.petitioner IS 'Appellant or Petitioner';
+
+
+--
+-- TOC entry 2206 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.respondent; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.respondent IS 'Respondent or Opposite Party';
+
+
+--
+-- TOC entry 2207 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.certificate_type; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.certificate_type IS 'Certificate type whether Order Copy or Other';
+
+
+--
+-- TOC entry 2208 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.document; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.document IS 'Final document uploaded by Computer Operator';
+
+
+--
+-- TOC entry 2209 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.read_by; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.read_by IS 'Name of the user who read the document';
+
+
+--
+-- TOC entry 2210 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.compared_by; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.compared_by IS 'Name of the user who compares the document';
+
+
+--
+-- TOC entry 2211 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.appln_det; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.appln_det IS 'Application details from client
+';
+
+
+--
+-- TOC entry 2212 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.order_date; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.order_date IS 'Date of Order or Disclosure';
+
+
+--
+-- TOC entry 2213 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.create_at; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.create_at IS 'Date of submission of the application';
+
+
+--
+-- TOC entry 2214 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.withdraw_at; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.withdraw_at IS 'Date and time on which the application is withdrawn by the applicant';
+
+
+--
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.withdraw_reason; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.withdraw_reason IS 'Reason for withdrawing application submitted before.';
+
+
+--
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.appln_src_ip; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.appln_src_ip IS 'IP of the client from which the application is submitted.';
+
+
+--
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.rejected_at; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.rejected_at IS 'Date and time on which an application is rejected';
+
+
+--
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.rejected_by; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.rejected_by IS 'user id of the person who reject the application';
+
+
+--
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN applications.reason_of_reject; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications.reason_of_reject IS 'Reason for rejecting the application';
+
+
+--
+-- TOC entry 191 (class 1259 OID 49275)
+-- Name: applications_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.applications_log (
+    applications_log_id integer NOT NULL,
+    application_id character varying(40),
+    users_id character varying(64),
+    action_date timestamp with time zone DEFAULT now(),
+    action character varying(30),
+    from_role_id integer,
+    to_role_id integer,
+    remark character varying(300) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.applications_log OWNER TO postgres;
+
+--
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: COLUMN applications_log.application_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications_log.application_id IS 'reference to appln_id of application table';
+
+
+--
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: COLUMN applications_log.users_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications_log.users_id IS 'who commited the task
+';
+
+
+--
+-- TOC entry 2222 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: COLUMN applications_log.action_date; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications_log.action_date IS 'date of action';
+
+
+--
+-- TOC entry 2223 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: COLUMN applications_log.action; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.applications_log.action IS 'to indicate the status of an application, and what is done.';
+
+
+--
+-- TOC entry 190 (class 1259 OID 49250)
+-- Name: audit_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.audit_log (
+);
+
+
+ALTER TABLE public.audit_log OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 49186)
+-- Name: certificate_types; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.certificate_types (
+    certificate_types_id integer NOT NULL,
+    copy_name character varying(30)
+);
+
+
+ALTER TABLE public.certificate_types OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 49237)
+-- Name: logins; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.logins (
+    login_id character varying(60) NOT NULL,
+    login_time timestamp with time zone NOT NULL,
+    logout_time timestamp with time zone,
+    expiry timestamp with time zone,
+    source_ip character varying(30),
+    device character varying(250),
+    users_id character varying(40)
+);
+
+
+ALTER TABLE public.logins OWNER TO postgres;
+
+--
+-- TOC entry 2224 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.login_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.login_id IS 'user login id';
+
+
+--
+-- TOC entry 2225 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.login_time; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.login_time IS 'the time when user logs in';
+
+
+--
+-- TOC entry 2226 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.logout_time; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.logout_time IS 'time when user logs out';
+
+
+--
+-- TOC entry 2227 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.expiry; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.expiry IS 'date and time of expiry of the login session';
+
+
+--
+-- TOC entry 2228 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.source_ip; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.source_ip IS 'login from which computer';
+
+
+--
+-- TOC entry 2229 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.device; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.device IS 'name of the device or user agent through which login takes place';
+
+
+--
+-- TOC entry 2230 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: COLUMN logins.users_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.users_id IS 'To indicate whose login';
+
+
+--
+-- TOC entry 194 (class 1259 OID 57349)
+-- Name: process; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.process (
+    process_id integer NOT NULL,
+    process_name character varying(30) NOT NULL,
+    process_description character varying(500)
+);
+
+
+ALTER TABLE public.process OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 57347)
+-- Name: process_process_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.process_process_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.process_process_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: process_process_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.process_process_id_seq OWNED BY public.process.process_id;
+
+
+--
+-- TOC entry 192 (class 1259 OID 49294)
+-- Name: process_role_map; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.process_role_map (
+    process_id integer NOT NULL,
+    description character varying(300),
+    role_id integer,
+    next_role_id integer,
+    prev_role_id integer,
+    process_role_map_id integer NOT NULL
+);
+
+
+ALTER TABLE public.process_role_map OWNER TO postgres;
+
+--
+-- TOC entry 2232 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN process_role_map.process_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.process_role_map.process_id IS 'work flow stage';
+
+
+--
+-- TOC entry 2233 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN process_role_map.description; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.process_role_map.description IS 'description of the work flow stage';
+
+
+--
+-- TOC entry 2234 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN process_role_map.role_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.process_role_map.role_id IS 'Role of the user who is responsible for the current task (work flow stage)';
+
+
+--
+-- TOC entry 2235 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN process_role_map.next_role_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.process_role_map.next_role_id IS 'Role id of the user who is responsible for the next task (use for forward)';
+
+
+--
+-- TOC entry 2236 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN process_role_map.prev_role_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.process_role_map.prev_role_id IS 'Role id of the user who is responsible for the previous task (use for backward)';
+
+
+--
+-- TOC entry 188 (class 1259 OID 49221)
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.roles (
+    role_id integer NOT NULL,
+    role_name character varying(30)
+);
+
+
+ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 49216)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    users_id character varying(40) NOT NULL,
+    full_name character varying(300),
+    email character varying(50),
+    phone_no character varying(30),
+    role_id integer NOT NULL,
+    user_password character varying(64) NOT NULL,
+    verify boolean DEFAULT false,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    update_at timestamp with time zone,
+    delete_at timestamp with time zone,
+    profile_image character varying(300),
+    aadhaar character varying(30) DEFAULT NULL::character varying,
+    updated_by character varying(40)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 2237 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.full_name; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.full_name IS 'User Full Name';
+
+
+--
+-- TOC entry 2238 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.user_password; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.user_password IS 'hashed password';
+
+
+--
+-- TOC entry 2239 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.verify; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.verify IS 'Whether user is verified or not';
+
+
+--
+-- TOC entry 2240 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.created_at; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.created_at IS 'The time when user is registered';
+
+
+--
+-- TOC entry 2241 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.update_at; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.update_at IS 'The last time when user details is updated';
+
+
+--
+-- TOC entry 2242 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.delete_at; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.delete_at IS 'The time when user account is deleted';
+
+
+--
+-- TOC entry 2243 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.aadhaar; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.aadhaar IS 'for future reference';
+
+
+--
+-- TOC entry 2244 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN users.updated_by; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.users.updated_by IS 'the user id who update user details last time. update can be done by the user himself or by the admin';
+
+
+--
+-- TOC entry 2049 (class 2604 OID 57352)
+-- Name: process process_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.process ALTER COLUMN process_id SET DEFAULT nextval('public.process_process_id_seq'::regclass);
+
+
+--
+-- TOC entry 2183 (class 0 OID 49154)
+-- Dependencies: 185
+-- Data for Name: applications; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.applications (applications_id, aadhaar, app_for, case_type, case_no, case_year, petitioner, respondent, certificate_type, document, read_by, compared_by, appln_det, order_date, create_at, withdraw_at, withdraw_reason, appln_src_ip, rejected_at, rejected_by, reason_of_reject, users_id) FROM stdin;
+5751c3ca-dd5d-4882-b7bb-ea8d2cec5125	763384620895	urgent_copy	148	21	2015	Tomba	Chaoba	1	\N	\N	\N		2019-10-10	\N	\N	\N	\N	\N	\N	\N	\N
+47056b25-02d8-47c8-a837-aace9e8327ab	763386420895	urgent_copy	86	12	2019	hryj	jrtjr	1	\N	\N	\N		2019-10-10	\N	\N	\N	\N	\N	\N	\N	\N
+ee1acae3-231e-4912-b70b-d2a84c88efe0	248763659359	urgent_copy	148	201	2015	cdsac	csac	2	\N	\N	\N		\N	\N	\N	\N	\N	\N	\N	\N	\N
+185c3004-f606-46de-ab75-9ebc477a0d23	763384620895	ordinary_copy	150	26	2019	Test1	Test2	2	\N	\N	\N	\N	\N	\N	\N	\N	::1	\N	\N	\N	\N
+2b47529a-3c3a-4227-8725-711afec89ad6	763384620895	ordinary_copy	150	26	2019	Test1	Test2	2	\N	\N	\N	\N	\N	\N	\N	\N	::1	\N	\N	\N	\N
+bea821d0-da85-47d1-a72b-c06af012bdfc	248763659359	ordinary_copy	148	25	2019	Tony	Chombi	2	\N	\N	\N	<p>Hi Dear</p>	\N	\N	\N	\N	::1	\N	\N	\N	\N
+a57f8f7f-d616-4b12-8d49-b35118561c42	763384620895	urgent_copy	42	45	2019	Nganthoiba	Tomchouba	2	\N	\N	\N	<p>Testing</p>	\N	2019-10-15 14:55:55	\N	\N	::1	\N	\N	\N	\N
+4a1d92cd-7a04-4a6e-bdc7-2b06faf180d3	763384620895	urgent_copy	42	45	2019	Nganthoiba	Tomchouba	2	\N	\N	\N	<p>Testing</p>	\N	2019-10-15 14:56:58	\N	\N	::1	\N	\N	\N	\N
+6df864ab-88e9-40e7-b139-266bdb1c5f5c	763384620895	ordinary_copy	152	21	2019	Gokul	Bonny	2	\N	\N	\N	&lt;p&gt;Nothing to &lt;strong&gt;say&lt;/strong&gt;&lt;/p&gt;	\N	2019-10-15 15:29:08	\N	\N	::1	\N	\N	\N	\N
+c23bf3ab-4984-4afa-b983-1b7acb09bb98	763384620895	urgent_copy	152	45	2019	fafa	fasdfdas	2	\N	\N	\N	&lt;p&gt;Here is a simple code &amp;lt;script&amp;gt; alert('Hello'); &amp;lt;/script&amp;gt;&lt;/p&gt;	\N	2019-10-15 15:38:53	\N	\N	::1	\N	\N	\N	\N
+cf83319d-0840-4c6c-85a4-c23122fafe6e	763384620895	ordinary_copy	42	56	2019	gogo	toto	2	\N	\N	\N	&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/REC-html40/loose.dtd&quot;&gt;\n&lt;html&gt;&lt;body&gt;&lt;p&gt;hcsancascb&lt;/p&gt;\r\n&lt;p&gt;ncsacaoca, dcosahco, dcosacoa&lt;/p&gt;\r\n&lt;p&gt;Simple javascript is embeded. &amp;lt;script&amp;gt;alert('Hello Darling');&amp;lt;/script&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;\n	\N	2019-10-15 15:49:57	\N	\N	::1	\N	\N	\N	\N
+fc8c2bd8-10bc-4d67-94df-925bc2dc7e8f	763384620895	urgent_copy	143	25	2019	hbjvj	bg	2	\N	\N	\N	&lt;p&gt;hi everyone, &amp;lt;script type='text/javascript'&amp;gt;alert('hello dear');&amp;lt;/script&amp;gt;&lt;/p&gt;	\N	2019-10-15 16:51:11	\N	\N	::1	\N	\N	\N	\N
+7ecb1690-e31c-4268-a043-6f488342958b	763384620895	urgent_copy	149	43	2019	fffa	faf	2	\N	\N	\N	&lt;p&gt;dsfa fafa afaf&lt;/p&gt;\r\n&lt;p&gt;fafa&lt;/p&gt;	\N	2019-11-11 06:45:10	\N	\N	::1	\N	\N	\N	\N
+eea2fab6-1bbd-40d1-b1aa-50101a4ee836	763384620895	ordinary_copy	148	3	2019	Tomba	Chaoba	2	\N	\N	\N	&lt;p&gt;This is a petition copy. &amp;lt;script&amp;gt;alert(1);&amp;lt;/script&amp;gt;&lt;/p&gt;	2019-11-02	2019-11-11 08:36:38	\N	\N	::1	\N	\N	\N	\N
+05f3bbfe-8fab-4e0a-a1ec-3dc421643a4b	736684620895	ordinary_copy	150	31	2018	Tomba	Chaoba	2	\N	\N	\N	Johnny Johnny Yes Papa	\N	2019-11-20 13:52:26	\N	\N	::1	\N	\N	\N	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+d9f84441-5ded-4310-9e03-fb06962126a7	763384620895	ordinary_copy	63	15	2019	chaonu	chaothoi	1	\N	\N	\N		2019-11-24	2019-11-20 13:59:39	\N	\N	::1	\N	\N	\N	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+32b912b1-e9a7-448a-b957-bc69a28d8c1a	763384620895	ordinary_copy	150	32	2017	thoibi	thoiba	1	\N	\N	\N		2019-11-14	2019-11-20 15:30:40	\N	\N	::1	\N	\N	\N	
+ec2ce8c2-b38b-4576-932d-2876a3deef2f	763384620895	ordinary_copy	150	32	2017	thoibi	thoiba	1	\N	\N	\N		2019-11-14	2019-11-20 15:31:42	\N	\N	::1	\N	\N	\N	
+dd812bfc-c4da-47d8-85a0-c3ad20c2c940	763394620895	ordinary_copy	150	5	2017	Nganthoiba	Onida	1	\N	\N	\N		2019-11-16	2019-11-20 16:00:14	\N	\N	::1	\N	\N	\N	bd20f847-8de4-4068-95de-4b0ccd04ba59
+59170990-e46e-4441-b4f3-dd413b6d9737	763384620895	ordinary_copy	142	14	2014	Manithoiba	Onida	6	\N	\N	\N	Dear Sir,\r\n&amp;amp;nbsp;\r\nI have some problem.	2019-11-17	2019-11-20 16:12:50	\N	\N	::1	\N	\N	\N	bd20f847-8de4-4068-95de-4b0ccd04ba59
+\.
+
+
+--
+-- TOC entry 2189 (class 0 OID 49275)
+-- Dependencies: 191
+-- Data for Name: applications_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.applications_log (applications_log_id, application_id, users_id, action_date, action, from_role_id, to_role_id, remark) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2188 (class 0 OID 49250)
+-- Dependencies: 190
+-- Data for Name: audit_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.audit_log  FROM stdin;
+\.
+
+
+--
+-- TOC entry 2184 (class 0 OID 49186)
+-- Dependencies: 186
+-- Data for Name: certificate_types; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.certificate_types (certificate_types_id, copy_name) FROM stdin;
+1	Order Copy
+2	Petition Copy
+3	Counter Affidavit or Affidavit
+4	Reply Affidavit
+5	Vakalatnama
+6	Others
+\.
+
+
+--
+-- TOC entry 2187 (class 0 OID 49237)
+-- Dependencies: 189
+-- Data for Name: logins; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.logins (login_id, login_time, logout_time, expiry, source_ip, device, users_id) FROM stdin;
+PnT0td5vUl2521Pa5o3X5L9lT0Pc5TD39F0l0Y52x503343nP5NI9SF0Gz4E	2019-11-19 10:53:33+05:30	\N	2019-11-19 12:53:33+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+U3W3hsr76zjC5xUj445nUL3454jXUA1gdOG5rYUBuUe4t2xdMs7I83h7Yh3f	2019-11-19 12:14:22+05:30	\N	2019-11-19 14:14:22+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+ix195oZekQ1p3K58kftBKrt78KfXKNkLqUNAJaUSL1J8F35l9o232Klk4klK	2019-11-19 12:15:22+05:30	\N	2019-11-19 14:15:22+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+Trg40Wd5yXNI15roxNckk4dkp51kSDa58f55PNd7kXxxc40x95q0t94TcEBk	2019-11-19 13:48:20+05:30	\N	2019-11-19 15:48:20+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+MQ52GEc5zjeEGVGE11M2FM985vv1TKdn6oeg33jU5dQ59a1n59vwcad6dEjd	2019-11-19 13:54:13+05:30	2019-11-19 14:08:38+05:30	2019-11-19 15:54:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
+E21Cl58q5PZ122GGN6055251M36x857191Eco7077EOX0RN1o28pZS32G1d2	2019-11-19 14:11:59+05:30	2019-11-19 14:12:18+05:30	2019-11-19 16:11:59+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+cG1VeRd5nNKbQR5d1bbdF74QMqad1Qkbb9165b4R3QdY1dnR5MMcMCdz193c	2019-11-19 17:56:53+05:30	2019-11-19 18:31:02+05:30	2019-11-19 19:56:53+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+83V3kG25IV175HR4d86ddB5Nt3hs5fOJPKfAtiV5sgCVnG5PjXdHOI9HaV6n	2019-11-19 18:43:03+05:30	2019-11-19 18:50:29+05:30	2019-11-19 20:43:03+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
+J9xO5SV2K617qSk3fbOVS656k36jkBNs3tMDk6b6xHD19nsoxnOD8Dcxn8d7	2019-11-19 19:34:25+05:30	2019-11-19 19:46:26+05:30	2019-11-19 21:34:25+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
+fS2IeEp9d7rWW04yQ4z4bYWI7S7p5WSEf2D1930fS81wNw7f1W03721ULSUv	2019-11-19 19:46:34+05:30	2019-11-19 19:52:31+05:30	2019-11-19 21:46:34+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
+26ib0Gbc055nmp4If32d12df1431ebi72tW5LOfgsiab11wL1lAiM11aiThd	2019-11-19 19:52:41+05:30	\N	2019-11-19 21:52:41+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+7xIXLLTuf8J55I1TaX440no04Tdfnu4Jo1dcad1LdQfdYynYx5u9fLJ1Inh6	2019-11-20 08:44:41+05:30	\N	2019-11-20 10:44:41+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
+qluNJhgdhhN65mi5OdjlnJHzn7o6Sxn7aC59UIAiMr44hi1VLg143bjNW914	2019-11-20 13:44:09+05:30	2019-11-20 14:03:35+05:30	2019-11-20 15:44:09+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+j64qZI2484ZMhCdd2G4fR08d2Sd2FsGdFMk2rGfZ0C4q42slm4r8d5d0Cq5d	2019-11-20 15:04:00+05:30	\N	2019-11-20 17:04:00+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
+XFkXhMxDdU44i4c0ID5zBH6m0XB4z3d4c41H0Mr00M246e4V44UW567V3nX7	2019-11-20 15:37:28+05:30	\N	2019-11-20 18:37:28+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+z1RY4q210Y62Jw86WYbAU2wDdrTj1r7412c8iG1Tcxj8j3jd0548d4vvDWW0	2019-11-20 15:40:40+05:30	\N	2019-11-20 18:40:40+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+4TO753Z372j3nnk7SE4F5P0H45oB4IWCkNd3Ru56nG7XWG213RoZEicec9d5	2019-11-20 15:51:13+05:30	\N	2019-11-20 18:51:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+AS4Lf5hcU5Cw3e1ykhkLn545gJKDaSL9Kwd17CLfdHQ2c1DYwdL7ZI55I3Vz	2019-11-20 16:35:38+05:30	2019-11-20 16:42:12+05:30	2019-11-20 18:35:38+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+0H9AF18b50A6gJ1bMM69j804pVb6Vj6Ab6bdlO8mN3oN6427DugWV72F4d09	2019-11-20 20:11:56+05:30	2019-11-20 20:27:21+05:30	2019-11-20 22:11:56+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+IBt1o93ujCe16eoe2FFeR5NT61NdjQ523i5uk543V7550U0aDM776Uy58uCD	2019-11-20 20:36:38+05:30	2019-11-20 20:45:30+05:30	2019-11-20 22:36:38+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
+D7C9V997T2T541e975ljAe7AAshOii9OAOe97hozU5eA2TA2n8qdmUsqC7Y1	2019-11-20 20:49:53+05:30	2019-11-20 20:49:55+05:30	2019-11-20 22:49:53+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+51yl42cna8dV5rdcRcHV2Td9E2u1yJrej9eddnez6Z1S92t2n2eujnoL21er	2019-11-20 22:30:18+05:30	\N	2019-11-21 00:30:18+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+7xRY1ptJ5653f98p48xI7V29s42x559iS2M446V0UY68t762JxtWBx25XWIe	2019-11-20 22:49:04+05:30	2019-11-20 23:04:45+05:30	2019-11-21 00:49:04+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+5DK1q7q9m4b9eeG75vnD58w7qldn56adk6Gdq76775d7lwjbgavwd6DwHm86	2019-11-21 07:00:53+05:30	2019-11-21 07:30:14+05:30	2019-11-21 09:00:53+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+\.
+
+
+--
+-- TOC entry 2192 (class 0 OID 57349)
+-- Dependencies: 194
+-- Data for Name: process; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.process (process_id, process_name, process_description) FROM stdin;
+2	receive_order	To receive application for order copy
+1	receive_not_order	To receive application for not order copy
+3	search_case_body	To search for case body
+4	receive_order after case body	Copying section receive application along with case body and forward to CO
+5	CS to Jr. AA	Copying Section forwards to Jr. AA
+6	notesheet preparation and appr	Notesheet preparations by Jr. AA and approval
+7	certificate preparation	Certificate preparations by CO and further approval
+\.
+
+
+--
+-- TOC entry 2190 (class 0 OID 49294)
+-- Dependencies: 192
+-- Data for Name: process_role_map; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.process_role_map (process_id, description, role_id, next_role_id, prev_role_id, process_role_map_id) FROM stdin;
+1	Receipt and Dispatch	15	\N	\N	1
+1	Receipt and Dispatch(RG)	3	2	\N	2
+2	Received by Copying Section	2	4	\N	3
+3	Case body Search	4	2	2	4
+3	Case body Search	4	7	2	5
+4	Copying Section to Computer Operator	2	12	4	6
+5	Copying Section to Jr. AA	2	7	4	7
+6	notesheet preparation	7	\N	2	8
+7	Certificate Preparation	12	\N	2	9
+\.
+
+
+--
+-- TOC entry 2186 (class 0 OID 49221)
+-- Dependencies: 188
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.roles (role_id, role_name) FROM stdin;
+1	Admin
+2	Copying Section
+3	Registrar General (RG)
+4	Judicial 1
+5	Judicial 2
+6	Judicial 3
+7	Jr. AA
+8	Sr. AA
+9	Assistant Registrar 2
+10	Deputy Registrar Judicial
+11	Registrar Judicial
+12	Computer Operator
+13	Superintendent
+14	Applicant
+\.
+
+
+--
+-- TOC entry 2185 (class 0 OID 49216)
+-- Dependencies: 187
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (users_id, full_name, email, phone_no, role_id, user_password, verify, created_at, update_at, delete_at, profile_image, aadhaar, updated_by) FROM stdin;
+613e8200-5906-4cb7-a8d3-d3b84f2f2b98	Khangenbam Nganthoiba	leecba@gmail.com	9856732169	14	82a3326339cfd75bdc0a667e21957437c58de70a5514aead2f8d2ed93f1fbd90	f	2019-11-13 19:03:37.447547+05:30	\N	\N	\N	\N	\N
+18168e47-4805-4549-83e9-4e7560508a87	Gandhi	toman@gmail.com	9089517468	14	51fbc04ef0e7f08642f1b6c222ee24776ddb07cf72a8553dee839ae8d49c56df	f	2019-11-13 19:26:48.946864+05:30	\N	\N	\N	\N	\N
+d1e93117-a1e8-4c13-9ca6-cf6891654a44	Khangembam Mathoungamba	meeraen.kl@gmail.com	9856732169	14	a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3	f	2019-11-15 13:31:02.668418+05:30	\N	\N	\N	\N	\N
+c4ace25e-46b9-46c7-81df-ad8bd0c60dd4	Khangembam Mathoungamba	meeraen_kha@hotmail.com	9856732169	14	a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3	f	2019-11-15 13:34:18.012346+05:30	\N	\N	\N	\N	\N
+f6a40850-6790-4e64-8e2b-563242f7b801	Manimatum	mani@gmail.com	9089517468	14	f61622fdc7ab3ac33b32335b853f9889d486a0c5b2493353470ae3874c8bda0f	f	2019-11-15 22:02:02.384245+05:30	\N	\N	\N	\N	f6a40850-6790-4e64-8e2b-563242f7b801
+34a7fb45-1e01-482a-b516-e835a2c61902	Manimatum	matum@gmail.com	9089517468	14	f61622fdc7ab3ac33b32335b853f9889d486a0c5b2493353470ae3874c8bda0f	f	2019-11-15 22:07:53.730086+05:30	\N	\N	\N	\N	34a7fb45-1e01-482a-b516-e835a2c61902
+ed638c42-e77a-45f3-afdd-4de8ead67b2b	Manithoiba	sana@yahoo.in	9089517468	14	40a1339c959d20d18ce0108f7f9c0a773617f46178643620e0498d1e26f0a318	f	2019-11-16 06:26:41.289759+05:30	\N	\N	\N	\N	ed638c42-e77a-45f3-afdd-4de8ead67b2b
+7c689d57-0f0f-423d-81a1-77b732aa2181	Konsam Malemngalba Singh	lkonsam@gmail.com	9856732169	14	17697f2013ce4e424b29bcac0fddcda92adfef64316eaf320932fcae835ea185	f	2019-11-16 06:40:36.429121+05:30	\N	\N	\N	\N	7c689d57-0f0f-423d-81a1-77b732aa2181
+f07ab32c-3fd1-4840-bed1-021f6e2e8b51	Chongtham Lanchenba	lanchen@yahoo.in	9856732168	14	a3d8c2f102f7528223093cc28ef28fbad2451cc3eda7b60d4b26c2ba3f0841ec	f	2019-11-17 04:28:05+05:30	\N	\N	\N	\N	f07ab32c-3fd1-4840-bed1-021f6e2e8b51
+e9644f7d-fa84-4541-adad-5490e857b546	Chongtham Lanchenba	lanchen@gmail.com	9856732168	14	a3d8c2f102f7528223093cc28ef28fbad2451cc3eda7b60d4b26c2ba3f0841ec	f	2019-11-17 11:03:35.883855+05:30	\N	\N	\N	\N	e9644f7d-fa84-4541-adad-5490e857b546
+ff078086-55a2-4c8b-8f17-7e9ad492d2ce	Laishram Bobby	bobby@gmail.com	9089517463	14	69ff8042237aeef5ddf1ced10e851bc6104e1ebb15a304061dba43ea10106fa9	f	2019-11-17 11:10:53.279926+05:30	\N	\N	\N	\N	ff078086-55a2-4c8b-8f17-7e9ad492d2ce
+54b44ef7-4dba-483b-a533-5655116ca21c	Nameirakpam Shanti	shanti@yahoo.in	9089517463	14	fb1484ec19172fbfc3e662f9ffd80f2add2ec6ed17128cabdffb1eaf9551e3ef	f	2019-11-17 16:40:09.281219+05:30	\N	\N	\N	\N	54b44ef7-4dba-483b-a533-5655116ca21c
+df022cc4-2603-47d8-a5b6-8a5be6d7721e	Laishram Decilla	decilla@gmail.com	9856732165	14	1761280356e84445a31f223047dcb041fadbffe8a72de110344e0d9e2168ab05	f	2019-11-17 17:14:37.884455+05:30	\N	\N	\N	\N	df022cc4-2603-47d8-a5b6-8a5be6d7721e
+10bfdce7-49d1-4a8c-8a4a-741fe90ef9d8	Laishram Devilla	devilla@gmail.com	9856732165	14	f017716a3bc13522d51124f7672ed50c8542b4a7244da9f66a423b7e7b275d90	f	2019-11-17 17:18:31.933214+05:30	\N	\N	\N	\N	10bfdce7-49d1-4a8c-8a4a-741fe90ef9d8
+4a4c72ce-74b0-466a-a5e5-9a9f074f0069	Laishram Devilla	devil@gmail.com	9856732165	14	f017716a3bc13522d51124f7672ed50c8542b4a7244da9f66a423b7e7b275d90	f	2019-11-17 17:20:07.38786+05:30	\N	\N	\N	\N	4a4c72ce-74b0-466a-a5e5-9a9f074f0069
+23093c4a-d655-43d8-b6b1-34844b25f569	Sinam Chandrakanta	chandra@gmail.com	9856732145	14	4a577ac3c017756a7cf2c8689ea5876f168c690497d05ef8e22da2dd13a22c11	f	2019-11-17 17:26:20.866894+05:30	\N	\N	\N	\N	23093c4a-d655-43d8-b6b1-34844b25f569
+46c114a9-dc29-4702-bff0-da82d07e16e5	Irom Sumarjit Singh	sumar@gmail.com	9774785616	14	2835c8aab95343185332e0addf0e03629a73fe7dd06ca0d8e45482bbf84a2ede	f	2019-11-17 17:35:36.464578+05:30	\N	\N	\N	\N	46c114a9-dc29-4702-bff0-da82d07e16e5
+6881f81b-fce5-4f4e-8ba6-1a2c4d259388	Ailan Maibam	ailan@gmail.com	9774785623	14	30a8b99fee9373a811e5db8e8ed3bfa04b713ba631400b4526b7f5ebbc88739e	f	2019-11-17 17:44:47.990397+05:30	\N	\N	\N	\N	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
+7f34810b-4f74-4d7b-9bb5-5bbb2a7f87d3	Yumkhaibam Guneshor	ygune@gmail.com	9856732148	14	ab6b414eee6044f22f684427ce5d6ce174ffef37a0d0ccefedee126ff2fc69f0	f	2019-11-18 20:25:56.116851+05:30	\N	\N	\N	\N	7f34810b-4f74-4d7b-9bb5-5bbb2a7f87d3
+76e1d643-99cf-4f5d-b649-f940aa4722fb	Khangenbam Nganthoiba Angom	khangembamc@gmail.com	9856732169	14	82a3326339cfd75bdc0a667e21957437c58de70a5514aead2f8d2ed93f1fbd90	f	2019-11-19 19:33:42.417105+05:30	\N	\N	\N	\N	\N
+bd20f847-8de4-4068-95de-4b0ccd04ba59	Khangembam Alica	alica@gmail.com	9856732169	14	461fac36809ceb0603fc4d841c6ccebccbeae1d011c915f7cc2b8cebba9e534f	f	2019-11-20 15:36:55.211522+05:30	\N	\N	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 2245 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: process_process_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.process_process_id_seq', 1, true);
+
+
+--
+-- TOC entry 2061 (class 2606 OID 49279)
+-- Name: applications_log applications_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications_log
+    ADD CONSTRAINT applications_log_pkey PRIMARY KEY (applications_log_id);
+
+
+--
+-- TOC entry 2051 (class 2606 OID 49168)
+-- Name: applications applications_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications
+    ADD CONSTRAINT applications_pkey PRIMARY KEY (applications_id);
+
+
+--
+-- TOC entry 2053 (class 2606 OID 49190)
+-- Name: certificate_types certificate_copy_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.certificate_types
+    ADD CONSTRAINT certificate_copy_types_pkey PRIMARY KEY (certificate_types_id);
+
+
+--
+-- TOC entry 2059 (class 2606 OID 57364)
+-- Name: logins login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.logins
+    ADD CONSTRAINT login_pkey PRIMARY KEY (login_id);
+
+
+--
+-- TOC entry 2063 (class 2606 OID 57346)
+-- Name: process_role_map process_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.process_role_map
+    ADD CONSTRAINT process_pkey PRIMARY KEY (process_role_map_id);
+
+
+--
+-- TOC entry 2065 (class 2606 OID 57357)
+-- Name: process process_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.process
+    ADD CONSTRAINT process_pkey1 PRIMARY KEY (process_id);
+
+
+--
+-- TOC entry 2057 (class 2606 OID 49225)
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (role_id);
+
+
+--
+-- TOC entry 2055 (class 2606 OID 49273)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (users_id);
+
+
+-- Completed on 2019-11-21 11:24:09
+
+--
+-- PostgreSQL database dump complete
+--
+

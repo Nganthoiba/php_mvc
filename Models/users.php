@@ -23,7 +23,7 @@ class Users extends model{
     /***********************/
     public function __construct($data = array()) {
         parent::__construct();
-        $this->table_name = "users";
+        $this->setTable("users");
         $this->setKey("users_id");
         
         /** setting default values **/
@@ -62,10 +62,10 @@ class Users extends model{
     
     //For updating user data
     public function save(){
-        if(!$this->isValidated()){
-            return $this->response;
-        }
+        $this->verify = ($this->verify == false)?0:1;
         $params = $this->toArray();
+        unset($params['users_id']);
+        //return $params;
         $cond = array("users_id"=> $this->users_id);
         return parent::update($params, $cond);
     }
@@ -93,7 +93,7 @@ class Users extends model{
         $stmt->execute();
         return ($stmt->rowCount()>0);
     }
-    /*** function to validate user data ***/
+    /*** function to validate user data for login ***/
     private function isValidated(){
         $this->response['status'] = false;
         $this->response['status_code'] = 403;
@@ -136,7 +136,6 @@ class Users extends model{
             "email" => $this->email,
             "phone_no" => $this->phone_no,
             "role_id" => $this->role_id,
-            "user_password" => $this->user_password,
             "verify" => $this->verify,
             "created_at" => $this->created_at,
             "update_at" => $this->update_at,
@@ -147,71 +146,3 @@ class Users extends model{
         return $arr;
     }
 }
-//Data Model for adding user
-class UserAddModel{
-    public  $users_id , 
-            $full_name ,     
-            $email  ,        
-            $phone_no  ,     
-            $role_id,        
-            $user_password,  
-            $verify,  
-            $aadhaar,        
-            $updated_by;
-    public function __construct(Users $user = null) {
-        if($user != null){
-            $this->users_id = $user->users_id;
-            $this->full_name = $user->full_name;
-            $this->email = $user->email;
-            $this->phone_no = $user->phone_no;
-            $this->role_id = $user->role_id;
-            $this->user_password = $user->user_password;
-            $this->verify = $user->verify;
-            $this->aadhaar = $user->aadhaar;
-            $this->updated_by = $user->updated_by;
-        }
-    }
-}
-
-//User Login Model
-class UserLoginModel{
-    private $email;
-    private $user_password;
-    
-    public function __construct($email,$password="") {
-        $this->email = $email;
-        $this->user_password = ($password == "")?"":hash("sha256", $password);
-    }
-    
-    public function isLoginSuccessfull(){
-        $model = new model();
-        $model->table_name = "users";
-        $cond = array(
-            'email' => $this->email,
-            'user_password' => $this->user_password
-        );
-        $res = $model->read(array(
-            'users_id',
-            'full_name',
-            'email',
-            'phone_no',
-            'role_id',
-            'verify',
-            'aadhaar'), $cond);
-        if($res['status_code'] == 200){
-            $user_info = $res['data'][0];
-            //$users_id = $user_info['users_id'];
-            $login = new Logins($user_info['users_id']);
-            $loginRes = $login->add();//adding login details
-            if($loginRes['status_code']==200){
-                $loginRes['msg'] = "You have successfully logged in.";
-                $loginRes['data'] = array_merge($user_info,$loginRes['data']);
-            }
-            return $loginRes;
-        }
-        else{
-            return $res;
-        }
-    }
-}
-
