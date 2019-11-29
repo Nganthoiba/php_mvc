@@ -37,7 +37,7 @@ class DefaultController extends Controller{
                 $sum += $val;
             }
         }
-        $this->send_data(array("Sum"=>$sum));
+        return $this->send_data(array("Sum"=>$sum));
     }
     public function testing(){
         //first check whether a user is already logged in, if no one logged in then redirect the page to the login page

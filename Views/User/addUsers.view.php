@@ -1,10 +1,10 @@
 <?php 
 $roles = $data['roles'];
 ?>            
-    <div class="card signup_card">
-                <h6 style="padding: 10px">
+            <div class="card signup_card">
+                <h5 class="card-header default-color white-text py-3">
                     <strong>Add user below:</strong>
-                </h6>
+                </h5>
                 <div class="card-body">
                     <form name="addUsers" method="POST" class="needs-validation" novalidate action="addUsers">
                         <input type="hidden" name="action" value="sign_up" />

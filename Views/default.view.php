@@ -38,23 +38,27 @@ and open the template in the editor.
         <!-- Sweet Alert -->
         <link href="<?=Config::get('host')?>/root/MDB/sweetalert2/sweetalert2.css" rel="stylesheet" type="text/css"/>
         <script src="<?=Config::get('host')?>/root/MDB/sweetalert2/sweetalert2.js" type="text/javascript"></script>
+        
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     </head>
     <body>
         <?php 
             include_once('navigation_bar.view.php'); 
         ?>
-        <div class="wrapper" style="margin-top: 70px">
+        <div class="wrapper">
             <?php 
             if(Logins::isAuthenticated()){
                 include_once ('side_navbar.view.php');
             }
             ?>
             <!-- Page Content  -->
-            <div id="content" style="padding: 5px">
-                <div class="" ><?= $data['content'] ?></div>
+            <div id="content" style="padding: 5px;margin-top: 70px">
+                <?= $data['content'] ?>
             </div>
         </div>
-        
         
         <?php //include_once('footer.view.php'); ?>
         <!-- SCRIPTS -->

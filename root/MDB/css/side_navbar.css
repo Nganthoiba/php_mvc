@@ -1,6 +1,8 @@
-/*@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";*/
+/*
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+*/
 body {
-    /*font-family: 'Poppins', sans-serif;*/
+    font-family: 'Poppins', sans-serif;
     background: #f0eeee;
     min-height: 100vh;
     position: relative;
@@ -48,15 +50,16 @@ p {
     align-items: stretch;
 }
 
-#sidebar_old {
+.sidebar_old {
     min-width: 250px;
     max-width: 250px;
     position: fixed;
-    background: #002752;
+    background: rgba(255,255,255,0.45);
     color: #fff;
     transition: all 0.3s;
+    height: 100vh;
 }
-#sidebar {
+.sidebar {
     width: 250px;
     position: fixed;
     top: 0;
@@ -68,42 +71,58 @@ p {
     transition: all 0.3s;
     box-shadow: 8px 0 5px -2px #c8c6c6;
 }
-#sidebar.active {
+.sidebar.active {
     margin-left: -250px;
 }
 
-#sidebar .sidebar-header {
+.sidebar .sidebar-header {
     padding: 20px;
     background: rgba(255,255,255,0.45) !important;
     color: #000;
 }
 
-#sidebar ul.components {
+.sidebar ul.components {
     padding: 20px 0;
     /*border-bottom: 1px solid #47748b;*/
 }
 
-#sidebar ul p {
+.sidebar ul p {
     color: #fff;
     padding: 10px;
 }
 
-#sidebar ul li a {
+.sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
 
-#sidebar ul li a:hover {
+.sidebar ul li a:hover {
     color: #eeeeee;
     background: #4aa5b0;
 }
 
-#sidebar ul li.active>a,
+.sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
     background: #2c838e;
 }
+
+
+
+/**** Orange Sidebar ****/
+.sidebar_orange ul li a:hover {
+    color: #eeeeee;
+    background: #F96E08 !important;
+}
+
+.sidebar_orange ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #F29A29  !important;
+}
+/***** end sidbar orange ***/
+
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -153,7 +172,7 @@ a.article:hover {
 #content {
     width: calc(100% - 250px);
     padding: 40px;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     transition: all 0.3s;
     position: absolute;
     top: 0;
@@ -165,13 +184,13 @@ a.article:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
-    #sidebar {
+    .sidebar {
         margin-left: -250px;
     }
-    #sidebar.active {
+    .sidebar.active {
         margin-left: 0;
     }
-    #sidebarCollapse span {
+    .sidebarCollapse span {
         display: none;
     }
 }

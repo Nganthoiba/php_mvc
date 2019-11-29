@@ -1,6 +1,7 @@
 <link href="<?= Config::get('host')?>/root/MDB/css/side_navbar.css" rel="stylesheet" type="text/css"/>
             <!-- Sidebar  -->
-            <nav id="sidebar">
+            <nav id="sidebar" class="sidebar">
+                
                 <div class="sidebar-header">
                     <p style="color:#000">Welcome</p>
                 </div>
@@ -66,8 +67,14 @@
             </nav>
             <script type="text/javascript">
                 $(document).ready(function () {
+                    $("#sidebar").mCustomScrollbar({
+                        theme: "minimal"
+                    });
                     $('#sidebarCollapse').on('click', function () {
                         $('#sidebar').toggleClass('active');
+                        
+                        $('.collapse.in').toggleClass('in');
+                        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
                     });
                 });
             </script>

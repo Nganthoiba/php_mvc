@@ -55,10 +55,10 @@ class Controller {
     }
     
     /** For sending any type of data **/
-    public function send_data($data = array()){
+    public function send_data($data = array(),$response_code=200){
         header("Content-Type: application/json");
-        echo json_encode($data);
-        exit();
+        header("HTTP/1.1 " . $response_code . " " . $this->_requestStatus($response_code));
+        return json_encode($data);
     }
     
     public function redirect($controller, $action){

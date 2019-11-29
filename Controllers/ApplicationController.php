@@ -61,7 +61,7 @@ class ApplicationController extends Controller{
         if(sizeof($data)){
             $status_code = 404;//Bad Request
             
-            $aadhaar = isset($data['aadhaar'])?str_replace(" ","",$data['aadhaar']):""; //Aadhaar 
+            //$aadhaar = isset($data['aadhaar'])?str_replace(" ","",$data['aadhaar']):""; //Aadhaar 
             $appli_for = isset($data['urgent_ordinary'])?$data['urgent_ordinary']:""; //Application For
             $case_type = isset($data['case_type'])?$data['case_type']:""; //Case Type
             $case_no = isset($data['case_no'])?$data['case_no']:""; //Case No
@@ -76,12 +76,13 @@ class ApplicationController extends Controller{
             $appln_src_ip = get_client_ip();
             $submit_date = date('Y-m-d H:i:s');
             /*** input validations *****/
-            if(strlen($aadhaar) != 12)
+            /*if(strlen($aadhaar) != 12)
             {
                 $this->response['msg'] = 'Invalid aadhaar number: '.trim($aadhaar,"\t ");
                 $this->response['status'] = false;
             }
-            else if(trim($case_type) == "")
+            */
+            if(trim($case_type) == "")
             {
                 $this->response['msg'] = 'Please select case type ';
                 $this->response['status'] = false;
@@ -115,7 +116,7 @@ class ApplicationController extends Controller{
             else{
                 
                 $applicationModel = new applications();
-                $applicationModel->aadhaar = $aadhaar;
+                //$applicationModel->aadhaar = $aadhaar;
                 $applicationModel->app_for = $appli_for;
                 $applicationModel->appln_det = $appln_det;
                 $applicationModel->appln_src_ip = $appln_src_ip;

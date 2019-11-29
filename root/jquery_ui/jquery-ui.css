@@ -933,6 +933,7 @@ html .ui-button.ui-state-disabled:active {
 	background: #f6f6f6;
 	font-weight: normal;
 	color: #454545;
+        min-width: 250px;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -1003,8 +1004,8 @@ a.ui-button:active,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
 	border: 1px solid #dad55e;
-	background: #fffa90;
-	color: #777620;
+	background: #1aae1a;
+	color: #f4f4ef;
 }
 .ui-state-checked {
 	border: 1px solid #dad55e;

@@ -5,8 +5,11 @@ define('ROOT', '../');
 define('VIEWS_PATH', ROOT.DS.'Views');
 
 /*******************************/
-
 require_once ROOT.DS.'libs/init.php';
+/********************************/
+
+//custom functions for the highcourt project
+require_once ROOT.DS.'copying_functions/application_logs.php';
 //starting session securely
 startSecureSession();
 date_default_timezone_set(Config::get('default_time_zone'));

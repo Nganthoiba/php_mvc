@@ -3,7 +3,7 @@ $response = $data['response'];
 if($response['status_code'] == 200){
     $users = $response['data'];
     ?>
-<table class="table table-light">
+<table class="table_style blue_header">
     <thead>
         <tr>
             <!--<th>User ID</th>-->

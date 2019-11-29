@@ -106,12 +106,58 @@ class RoleController extends Controller{
     }
     
     public function processRoleMapping(){
+        
+        if(Logins::getRoleName()!== "Admin"){
+            $this->redirectTo();// redirecting to proper page
+        }
+        $input_data = $this->_cleanInputs($_POST);
+        if(isset($input_data['action'])){
+            $response = array("status"=>0,
+                "msg"=>"",
+                "data"=>"",
+                "error"=>array());
+            $model = new model();
+            $obj = new ProcessRoleMap(model::$conn);
+            
+            $action = $input_data['action'];
+            model::$conn->beginTransaction();
+            switch($action){
+                case 'getprocess':
+                    $response = ($obj->get_process());
+                    break;
+                case 'getprocessrolemap':
+                    $process_id = $input_data['pid']??'';
+                    $response =  ($obj->get_Process_Role_Map($process_id));
+                    break;
+                case 'setprocess':
+                    $process_id = $input_data['pid']??'';
+                    if($process_id==""){
+                        $response =  array('status'=>0, 'msg'=> 'Please select a process');
+                    }
+                    else{
+                        $data = $input_data['data']??array("included"=>"","excluded"=>"");
+                        $response =  ($obj->set_Process_Role_Map($process_id,$data));
+                    }
+                    break;
+                default : 
+                    $response =  (array('status'=>0, 'msg'=> 'Wrong Request'));
+            }
+            if($response['status'] == 1){
+                model::$conn->commit();
+            }
+            else {
+                model::$conn->rollback();
+            }
+            $response_code = $response['status']?200:403;
+            return $this->send_data($response,$response_code);
+        }
+
         $process = new Process();
         $res = $process->read();
         $this->data['processes'] = $res['data'];
-        
         return $this->view();
     }
+    
     
     private function updateRole($roles_id, $role_name){
         $role = new roles();

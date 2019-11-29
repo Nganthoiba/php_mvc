@@ -168,19 +168,20 @@
                     </div>
                 </div>
             </div>
-            
+            <!--
             <div class="row">
                 <div class="col-sm-4"><label for="aadhaar" class="control-label">Aadhaar (UID) (*):</label></div>
                 <div class="col-sm-4">
-                    <!--<div class="md-form mb-0">-->
+                    
                         <input style="font-size: 18pt; text-align: center; color: #007bff;" type="text" name="aadhaar" 
                                id="aadhaar" class="form-control" onkeyup="isValidAadhaar()" required/>
 
                         <div class="valid-feedback" id="aadhar_valid"></div>
                         <div class="invalid-feedback" id="aadhar_invalid">Please fill your aadhaar.</div>
-                    <!--</div>-->
+                    
                 </div>
             </div>
+            -->
             <div style="display:none" id="write_application_area">
                 <div>
                     <p> Write your application below (*):</p>
@@ -323,9 +324,10 @@
         var textData = (tinyMCE.get('textData').getContent()).trim();//$("#textData").val().trim();
         var cert_type = $("#cert_type").val().trim();
 
-        var aadhaar = $("#aadhaar").val().trim();
+        //var aadhaar = $("#aadhaar").val().trim();
         var order_date = $("#order_date").val().trim();
-        aadhaar = aadhaar.replace(/\s+|_+/g, '');
+        
+        //aadhaar = aadhaar.replace(/\s+|_+/g, '');
         if(cert_type === ""){
             //customAlert("Please select Certificate type");
             //$("#cert_type").attr("class","form-control invalid");
@@ -337,12 +339,13 @@
             customAlert("Please write your application.");
             return false;
         }
+        /*
         if(!isValidAadhaar()){
             //customAlert("Please enter your aadhaar number");
             $("#aadhaar").focus();
             return false;
         }
-
+        */
         if(case_type === "" || case_no === "" || case_year === "" || appel_petitioner === "" || respondant_opp === "" || order_date === ""){
             return false;
         }
@@ -353,9 +356,9 @@
         if(!validateForm()){
             return false;
         }
-        var aadhaar = $("#aadhaar").val().trim();
-        $("#aadhaar").val(aadhaar.replace(/\s+/g, ''));
-        $("#aadhar_no").html("<b>"+aadhaar+"</b>");
+//        var aadhaar = $("#aadhaar").val().trim();
+//        $("#aadhaar").val(aadhaar.replace(/\s+/g, ''));
+//        $("#aadhar_no").html("<b>"+aadhaar+"</b>");
         $("#otp_verify_layout").show();
         $("#application_form_layout").hide();
     }

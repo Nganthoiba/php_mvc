@@ -1,5 +1,5 @@
 <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark custom-nav-color fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark custom-nav-grey fixed-top">
             <?php 
                 if(Logins::isAuthenticated()){
             ?>
@@ -30,7 +30,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="<?= Config::get('host')?>/account/manageAccount">Manage Account</a>
-                            <a class="dropdown-item" href="#">Setting</a>
+                            <a class="dropdown-item" href="<?= Config::get('host')?>/account/resetPassword">Change Password</a>
                             <a class="dropdown-item" href="<?= Config::get('host')?>/account/logout">Log out</a>
                         </div>
                     </li>

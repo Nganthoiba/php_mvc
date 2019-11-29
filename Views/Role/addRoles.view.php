@@ -20,7 +20,7 @@
         </div>
         <div class="col-sm-8">
             <label>List of roles:</label>
-            <table border="0" class="table_style">
+            <table border="0" class="table_style yellow_header">
                 <tr>
                     <th>Sl. No.</th>
                     <th colspan="2">Role Name</th>

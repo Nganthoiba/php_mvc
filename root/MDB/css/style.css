@@ -1,4 +1,22 @@
 /**custom styles**/
+.but-custom {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14pt;
+    margin: 2px 2px;
+    cursor: pointer;
+    min-height: 38px;
+    min-width:90px;
+}
+.but-custom:hover {
+    background-color: #329F36;
+    font-size: 12pt;
+}
 .small_font{
     font-size: 10pt;
 }
@@ -39,9 +57,19 @@ footer {
 .date_picker{
     
 }
-.custom-nav-color{
+.custom-nav-grey{
     background-color: #355552 !important;
+    color: #FFFFFF !important;
 }
+.custom-nav-orange{
+    background-color: #f97e12  !important;
+    color: #FFFFFF !important;
+}
+.custom-nav-orange ul li .active{
+    background-color: #db930b  !important;
+}
+
+
 /***** Table Styles ***/
 .table_style {
     width: 100% !important;
@@ -72,8 +100,15 @@ footer {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #2F5C6E;
-    color: white;
+}
+
+.yellow_header th{
+    background-color: #A67E07 !important;
+    color: #FFFFFF;
+}
+.blue_header th{
+    background-color: #1a4c6a !important;
+    color: #FFFFFF;
 }
 
 

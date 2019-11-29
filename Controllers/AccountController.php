@@ -104,6 +104,13 @@ class AccountController extends Controller{
     public function forgotPassword(){
         return $this->view();
     }
+    //reset password
+    public function resetPassword(){
+        if(!Logins::isAuthenticated()){
+            $this->redirect("account", "login");
+        }
+        return $this->view();
+    }
     /*** function to check whether captcha code is valid or not ***/
     private function isValidCaptchaCode($captcha_code){
         if(empty($_SESSION['captcha_code'] ) || strcasecmp($_SESSION['captcha_code'], $captcha_code) != 0){  

@@ -67,6 +67,12 @@ class UserController extends Controller{
         return $this->view();
     }
     public function addUsers(){
+        if(!Logins::isAuthenticated()){
+            $this->redirect("account", "login");
+        }
+        if(Logins::getRoleName()!== "Admin"){
+            $this->redirectTo();
+        }
         $roles = new roles();
         $res = $roles->read();
         $this->data['roles'] = $res['data'];
