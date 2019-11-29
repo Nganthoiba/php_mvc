@@ -14,7 +14,7 @@ class applications extends model{
     
     /* Fields in the table applications */
     public  $applications_id,
-            $aadhaar,
+            /*$aadhaar,*/
             $app_for,
             $case_type,
             $case_no,
@@ -46,10 +46,13 @@ class applications extends model{
     //insert a new application
     public function add() {
         $this->applications_id = UUID::v4();
+        $conn = self::$conn;
+        $conn->beginTransaction();
         //Record to be inserted
+        $is_order = $this->case_type==1?"y":"n";
         $rec = array(
             "applications_id"=>$this->applications_id ,
-            "aadhaar"=>$this->aadhaar ,
+            /*"aadhaar"=>$this->aadhaar ,*/
             "app_for"=>$this->app_for ,
             "case_type"=>$this->case_type ,
             "case_no"=>$this->case_no ,
@@ -61,9 +64,26 @@ class applications extends model{
             "appln_det"=>$this->appln_det ,
             "appln_src_ip"=>$this->appln_src_ip ,
             "create_at"=>$this->create_at, 
-            "users_id"=>$this->users_id 
+            "users_id"=>$this->users_id,
+            "is_order"=>$is_order
         );
-        return parent::create($rec);
+        $resp = parent::create($rec);
+        if($resp['status_code']!=200){
+            return $resp;
+        }
+        $action = "creation";
+        $process_id = 0;//first process
+        $remark = "Application is submitted";
+        
+        $app_log_res = insertApplicationLog($conn, $action,  $this->applications_id, $process_id, $remark,$is_order);
+        if(!$app_log_res['status']){
+            $conn->rollback();
+            $app_log_res['status_code'] = 500;
+            //$app_log_res['error'] = array("Internal Server Error");
+            return $app_log_res;
+        }
+        $conn->commit();
+        return $resp;
     }
     
 }
