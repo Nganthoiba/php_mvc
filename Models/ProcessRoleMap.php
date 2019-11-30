@@ -55,17 +55,21 @@ class ProcessRoleMap {
         $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
         if(count($rows)==0)
         {
-            $response['msg'] = "No data!! Please select another process.";
+            $response['msg'] = "No data! Please select another process.";
             return $response;
         }
         $role_excluded = array();
         $role_included = array();
         foreach($rows as $row){
             if($row['process_id'] == NULL || trim($row['process_id']) == "" ){
-				$role_excluded[] = $row;				
+                $role_excluded[] = $row;				
+            }
+            else if((int)$row['process_id'] == 0){
+                $role_included[] = $row;
+                die (json_encode($row));
             }
             else{
-                    $role_included[] = $row;		
+                $role_included[] = $row;		
             }
         }
         $response['status'] = 1;
@@ -82,14 +86,15 @@ class ProcessRoleMap {
             $response['msg'] = 'Select a valid Process!!!';	
             return $response;
         }		
-        //first disabled all rows with process_id to be alter
+        //first disabled all rows of process_role_map  with process_id to be alter
         $qry = "update process_role_map set is_disabled='y' where process_id=?";
         $stmt=$db->prepare($qry);
         $check_flag = $stmt->execute(array($process_id));
         if(!$check_flag){
-                $response['msg'] = "Error: internal server problem." ;
-                return $response;	
+            $response['msg'] = "Error: internal server problem." ;
+            return $response;	
         }
+        
         $qry = "select process_role_map_id, roles_id from process_role_map
                                 where process_id=?";
         $stmt=$db->prepare($qry);
@@ -105,13 +110,8 @@ class ProcessRoleMap {
             $old_role_id[$x['process_role_map_id']] = $x['roles_id'];
         }
 
-       
-		//print_r($data);
-		//exit;
-		
         if(isset($data['included'])){
             $number_of_role = count($data['included']);
-		
             $qry = "UPDATE  process
                     set number_of_role=?
                     where process_id=? ; ";
@@ -119,7 +119,8 @@ class ProcessRoleMap {
             $resp = $stmt->execute(array($number_of_role, $process_id));
 
             if( !$resp  || $stmt->rowCount()==0 ){
-                    $response['msg'] = "Error: internal server problem.".json_encode($stmt->errorInfo()) ;
+                    $response['msg'] = "Error: internal server problem.";
+                    $response['error'] = $stmt->errorInfo();
                     return $response;		
             }
             $role_level = 1;
@@ -128,25 +129,23 @@ class ProcessRoleMap {
                 //check in old_role_id using in_array here for insert or update
                 $role_id = $item['roleid'];
                 $role_description = $item['desp'];
-                $old_id = array_search($role_id, $old_role_id );  //get ids using rolesid
-                if(!$old_id){
-                        $qry = "INSERT into process_role_map 
-                        (process_id, roles_id, role_level, description, is_disabled)
-                         VALUES (?,?,?,?,'n'); ";
-
+                $old_process_role_map_id = array_search($role_id, $old_role_id );  //get ids using roles_id
+                if(!$old_process_role_map_id){
+                    $qry = "INSERT into process_role_map 
+                    (process_id, roles_id, role_level, description, is_disabled)
+                    VALUES (?,?,?,?,'n'); ";
                 }else{
-                        $qry = "UPDATE  process_role_map
-                          set process_id=?, roles_id=?, role_level=?, description=?, is_disabled='n' 
-                          where process_role_map_id=$old_id ; ";
+                    $qry = "UPDATE  process_role_map
+                    set process_id=?, roles_id=?, role_level=?, description=?, is_disabled='n' 
+                    where process_role_map_id=$old_process_role_map_id ; ";
                 }
-
                 $stmt=$db->prepare($qry);
                 $resp = $stmt->execute(array($process_id, $role_id, $role_level++, $role_description ));
 
                 if( !$resp  || $stmt->rowCount()==0 ){
-                        $response['msg'] = "Error: internal server problem.";
-                        //.json_encode($stmt->errorInfo()) ;
-                        return $response;		
+                    $response['msg'] = "Error: internal server problem.";
+                    //.json_encode($stmt->errorInfo()) ;
+                    return $response;		
                 }
             }
         }

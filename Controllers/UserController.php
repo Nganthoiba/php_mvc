@@ -71,7 +71,7 @@ class UserController extends Controller{
             $this->redirect("account", "login");
         }
         if(Logins::getRoleName()!== "Admin"){
-            $this->redirectTo();
+            $this->redirectTo();//redirecting to the default authorized page
         }
         $roles = new roles();
         $res = $roles->read();

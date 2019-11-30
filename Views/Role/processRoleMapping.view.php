@@ -52,7 +52,7 @@
                         <option value="-1">-- Select --</option>
                         <?php 
                             foreach ($processes as $process){
-                                if($process->process_id == 0) 
+                                if($process->process_id == 8) 
                                     continue;
                         ?>
                             <option value="<?= $process->process_id ?>"><?= $process->process_name ?></option>

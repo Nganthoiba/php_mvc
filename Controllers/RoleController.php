@@ -140,7 +140,7 @@ class RoleController extends Controller{
                     }
                     break;
                 default : 
-                    $response =  (array('status'=>0, 'msg'=> 'Wrong Request'));
+                    $response =  (array('status'=>0, 'msg'=> 'Bad Request'));
             }
             if($response['status'] == 1){
                 model::$conn->commit();
