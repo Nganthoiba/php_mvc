@@ -23,7 +23,7 @@ class ApplicationController extends Controller{
     public function viewApplications(){
         $users_id = "";
         /* Check user is authenticated */
-        if(Logins::isAuthenticated() && strtolower(Logins::getRoleName())=="applicant"){
+        if(Logins::isAuthenticated() && (strtolower(Logins::getRoleName())=="applicant" || strtolower(Logins::getRoleName())=="admin")){
             $info = $_SESSION['user_info'];
             $users_id = $info['users_id'];
         }
@@ -32,8 +32,9 @@ class ApplicationController extends Controller{
             $this->redirect("Account", "login");
         }
         $applications = new applications();
-        $list = $applications->read(array(),array('users_id'=>$users_id));
-        //$this->data['content'] = json_encode($list);
+        $process_id = 0; //to be get from user input 
+        $list = strtolower(Logins::getRoleName())=="admin"?$applications->read():$applications->readAppLog($users_id,$process_id);
+        //return json_encode($list);
         $this->data['applications'] = $list['data'];
         return $this->view();
     }

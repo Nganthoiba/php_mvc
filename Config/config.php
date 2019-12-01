@@ -26,4 +26,4 @@ Config::set('DB_HOST', 'localhost');
 Config::set('DB_DRIVER', 'pgsql');//for postgres
 Config::set('DBNAME', 'applications_for_copy');
 Config::set('DB_USERNAME', 'postgres');
-Config::set('DB_PASSWORD', '');
+Config::set('DB_PASSWORD', 'postgres');

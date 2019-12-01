@@ -86,4 +86,45 @@ class applications extends model{
         return $resp;
     }
     
+    public function read($columns = array(), $cond = array(), $order_by = "") {
+        $order_by = $order_by==""?"create_at desc":$order_by;
+        return parent::read($columns, $cond, $order_by);
+    }
+    
+    public function readAppLog($user_id, $process_id){
+        $qry = "select * from applications_log_view where action_user_id = ? and from_process_id=? order by action_date desc limit 100";
+        $stmt = self::$conn->prepare($qry);
+        $res = $stmt->execute(array($user_id, $process_id));
+        if($res){
+            if($stmt->rowCount()==0){
+                $this->response['status'] = false;
+                $this->response['msg'] = "No record found";
+                $this->response['status_code'] = 404;
+            }
+            else{
+                $this->response['status'] = true;
+                $this->response['msg'] = "Record found";
+                $this->response['status_code'] = 404;
+                $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
+                $data =array();
+                foreach ($rows as $row){
+                    $obj = new model();
+                    foreach ($row as $key=>$val){
+                        $obj->$key = $val;
+                    }
+                    $data[] = $obj;
+                }
+                $this->response['data'] = $data;
+            }
+        }
+        else{
+            $this->response['status'] = false;
+            $this->response['msg'] = "Oops! An internal error occurs.";
+            $this->response['status_code'] = 500;
+            $this->response['error'] = $stmt->errorInfo();
+            
+        }
+        return $this->response;
+    }
+    
 }

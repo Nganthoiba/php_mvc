@@ -145,4 +145,13 @@ class Users extends model{
         );
         return $arr;
     }
+    
+    public static function isAdminUser($user_id){
+        $user = new Users();
+        $user = $user->find($user_id);
+        if($user == null) {
+            return false;
+        }
+        return ($user->role_id == 1);
+    }
 }

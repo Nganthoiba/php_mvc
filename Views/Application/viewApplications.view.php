@@ -3,7 +3,13 @@ $applications = $data['applications'];
 
 if(sizeof($applications)){
 ?>
-<table class="table_style">
+<link href="<?= Config::get('host') ?>/root/MDB/css/dataTable.css" rel="stylesheet" type="text/css"/>
+
+<a href="#">Pending</a> |
+<a href="#">Completed</a> |
+<a href="#">Rejected</a>
+<table class="table_style yellow_header" id="application_table">
+    
     <thead>
         <tr>
             <th>Application For</th>
@@ -13,6 +19,7 @@ if(sizeof($applications)){
             <th>Case Year</th>
             <th>Order Date</th>
             <th>Certificate Type</th>
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
@@ -33,12 +40,21 @@ if(sizeof($applications)){
             <td><?= $app->case_year ?></td>
             <td><?= date('d-m-Y',$order_date_timestamp) ?></td>
             <td><?= $cert->copy_name ?></td>
+            <td><a href="#">View Details</a></td>
         </tr>
 <?php 
     }
 ?>
     </tbody>
 </table>
+
+<script src="<?=Config::get('host')?>/root/MDB/js/dataTable.js" type="text/javascript"></script>
+<script src="<?=Config::get('host')?>/root/MDB/js/dataTables.bootstrap4.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#application_table').DataTable();
+    } );
+</script>
 <?php
 }
 else{

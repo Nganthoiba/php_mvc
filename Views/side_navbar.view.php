@@ -46,6 +46,9 @@
                     <li class="<?= isLinkActive('role/processRoleMapping') ?>">
                         <a href="<?=Config::get('host')?>/role/processRoleMapping"><i class="fa fa-bullhorn"></i> Process Roles Mapping</a>
                     </li>
+                    <li class="<?= isLinkActive('application/viewApplications') ?>">
+                        <a href="<?=Config::get('host')?>/application/viewApplications"><i class="fa fa-desktop"></i> View Applications</a>
+                    </li>
                     <?php
                     }
                     else
