@@ -39,10 +39,15 @@ and open the template in the editor.
         <link href="<?=Config::get('host')?>/root/MDB/sweetalert2/sweetalert2.css" rel="stylesheet" type="text/css"/>
         <script src="<?=Config::get('host')?>/root/MDB/sweetalert2/sweetalert2.js" type="text/javascript"></script>
         
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-        <!-- jQuery Custom Scroller CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+        
+        <link href="<?=Config::get('host')?>/root/MDB/malihu_custom_scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>
+        <script src="<?=Config::get('host')?>/root/MDB/malihu_custom_scrollbar/jquery.mCustomScrollbar.js" type="text/javascript"></script>
+        
+        <!-- Scrollbar Custom CSS 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">-->
+        <!-- jQuery Custom Scroller CDN 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>-->
+    
     </head>
     <body>
         <?php 
@@ -62,7 +67,14 @@ and open the template in the editor.
         
         <?php //include_once('footer.view.php'); ?>
         <!-- SCRIPTS -->
-        
+        <script>
+            $(document).ready(function () {
+//                $("body").mCustomScrollbar({
+//                    theme: "minimal"
+//                });
+            });
+
+        </script>
         <!-- Bootstrap tooltips -->
         <script type="text/javascript" src="<?=Config::get('host')?>/root/MDB/js/popper.min.js"></script>
         <!-- Bootstrap core JavaScript -->

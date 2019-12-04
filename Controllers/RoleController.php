@@ -17,10 +17,10 @@ class RoleController extends Controller{
         if(!Logins::isAuthenticated() || Logins::getRoleName() != "Admin"){
             $this->redirectTo();
         }
-        $role = new roles();
+        $role = new Role();
         $data = $this->_cleanInputs($_POST);
         $this->data['addRoleResponse'] = "";
-        if(isset($data['role_name'])){
+        if(isset($data['role_name']) && trim($data['role_name'])!==""){
             $role->role_name = $data['role_name'];
             $add_result= $role->add();
             $this->data['addRoleResponse']=$add_result['msg'];
@@ -70,11 +70,11 @@ class RoleController extends Controller{
         $this->data['msg'] = "";
         $this->data['role'] = null;
         if(sizeof($param)){
-            $roles_id = $param[0];
-            $role = new roles();
-            $role = $role->find($roles_id);
+            $role_id = $param[0];
+            $role = new Role();
+            $role = $role->find($role_id);
             if($role == null){
-                $this->data['msg'] = "Role does not exist,ididi";
+                $this->data['msg'] = "Role does not exist.";
             }
             $this->data['role']=$role;
         }
@@ -90,10 +90,10 @@ class RoleController extends Controller{
         }
         $this->data['msg'] = "";
         $data = $this->_cleanInputs($_POST);
-        if(isset($data['roles_id'])){
-            $roles_id = $data['roles_id'];
-            $role = new roles();
-            $role = $role->find($roles_id);
+        if(isset($data['role_id'])){
+            $role_id = $data['role_id'];
+            $role = new Role();
+            $role = $role->find($role_id);
             if($role == null){
                 $this->data['msg'] = "Role does not exist.". json_encode($role);
             }
@@ -158,11 +158,12 @@ class RoleController extends Controller{
         return $this->view();
     }
     
-    
-    private function updateRole($roles_id, $role_name){
+    /*
+    private function updateRole($role_id, $role_name){
         $role = new roles();
         $role->role_name = $role_name;
-        $role->roles_id = $roles_id;
+        $role->role_id = $role_id;
         return $role->save();
     }
+    */
 }

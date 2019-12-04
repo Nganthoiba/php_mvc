@@ -9,14 +9,19 @@ try{
         $model_path = ROOT.DS.'Models'.DS.($classname).'.php';
         if(file_exists($lib_path)){
             require_once ($lib_path);
-        }elseif(file_exists($controller_path)){
+        }
+        if(file_exists($controller_path)){
             require_once ($controller_path);
-        }elseif(file_exists($model_path)){
+        }
+        if(file_exists($model_path)){
             require_once ($model_path);
         }
+        /*
         else{
-            throw new Exception("Failed to include class : ".$classname.". or the class does not exist.");
+            throw new Exception("Failed to include model class : ".$classname.". or the class does not exist.");
         }
+         * 
+         */
     });
 }catch(Exception $e){
     echo $e->getMessage();

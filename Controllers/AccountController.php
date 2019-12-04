@@ -47,7 +47,7 @@ class AccountController extends Controller{
                     $this->redirectTo();
                 }
                 else{
-                    $this->data['login_response'] = "Login failed, please try with proper credentials";
+                    $this->data['login_response'] = "Login failed, please try with proper credentials.".json_encode($resLogin);
                 }
             }
             else{
@@ -71,7 +71,7 @@ class AccountController extends Controller{
             // If there is session
             session_destroy();
         }
-        $this->data['content'] ="<center>You have successfully logged out</center>";
+        $this->data['content'] ="You have successfully logged out.";
         return $this->view();
     }
     
@@ -127,9 +127,9 @@ class AccountController extends Controller{
             $this->redirect("account", "login");
         }
         $info = $_SESSION['user_info'];
-        $users_id = $info['users_id'];
+        $user_id = $info['user_id'];
         $user = new Users();
-        $user=$user->find($users_id);
+        $user=$user->find($user_id);
         $this->data['user'] = $user;
         $this->data['update_response'] = "";
         $input_data = $this->_cleanInputs($_POST);
@@ -144,13 +144,13 @@ class AccountController extends Controller{
             else if(!filter_var($input_data['email'], FILTER_VALIDATE_EMAIL)){
                 $this->data['update_response'] = "Your email is invalid.";
             }
-            else if($this->isEmailExist($user->users_id,$input_data['email'])){
+            else if($this->isEmailExist($user->user_id,$input_data['email'])){
                 $this->data['update_response'] = "Your new email '".$input_data['email']."' already exist with another account try another.";
             }
             else if(!isset($input_data['phone_no']) || $input_data['phone_no']=== ""){
                 $this->data['update_response'] = "Missing your phone number";
             }
-            else if(isset($input_data['aadhaar']) && $this->isAadhaarExist($user->users_id, $input_data['aadhaar'])){
+            else if(isset($input_data['aadhaar']) && $this->isAadhaarExist($user->user_id, $input_data['aadhaar'])){
                 $this->data['update_response'] = "Please check your aadhaar, aadhaar no already exists with another account.";
             }
             else
@@ -160,7 +160,7 @@ class AccountController extends Controller{
                 $user->phone_no = $input_data['phone_no'];
                 $user->aadhaar = $input_data['aadhaar']==""?null:$input_data['aadhaar'];
                 $user->update_at = date('Y-m-d H:i:s');
-                $user->updated_by = $user->users_id;
+                $user->updated_by = $user->user_id;
                 try{
                     $res = $user->save();//saving user details
                     $this->data['update_response'] = $res['msg'];//json_encode($res);
@@ -189,16 +189,16 @@ class AccountController extends Controller{
         return array("status"=>true,"msg"=>"Validated");
     }
     /*function to check whether an email to be updated already exists with another account*/
-    private function isEmailExist($users_id,$email){
+    private function isEmailExist($user_id,$email){
         $model = new model();
-        $qry = "select * from users where users_id!='$users_id' and email='$email'";
+        $qry = "select * from users where user_id!='$user_id' and email='$email'";
         $res = $model::$conn->query($qry);
         return $res->rowCount()>0;
     }
     /*function to check whether an email to be updated already exists with another account*/
-    private function isAadhaarExist($users_id,$aadhaar){
+    private function isAadhaarExist($user_id,$aadhaar){
         $model = new model();
-        $qry = "select * from users where users_id!='$users_id' and aadhaar='$aadhaar'";
+        $qry = "select * from users where user_id!='$user_id' and aadhaar='$aadhaar'";
         $res = $model::$conn->query($qry);
         return $res->rowCount()>0;
     }

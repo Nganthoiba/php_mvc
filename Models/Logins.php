@@ -17,15 +17,15 @@ class Logins extends model{
             $expiry,   
             $source_ip,
             $device,
-            $users_id;
-    public function __construct($users_id="") {
+            $user_id;
+    public function __construct($user_id="") {
         parent::__construct();
         /*** default values ***/
         $key = "login_id";// setting the key of this model
-        $this->setTable("logins");
+        $this->setTable("login");
         $this->setKey($key);
         /**** table data ****/
-        $this->users_id = $users_id;        
+        $this->user_id = $user_id;        
     }
 
     //Adding user login details
@@ -44,7 +44,7 @@ class Logins extends model{
             "expiry"=>$this->expiry,
             "source_ip"=>$this->source_ip,
             "device"=>$this->device,
-            "users_id"=>$this->users_id
+            "user_id"=>$this->user_id
         );
         return parent::create($data);
     }
@@ -54,7 +54,7 @@ class Logins extends model{
         if(self::isAuthenticated()){
             $user_info = $_SESSION['user_info'];
             $role_id = $user_info['role_id'];
-            $role = new roles();
+            $role = new Role();
             $role = $role->find($role_id);
             return $role==null?"not_found":$role->role_name;
         }
@@ -85,7 +85,7 @@ class Logins extends model{
             $model = new model();//require to create a new object
         }
         $currentDatetime = date('Y-m-d H:i:s');
-        $qry = "select * from logins "
+        $qry = "select * from login "
                 . "where login_id = :login_id "
                 . "and   logout_time IS NULL "
                 . "and   expiry > :curr_datetime";

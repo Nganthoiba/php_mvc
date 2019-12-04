@@ -65,6 +65,10 @@ footer {
     background-color: #f97e12  !important;
     color: #FFFFFF !important;
 }
+.custom-nav-yellow{
+    background-color: #A67E07  !important;
+    color: #FFFFFF !important;
+}
 .custom-nav-orange ul li .active{
     background-color: #db930b  !important;
 }
@@ -76,6 +80,7 @@ footer {
     border-collapse: collapse;
     border: 1px solid #ddd !important;
     overflow-x: auto;
+    background-color: #e7eef4;
 }
 
 .table_style, .table_style td {
@@ -103,7 +108,7 @@ footer {
 }
 
 .yellow_header th{
-    background-color: #A67E07 !important;
+    background-color: #f97e12 !important;
     color: #FFFFFF;
 }
 .blue_header th{
@@ -111,10 +116,85 @@ footer {
     color: #FFFFFF;
 }
 
+/*Scrollable Table Style*/
+.table-scroll{
+  /*width:100%; */
+  display: block;
+  empty-cells: show;
+  
+  /* Decoration */
+  border-spacing: 0;
+  border: 1px solid;
+}
+
+.table-scroll thead{
+  background-color: #f1f1f1;  
+  position:relative;
+  display: block;
+  width:100%;
+  overflow-y: scroll;
+}
+
+.table-scroll tbody{
+  /* Position */
+  display: block; position:relative;
+  width:100%; 
+  overflow-y:scroll;
+  /* Decoration */
+  border-top: 1px solid rgba(0,0,0,0.2);
+  padding-bottom: 10px;
+  max-height: 75vh;
+}
+
+.table-scroll tr{
+  width: 100%;
+  display:flex;
+}
+
+.table-scroll td,.table-scroll th{
+  flex-basis:100%;
+  flex-grow:2;
+  display: block;
+  text-align:left;
+}
+
+
+/* Other options 
+
+.table-scroll td:first-child,
+.table-scroll th:first-child{
+  flex-basis:100%;
+  flex-grow:2;
+}*/
+/*
+.table-scroll tbody tr:nth-child(2n){
+  background-color: rgba(130,130,170,0.1);
+}
+*/
+
+.body-half-screen{
+  max-height: 50vh !important;
+}
+
+.small-col{flex-basis:10%;}
+
+/* Align center vertically */
+.vertical-center {
+    width: 98%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 
 @media only screen and (max-width: 600px){
     .nav_heading_text{
         font-size: 14pt;
         font-weight: bold;
+    }
+    .control-label{
+        float: left;
     }
 }

@@ -7,41 +7,52 @@
  */
 
 /**
- * Description of roles
+ * Description of Role
  *
  * @author Nganthoiba
  */
-class roles extends model{
-    public $roles_id;
+class Role extends model{
+    public $role_id;
     public $role_name;
     
     public function __construct() {
         parent::__construct();
-        $this->setTable("roles");
-        $this->setKey("roles_id");
+        $this->setTable("role");
+        $this->setKey("role_id");
     }
     
     public function add(){
-        $qry = "select max(roles_id)+1 as new_role from roles";
+        $qry = "select max(role_id)+1 as new_role from role";
         $stmt = self::$conn->prepare($qry);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row['new_role'] == NULL){
-            $roles_id = 1;
+            $role_id = 1;
         }
         else{
-            $roles_id = (int)$row['new_role'];
+            $role_id = (int)$row['new_role'];
         }
         
         $data = array(
-            "roles_id"=>$roles_id,
+            "role_id"=>$role_id,
             "role_name"=>$this->role_name
         );
         return parent::create($data);
     }
     
     public function read($columns = array(), $cond = array(), $order_by = "role_name") {
-        return parent::read($columns, $cond, $order_by);
+        $res = parent::read($columns, $cond, $order_by);
+        if($res['status_code'] == 200 && sizeof($res['data'])>0){
+            $roles = array();
+            foreach ($res['data'] as $role){
+               if($role->role_name == "Admin"){
+                   continue;
+               }
+               $roles[] = $role;
+            }
+            $res['data'] = $roles;
+        }
+        return $res;
     }
     
     public function save(){
@@ -49,7 +60,7 @@ class roles extends model{
             "role_name" => $this->role_name
         );
         $cond = array(
-            "roles_id" => $this->roles_id
+            "role_id" => $this->role_id
         );
         return parent::update($params, $cond);
     }
@@ -59,7 +70,7 @@ class roles extends model{
     }
     
     public function remove(){
-        $cond = array("roles_id"=>$this->roles_id);
+        $cond = array("role_id"=>$this->role_id);
         return parent::delete($cond);
     }
 }

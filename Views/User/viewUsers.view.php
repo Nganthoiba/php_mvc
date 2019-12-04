@@ -3,7 +3,7 @@ $response = $data['response'];
 if($response['status_code'] == 200){
     $users = $response['data'];
     ?>
-<table class="table_style blue_header">
+<table class="table_style yellow_header table-scroll">
     <thead>
         <tr>
             <!--<th>User ID</th>-->
@@ -14,7 +14,7 @@ if($response['status_code'] == 200){
             <th>User Role</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="users_content">
         <?php
             foreach ($users as $user){
         ?>
@@ -24,7 +24,7 @@ if($response['status_code'] == 200){
             <td><?= $user->phone_no ?></td>
             <td><?= $user->aadhaar ?></td>
             <?php 
-                $role = new roles();
+                $role = new role();
                 $role = $role->find($user->role_id);
             ?>
             <td><?= $role->role_name ?></td>
@@ -34,6 +34,17 @@ if($response['status_code'] == 200){
         ?>
     </tbody>
 </table>
+<script>
+    $(document).ready(function () {
+        $(".table-scroll thead").mCustomScrollbar({
+            theme: "minimal"
+        });
+        $(".table-scroll tbody").mCustomScrollbar({
+            theme: "minimal"
+        });
+    });
+    
+</script>
     <?php
 }
  else {

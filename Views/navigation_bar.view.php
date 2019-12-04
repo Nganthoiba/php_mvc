@@ -5,10 +5,10 @@
             ?>
             <span class="navbar-toggler-icon" id="sidebarCollapse"></span>
             <?php } ?>
-            <div class="container">
+            <div class="container-fluid">
                 <!-- Navbar brand -->
                 <a class="navbar-brand" href="#"><?= Config::get('app_name') ?></a>
-            </div>
+            
             <?php 
                 if(Logins::isAuthenticated()){
             ?>
@@ -51,6 +51,7 @@
                 } 
             ?>
             <!-- Links -->
+            </div>
         </nav>
         <!--/.Navbar-->
 

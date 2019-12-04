@@ -19,17 +19,21 @@ class UserController extends Controller{
         $users = new Users();//creating user model
         if($user_id == ""){
             $columns = array(
-                'users_id',
-                'full_name',
-                'email',
-                'phone_no',
-                'role_id',
-                'verify',
-                'created_at',
-                'update_at',
-                'delete_at',
-                'aadhaar',
-                'updated_by');
+                'user_id' , 
+                'full_name' ,     
+                'email'  ,        
+                'phone_no'  ,     
+                'role_id',        
+                'user_password',  
+                'verify',         
+                'create_at',     
+                'update_at',      
+                'delete_at',      
+                'profile_image',  
+                'aadhaar',        
+                'update_by'
+                
+                );
             $cond = array();
             $resp = $users->read($columns,$cond, "full_name");
             return $this->sendResponse($resp['status'],$resp['msg'],$resp['status_code'],$resp['error'],$resp['data']);
@@ -49,17 +53,19 @@ class UserController extends Controller{
         
         $users = new Users();//creating user model
         $columns = array(
-                'users_id',
-                'full_name',
-                'email',
-                'phone_no',
-                'role_id',
-                'verify',
-                'created_at',
-                'update_at',
-                'delete_at',
-                'aadhaar',
-                'updated_by');
+                'user_id' , 
+                'full_name' ,     
+                'email'  ,        
+                'phone_no'  ,     
+                'role_id',        
+                'user_password',  
+                'verify',         
+                'create_at',     
+                'update_at',      
+                'delete_at',      
+                'profile_image',  
+                'aadhaar',        
+                'update_by');
         $cond = array();
         $resp = $users->read($columns,$cond, "full_name");
         $this->data['response'] = $resp;
@@ -73,7 +79,7 @@ class UserController extends Controller{
         if(Logins::getRoleName()!== "Admin"){
             $this->redirectTo();//redirecting to the default authorized page
         }
-        $roles = new roles();
+        $roles = new Role();
         $res = $roles->read();
         $this->data['roles'] = $res['data'];
         $this->data['response'] = "";

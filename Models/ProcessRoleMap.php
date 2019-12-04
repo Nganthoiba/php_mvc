@@ -42,14 +42,14 @@ class ProcessRoleMap {
                 return $response;
         }
         $qry = "select  R.role_name,
-                R.roles_id,
+                R.role_id,
                 I.process_id,
                 I.description,
                 I.role_level,
                 I.process_role_map_id
-                from roles as R left join
+                from role as R left join
                 ( select * from process_role_map as P where P.process_id=? and P.is_disabled = 'n' ) as I
-                on R.roles_id = I.roles_id order by I.role_level" ;
+                on R.role_id = I.role_id order by I.role_level" ;
         $stmt=$db->prepare($qry);
         $stmt->execute(array($process_id));
         $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -95,19 +95,20 @@ class ProcessRoleMap {
             return $response;	
         }
         
-        $qry = "select process_role_map_id, roles_id from process_role_map
+        $qry = "select process_role_map_id, role_id from process_role_map
                                 where process_id=?";
         $stmt=$db->prepare($qry);
         $check_flag = $stmt->execute(array($process_id));	
         if(!$check_flag){
             $response['msg'] = "Error: internal server problem." ;
+            $response['error'] = $stmt->errorInfo() ;
             return $response;	
         }
 		
         $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
         $old_role_id = array();
         foreach($rows as $x){
-            $old_role_id[$x['process_role_map_id']] = $x['roles_id'];
+            $old_role_id[$x['process_role_map_id']] = $x['role_id'];
         }
 
         if(isset($data['included'])){
@@ -129,14 +130,14 @@ class ProcessRoleMap {
                 //check in old_role_id using in_array here for insert or update
                 $role_id = $item['roleid'];
                 $role_description = $item['desp'];
-                $old_process_role_map_id = array_search($role_id, $old_role_id );  //get ids using roles_id
+                $old_process_role_map_id = array_search($role_id, $old_role_id );  //get ids using role_id
                 if(!$old_process_role_map_id){
                     $qry = "INSERT into process_role_map 
-                    (process_id, roles_id, role_level, description, is_disabled)
+                    (process_id, role_id, role_level, description, is_disabled)
                     VALUES (?,?,?,?,'n'); ";
                 }else{
                     $qry = "UPDATE  process_role_map
-                    set process_id=?, roles_id=?, role_level=?, description=?, is_disabled='n' 
+                    set process_id=?, role_id=?, role_level=?, description=?, is_disabled='n' 
                     where process_role_map_id=$old_process_role_map_id ; ";
                 }
                 $stmt=$db->prepare($qry);

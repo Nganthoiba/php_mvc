@@ -1,4 +1,4 @@
-<link href="<?= Config::get('host')?>/root/MDB/css/side_navbar.css" rel="stylesheet" type="text/css"/>
+        <link href="<?= Config::get('host')?>/root/MDB/css/side_navbar.css" rel="stylesheet" type="text/css"/>
             <!-- Sidebar  -->
             <nav id="sidebar" class="sidebar">
                 
@@ -18,7 +18,7 @@
                         </a>
                     </li>
                     <li class="<?= isLinkActive('application/apply') ?>">
-                        <a href="<?=Config::get('host')?>/application/apply"><i class="fa fa-edit"></i> Apply</a>
+                        <a href="<?=Config::get('host')?>/application/apply"><i class="fa fa-edit"></i> Apply for copy</a>
                     </li>
                     <!--
                     <li class="<?= isLinkActive('application/status') ?>">
@@ -46,8 +46,12 @@
                     <li class="<?= isLinkActive('role/processRoleMapping') ?>">
                         <a href="<?=Config::get('host')?>/role/processRoleMapping"><i class="fa fa-bullhorn"></i> Process Roles Mapping</a>
                     </li>
-                    <li class="<?= isLinkActive('application/viewApplications') ?>">
-                        <a href="<?=Config::get('host')?>/application/viewApplications"><i class="fa fa-desktop"></i> View Applications</a>
+                    <?php
+                    }
+                    else if(Logins::getRoleName() == "Registrar General (RG)"){
+                    ?>
+                    <li class="<?= isLinkActive('application/application_list/in') ?>">
+                        <a href="<?=Config::get('host')?>/application/application_list/1/in"><i class="fa fa-bullhorn"></i> Process1</a>
                     </li>
                     <?php
                     }
@@ -74,7 +78,8 @@
                         theme: "minimal"
                     });
                     $('#sidebarCollapse').on('click', function () {
-                        $('#sidebar').toggleClass('active');
+                        $('.sidebar').toggleClass('active');
+                        $('#content').toggleClass('active');
                         
                         $('.collapse.in').toggleClass('in');
                         $('a[aria-expanded=true]').attr('aria-expanded', 'false');

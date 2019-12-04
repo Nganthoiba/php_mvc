@@ -13,7 +13,7 @@
  */
 //Data Model for adding user
 class UserAddModel{
-    public  $users_id , 
+    public  $user_id , 
             $full_name ,     
             $email  ,        
             $phone_no  ,     
@@ -21,10 +21,10 @@ class UserAddModel{
             $user_password,  
             $verify,  
             $aadhaar,        
-            $updated_by;
+            $update_by;
     public function __construct(Users $user = null) {
         if($user != null){
-            $this->users_id = $user->users_id;
+            $this->user_id = $user->user_id;
             $this->full_name = $user->full_name;
             $this->email = $user->email;
             $this->phone_no = $user->phone_no;
@@ -32,7 +32,7 @@ class UserAddModel{
             $this->user_password = $user->user_password;
             $this->verify = $user->verify;
             $this->aadhaar = $user->aadhaar;
-            $this->updated_by = $user->updated_by;
+            $this->update_by = $user->update_by;
         }
     }
 }

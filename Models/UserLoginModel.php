@@ -24,13 +24,13 @@ class UserLoginModel{
     public function isLoginSuccessfull(){
         $model = new model();
         $model->setTable("users");
-        $model->setKey("users_id");
+        $model->setKey("user_id");
         $cond = array(
             'email' => $this->email,
             'user_password' => $this->user_password
         );
         $res = $model->read(array(
-            'users_id',
+            'user_id',
             'full_name',
             'email',
             'phone_no',
@@ -40,7 +40,7 @@ class UserLoginModel{
         if($res['status_code'] == 200){
             $user = $res['data'][0];
             //$users_id = $user['users_id'];
-            $login = new Logins($user->users_id);
+            $login = new Logins($user->user_id);
             $loginRes = $login->add();//adding login details
             if($loginRes['status_code']==200){
                 $loginRes['msg'] = "You have successfully logged in.";

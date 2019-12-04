@@ -7,18 +7,18 @@
  */
 
 /**
- * Description of certificate_types
+ * Description of certificate_type
  *
  * @author Nganthoiba
  */
-class certificate_types extends model{
-    public $certificate_types_id;
+class certificate_type extends model{
+    public $certificate_type_id;
     public $copy_name;
     
     public function __construct() {
         parent::__construct();
-        $this->setTable(get_class($this));
-        $this->setKey(get_class($this)."_id");
+        $this->setTable("certificate_type");
+        $this->setKey($this->getTable()."_id");
     }
     
     public function read($columns = array(), $cond = array(), $order_by = "") {

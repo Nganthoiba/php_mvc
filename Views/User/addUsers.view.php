@@ -34,7 +34,7 @@ $roles = $data['roles'];
                                 <label for="phone_no" class="control-label">Mobile Phone No.:</label>
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" maxlength="10" onblur="validatePhoneNo();" onchange="validatePhoneNo();" onkeyup="validatePhoneNo();" onkeypress="return isNumber(event);" name="phone_no" id="phone_no" class="form-control" required/>
+                                <input type="text" autocomplete="new-password" maxlength="10" onblur="validatePhoneNo();" onchange="validatePhoneNo();" onkeyup="validatePhoneNo();" onkeypress="return isNumber(event);" name="phone_no" id="phone_no" class="form-control" required/>
                                 <div class="valid-feedback"></div>
                                 <div id="phone_no_invalid_feedback" class="invalid-feedback">Mobile Phone No can not be left blank.</div>
                             </div>

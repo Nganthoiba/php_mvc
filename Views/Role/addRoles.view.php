@@ -20,28 +20,42 @@
         </div>
         <div class="col-sm-8">
             <label>List of roles:</label>
-            <table border="0" class="table_style yellow_header">
-                <tr>
-                    <th>Sl. No.</th>
-                    <th colspan="2">Role Name</th>
-                </tr>
-            
-            <?php
-            $roles = $data['roles'];
-            $i=1;
-            foreach ($roles as $role){
-            ?>
-                <tr>
-                    <td><?= $i++ ?></td>
-                    <td><?= $role->role_name ?></td>
-                    <!--<td><a href="edit/<?= $role->roles_id ?>">Edit</a></td>-->
-                    <td><a href="remove/<?= $role->roles_id ?>">Remove</a></td>
-                </tr>
-            <?php
-            }
-            ?>
+            <table border="0" class="table_style yellow_header table-scroll">
+                <thead>
+                    <tr>
+                        <th>Sl. No.</th>
+                        <th>Role Name</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $roles = $data['roles'];
+                    $i=1;
+                    foreach ($roles as $role){
+                    ?>
+                        <tr>
+                            <td><?= $i++ ?></td>
+                            <td><?= $role->role_name ?></td>
+                            <!--<td><a href="edit/<?= $role->role_id ?>">Edit</a></td>-->
+                            <td align="right"><a href="remove/<?= $role->role_id ?>">Remove</a></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        $(".table-scroll thead").mCustomScrollbar({
+            theme: "minimal"
+        });
+        $(".table-scroll tbody").mCustomScrollbar({
+            theme: "minimal"
+        });
+    });
+    
+</script>

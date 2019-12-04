@@ -178,6 +178,9 @@ a.article:hover {
     top: 0;
     right: 0;
 }
+#content.active {
+    width: 100%;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
@@ -189,6 +192,16 @@ a.article:hover {
     }
     .sidebar.active {
         margin-left: 0;
+    }
+    .sidebarCollapse span {
+        display: none;
+    }
+    
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 250px);
     }
     .sidebarCollapse span {
         display: none;

@@ -5,7 +5,7 @@
 <div class="col-6" style="margin: auto; text-align: center">
     <h3>Are you sure to remove role <strong><?= $role->role_name ?> </strong>?</h3>
     <form action="<?= Config::get('host') ?>/role/confirmRemove" method="post">
-        <input type="hidden" name="roles_id" value="<?= $role->roles_id ?>" />
+        <input type="hidden" name="role_id" value="<?= $role->role_id ?>" />
         <button type="submit" class="btn btn-danger">Confirm</button>
         <a href="<?= Config::get('host') ?>/role/addRoles" class="btn btn-success">Cancel</a>
     </form>
