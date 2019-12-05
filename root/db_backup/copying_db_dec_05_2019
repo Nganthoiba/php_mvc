@@ -2,19 +2,23 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.3.5
--- Dumped by pg_dump version 9.4beta1
--- Started on 2019-12-05 00:51:50
+-- Dumped from database version 9.6.14
+-- Dumped by pg_dump version 10.5
+
+-- Started on 2019-12-05 23:16:05
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
--- TOC entry 189 (class 3079 OID 11750)
+-- TOC entry 1 (class 3079 OID 12387)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,26 +26,24 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2059 (class 0 OID 0)
--- Dependencies: 189
+-- TOC entry 2247 (class 0 OID 0)
+-- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- TOC entry 185 (class 1259 OID 73747)
--- Name: document; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 185 (class 1259 OID 57599)
+-- Name: document; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE document (
+CREATE TABLE public.document (
     document_id integer NOT NULL,
     application_id character varying(40),
     document_path character varying(200),
@@ -54,77 +56,77 @@ CREATE TABLE document (
 );
 
 
-ALTER TABLE document OWNER TO postgres;
+ALTER TABLE public.document OWNER TO postgres;
 
 --
--- TOC entry 2060 (class 0 OID 0)
+-- TOC entry 2248 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.document_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.document_id IS 'Document ID';
+COMMENT ON COLUMN public.document.document_id IS 'Document ID';
 
 
 --
--- TOC entry 2061 (class 0 OID 0)
+-- TOC entry 2249 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.application_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.application_id IS 'To indicate, document of which application, application_id referenced from application table, works as foreign key.';
+COMMENT ON COLUMN public.document.application_id IS 'To indicate, document of which application, application_id referenced from application table, works as foreign key.';
 
 
 --
--- TOC entry 2062 (class 0 OID 0)
+-- TOC entry 2250 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.document_path; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.document_path IS 'file path of the document';
+COMMENT ON COLUMN public.document.document_path IS 'file path of the document';
 
 
 --
--- TOC entry 2063 (class 0 OID 0)
+-- TOC entry 2251 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.create_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.create_at IS 'date and time of creating document';
+COMMENT ON COLUMN public.document.create_at IS 'date and time of creating document';
 
 
 --
--- TOC entry 2064 (class 0 OID 0)
+-- TOC entry 2252 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.delete_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.delete_at IS 'date and time of deleting document';
+COMMENT ON COLUMN public.document.delete_at IS 'date and time of deleting document';
 
 
 --
--- TOC entry 2065 (class 0 OID 0)
+-- TOC entry 2253 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.created_by; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.created_by IS 'This is the user id  to indicate who created the document. ';
+COMMENT ON COLUMN public.document.created_by IS 'This is the user id  to indicate who created the document. ';
 
 
 --
--- TOC entry 2066 (class 0 OID 0)
+-- TOC entry 2254 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN document.update_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN document.update_at IS 'last updated timestamp';
+COMMENT ON COLUMN public.document.update_at IS 'last updated timestamp';
 
 
 --
--- TOC entry 184 (class 1259 OID 73745)
+-- TOC entry 186 (class 1259 OID 57602)
 -- Name: Document_document_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE "Document_document_id_seq"
+CREATE SEQUENCE public."Document_document_id_seq"
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -132,23 +134,23 @@ CREATE SEQUENCE "Document_document_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "Document_document_id_seq" OWNER TO postgres;
+ALTER TABLE public."Document_document_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 2067 (class 0 OID 0)
--- Dependencies: 184
+-- TOC entry 2255 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: Document_document_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE "Document_document_id_seq" OWNED BY document.document_id;
+ALTER SEQUENCE public."Document_document_id_seq" OWNED BY public.document.document_id;
 
 
 --
--- TOC entry 170 (class 1259 OID 65543)
--- Name: application; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 187 (class 1259 OID 57604)
+-- Name: application; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE application (
+CREATE TABLE public.application (
     application_id character varying(40) NOT NULL,
     application_for character varying(30) DEFAULT NULL::character varying,
     case_type integer,
@@ -169,158 +171,158 @@ CREATE TABLE application (
 );
 
 
-ALTER TABLE application OWNER TO postgres;
+ALTER TABLE public.application OWNER TO postgres;
 
 --
--- TOC entry 2068 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2256 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.application_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.application_id IS 'this is primary key';
+COMMENT ON COLUMN public.application.application_id IS 'this is primary key';
 
 
 --
--- TOC entry 2069 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2257 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.application_for; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.application_for IS 'Whether urgent or ordinary';
+COMMENT ON COLUMN public.application.application_for IS 'Whether urgent or ordinary';
 
 
 --
--- TOC entry 2070 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2258 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.case_type; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.case_type IS 'case type
+COMMENT ON COLUMN public.application.case_type IS 'case type
 ';
 
 
 --
--- TOC entry 2071 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2259 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.petitioner; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.petitioner IS 'Appellant or Petitioner';
+COMMENT ON COLUMN public.application.petitioner IS 'Appellant or Petitioner';
 
 
 --
--- TOC entry 2072 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2260 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.respondent; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.respondent IS 'Respondent or Opposite Party';
+COMMENT ON COLUMN public.application.respondent IS 'Respondent or Opposite Party';
 
 
 --
--- TOC entry 2073 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2261 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.certificate_type_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.certificate_type_id IS 'Certificate type whether Order Copy or Other';
+COMMENT ON COLUMN public.application.certificate_type_id IS 'Certificate type whether Order Copy or Other';
 
 
 --
--- TOC entry 2074 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2262 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.document; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.document IS 'Final document uploaded by Computer Operator';
+COMMENT ON COLUMN public.application.document IS 'Final document uploaded by Computer Operator';
 
 
 --
--- TOC entry 2075 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2263 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.application_written; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.application_written IS 'Application written by applicant
+COMMENT ON COLUMN public.application.application_written IS 'Application written by applicant
 ';
 
 
 --
--- TOC entry 2076 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2264 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.order_date; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.order_date IS 'Date of Order or Disclosure';
+COMMENT ON COLUMN public.application.order_date IS 'Date of Order or Disclosure';
 
 
 --
--- TOC entry 2077 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2265 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.create_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.create_at IS 'Date of submission of the application';
+COMMENT ON COLUMN public.application.create_at IS 'Date of submission of the application';
 
 
 --
--- TOC entry 2078 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2266 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.user_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.user_id IS 'The user who submits application';
+COMMENT ON COLUMN public.application.user_id IS 'The user who submits application';
 
 
 --
--- TOC entry 2079 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2267 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.is_order; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.is_order IS 'whether the application is for Order Copy or not';
+COMMENT ON COLUMN public.application.is_order IS 'whether the application is for Order Copy or not';
 
 
 --
--- TOC entry 2080 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2268 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.case_no_reference; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.case_no_reference IS 'Refer to which case no';
+COMMENT ON COLUMN public.application.case_no_reference IS 'Refer to which case no';
 
 
 --
--- TOC entry 2081 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2269 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.case_type_reference; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.case_type_reference IS 'Refer to which case type';
+COMMENT ON COLUMN public.application.case_type_reference IS 'Refer to which case type';
 
 
 --
--- TOC entry 2082 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2270 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: COLUMN application.case_year_reference; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application.case_year_reference IS 'refer to which case year';
+COMMENT ON COLUMN public.application.case_year_reference IS 'refer to which case year';
 
 
 --
--- TOC entry 171 (class 1259 OID 65556)
--- Name: application_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 188 (class 1259 OID 57612)
+-- Name: application_log; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE application_log (
+CREATE TABLE public.application_log (
     application_log_id character varying(40) NOT NULL,
     application_id character varying(40),
     user_id character varying(64),
     action_date timestamp with time zone DEFAULT now(),
     action_name character varying(30),
-    from_role_id integer DEFAULT (-1),
-    to_role_id integer DEFAULT (-1),
+    from_role_id integer DEFAULT '-1'::integer,
+    to_role_id integer DEFAULT '-1'::integer,
     remark character varying(300) DEFAULT NULL::character varying,
     from_process_id integer,
     to_process_id integer,
@@ -328,73 +330,73 @@ CREATE TABLE application_log (
 );
 
 
-ALTER TABLE application_log OWNER TO postgres;
+ALTER TABLE public.application_log OWNER TO postgres;
 
 --
--- TOC entry 2083 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2271 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: COLUMN application_log.application_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application_log.application_id IS 'reference to appln_id of application table';
+COMMENT ON COLUMN public.application_log.application_id IS 'reference to appln_id of application table';
 
 
 --
--- TOC entry 2084 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2272 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: COLUMN application_log.user_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application_log.user_id IS 'who commited the task
+COMMENT ON COLUMN public.application_log.user_id IS 'who commited the task
 ';
 
 
 --
--- TOC entry 2085 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2273 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: COLUMN application_log.action_date; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application_log.action_date IS 'date of action';
+COMMENT ON COLUMN public.application_log.action_date IS 'date of action';
 
 
 --
--- TOC entry 2086 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2274 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: COLUMN application_log.action_name; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application_log.action_name IS 'to indicate what task has been done on an application. Possible values are create, update, complete, withdraw, reject, forward, approve, lock, read, compare.';
+COMMENT ON COLUMN public.application_log.action_name IS 'to indicate what task has been done on an application. Possible values are create, update, complete, withdraw, reject, forward, approve, lock, read, compare.';
 
 
 --
--- TOC entry 2087 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2275 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: COLUMN application_log.user_ip; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN application_log.user_ip IS 'To show from which source the request is comming.';
+COMMENT ON COLUMN public.application_log.user_ip IS 'To show from which source the request is comming.';
 
 
 --
--- TOC entry 172 (class 1259 OID 65566)
--- Name: certificate_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 189 (class 1259 OID 57622)
+-- Name: certificate_type; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE certificate_type (
+CREATE TABLE public.certificate_type (
     certificate_type_id integer NOT NULL,
     copy_name character varying(30)
 );
 
 
-ALTER TABLE certificate_type OWNER TO postgres;
+ALTER TABLE public.certificate_type OWNER TO postgres;
 
 --
--- TOC entry 181 (class 1259 OID 65599)
--- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 190 (class 1259 OID 57625)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE users (
+CREATE TABLE public.users (
     user_id character varying(40) NOT NULL,
     full_name character varying(300),
     email character varying(50),
@@ -411,86 +413,86 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE users OWNER TO postgres;
+ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 2088 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2276 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.full_name; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.full_name IS 'User Full Name';
+COMMENT ON COLUMN public.users.full_name IS 'User Full Name';
 
 
 --
--- TOC entry 2089 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2277 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.user_password; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.user_password IS 'hashed password';
+COMMENT ON COLUMN public.users.user_password IS 'hashed password';
 
 
 --
--- TOC entry 2090 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2278 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.verify; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.verify IS 'Whether user is verified or not';
+COMMENT ON COLUMN public.users.verify IS 'Whether user is verified or not';
 
 
 --
--- TOC entry 2091 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2279 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.create_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.create_at IS 'The time when user is registered';
+COMMENT ON COLUMN public.users.create_at IS 'The time when user is registered';
 
 
 --
--- TOC entry 2092 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2280 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.update_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.update_at IS 'The last time when user details is updated';
+COMMENT ON COLUMN public.users.update_at IS 'The last time when user details is updated';
 
 
 --
--- TOC entry 2093 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2281 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.delete_at; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.delete_at IS 'The time when user account is deleted';
+COMMENT ON COLUMN public.users.delete_at IS 'The time when user account is deleted';
 
 
 --
--- TOC entry 2094 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2282 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.aadhaar; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.aadhaar IS 'for future reference';
+COMMENT ON COLUMN public.users.aadhaar IS 'for future reference';
 
 
 --
--- TOC entry 2095 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2283 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: COLUMN users.update_by; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN users.update_by IS 'the user id who update user details last time. update can be done by the user himself or by the admin';
+COMMENT ON COLUMN public.users.update_by IS 'the user id who update user details last time. update can be done by the user himself or by the admin';
 
 
 --
--- TOC entry 187 (class 1259 OID 81931)
+-- TOC entry 191 (class 1259 OID 57634)
 -- Name: application_log_view; Type: VIEW; Schema: public; Owner: postgres
 --
 
-CREATE VIEW application_log_view AS
+CREATE VIEW public.application_log_view AS
  SELECT a.application_id,
     a.application_for,
     a.case_type,
@@ -519,20 +521,20 @@ CREATE VIEW application_log_view AS
     al_1.from_process_id,
     al_1.to_process_id,
     u.full_name AS action_user_full_name
-   FROM (((application a
-     JOIN application_log al_1 ON (((a.application_id)::text = (al_1.application_id)::text)))
-     JOIN certificate_type ct ON ((a.certificate_type_id = ct.certificate_type_id)))
-     JOIN users u ON (((al_1.user_id)::text = (u.user_id)::text)));
+   FROM (((public.application a
+     JOIN public.application_log al_1 ON (((a.application_id)::text = (al_1.application_id)::text)))
+     JOIN public.certificate_type ct ON ((a.certificate_type_id = ct.certificate_type_id)))
+     JOIN public.users u ON (((al_1.user_id)::text = (u.user_id)::text)));
 
 
-ALTER TABLE application_log_view OWNER TO postgres;
+ALTER TABLE public.application_log_view OWNER TO postgres;
 
 --
--- TOC entry 188 (class 1259 OID 81936)
+-- TOC entry 192 (class 1259 OID 57639)
 -- Name: latest_application_log_view; Type: VIEW; Schema: public; Owner: postgres
 --
 
-CREATE VIEW latest_application_log_view AS
+CREATE VIEW public.latest_application_log_view AS
  SELECT a.application_id,
     a.application_for,
     a.case_type,
@@ -561,23 +563,23 @@ CREATE VIEW latest_application_log_view AS
     al_1.from_process_id,
     al_1.to_process_id,
     u.full_name AS action_user_full_name
-   FROM (((application a
-     JOIN application_log al_1 ON (((a.application_id)::text = (al_1.application_id)::text)))
-     JOIN certificate_type ct ON ((a.certificate_type_id = ct.certificate_type_id)))
-     JOIN users u ON (((al_1.user_id)::text = (u.user_id)::text)))
+   FROM (((public.application a
+     JOIN public.application_log al_1 ON (((a.application_id)::text = (al_1.application_id)::text)))
+     JOIN public.certificate_type ct ON ((a.certificate_type_id = ct.certificate_type_id)))
+     JOIN public.users u ON (((al_1.user_id)::text = (u.user_id)::text)))
   WHERE (al_1.action_date = ( SELECT max(al_2.action_date) AS max
-           FROM application_log al_2
+           FROM public.application_log al_2
           WHERE ((al_2.application_id)::text = (al_1.application_id)::text)));
 
 
-ALTER TABLE latest_application_log_view OWNER TO postgres;
+ALTER TABLE public.latest_application_log_view OWNER TO postgres;
 
 --
--- TOC entry 173 (class 1259 OID 65569)
--- Name: login; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 193 (class 1259 OID 57644)
+-- Name: logins; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE login (
+CREATE TABLE public.logins (
     login_id character varying(60) NOT NULL,
     login_time timestamp with time zone NOT NULL,
     logout_time timestamp with time zone,
@@ -588,77 +590,77 @@ CREATE TABLE login (
 );
 
 
-ALTER TABLE login OWNER TO postgres;
+ALTER TABLE public.logins OWNER TO postgres;
 
 --
--- TOC entry 2096 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.login_id; Type: COMMENT; Schema: public; Owner: postgres
+-- TOC entry 2284 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.login_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN login.login_id IS 'user login id';
-
-
---
--- TOC entry 2097 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.login_time; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN login.login_time IS 'the time when user logs in';
+COMMENT ON COLUMN public.logins.login_id IS 'user login id';
 
 
 --
--- TOC entry 2098 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.logout_time; Type: COMMENT; Schema: public; Owner: postgres
+-- TOC entry 2285 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.login_time; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN login.logout_time IS 'time when user logs out';
-
-
---
--- TOC entry 2099 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.expiry; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN login.expiry IS 'date and time of expiry of the login session';
+COMMENT ON COLUMN public.logins.login_time IS 'the time when user logs in';
 
 
 --
--- TOC entry 2100 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.source_ip; Type: COMMENT; Schema: public; Owner: postgres
+-- TOC entry 2286 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.logout_time; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN login.source_ip IS 'login from which computer';
-
-
---
--- TOC entry 2101 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.device; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN login.device IS 'name of the device or user agent through which login takes place';
+COMMENT ON COLUMN public.logins.logout_time IS 'time when user logs out';
 
 
 --
--- TOC entry 2102 (class 0 OID 0)
--- Dependencies: 173
--- Name: COLUMN login.user_id; Type: COMMENT; Schema: public; Owner: postgres
+-- TOC entry 2287 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.expiry; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN login.user_id IS 'To indicate whose login';
+COMMENT ON COLUMN public.logins.expiry IS 'date and time of expiry of the login session';
 
 
 --
--- TOC entry 174 (class 1259 OID 65572)
--- Name: process; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2288 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.source_ip; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-CREATE TABLE process (
+COMMENT ON COLUMN public.logins.source_ip IS 'login from which computer';
+
+
+--
+-- TOC entry 2289 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.device; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.device IS 'name of the device or user agent through which login takes place';
+
+
+--
+-- TOC entry 2290 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: COLUMN logins.user_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.logins.user_id IS 'To indicate whose login';
+
+
+--
+-- TOC entry 194 (class 1259 OID 57647)
+-- Name: process; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.process (
     process_id integer NOT NULL,
     process_name character varying(50) NOT NULL,
     process_description character varying(500),
@@ -666,14 +668,14 @@ CREATE TABLE process (
 );
 
 
-ALTER TABLE process OWNER TO postgres;
+ALTER TABLE public.process OWNER TO postgres;
 
 --
--- TOC entry 175 (class 1259 OID 65578)
+-- TOC entry 195 (class 1259 OID 57653)
 -- Name: process_process_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE process_process_id_seq
+CREATE SEQUENCE public.process_process_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -681,23 +683,23 @@ CREATE SEQUENCE process_process_id_seq
     CACHE 1;
 
 
-ALTER TABLE process_process_id_seq OWNER TO postgres;
+ALTER TABLE public.process_process_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2103 (class 0 OID 0)
--- Dependencies: 175
+-- TOC entry 2291 (class 0 OID 0)
+-- Dependencies: 195
 -- Name: process_process_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE process_process_id_seq OWNED BY process.process_id;
+ALTER SEQUENCE public.process_process_id_seq OWNED BY public.process.process_id;
 
 
 --
--- TOC entry 176 (class 1259 OID 65580)
--- Name: process_role_map; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 196 (class 1259 OID 57655)
+-- Name: process_role_map; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE process_role_map (
+CREATE TABLE public.process_role_map (
     process_role_map_id integer NOT NULL,
     process_id integer NOT NULL,
     role_id integer NOT NULL,
@@ -707,41 +709,41 @@ CREATE TABLE process_role_map (
 );
 
 
-ALTER TABLE process_role_map OWNER TO postgres;
+ALTER TABLE public.process_role_map OWNER TO postgres;
 
 --
--- TOC entry 2104 (class 0 OID 0)
--- Dependencies: 176
+-- TOC entry 2292 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: COLUMN process_role_map.process_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN process_role_map.process_id IS 'work flow stage';
+COMMENT ON COLUMN public.process_role_map.process_id IS 'work flow stage';
 
 
 --
--- TOC entry 2105 (class 0 OID 0)
--- Dependencies: 176
+-- TOC entry 2293 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: COLUMN process_role_map.role_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN process_role_map.role_id IS 'Role of the user who is responsible for the current task (work flow stage)';
+COMMENT ON COLUMN public.process_role_map.role_id IS 'Role of the user who is responsible for the current task (work flow stage)';
 
 
 --
--- TOC entry 2106 (class 0 OID 0)
--- Dependencies: 176
+-- TOC entry 2294 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: COLUMN process_role_map.description; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN process_role_map.description IS 'description of the work flow stage';
+COMMENT ON COLUMN public.process_role_map.description IS 'description of the work flow stage';
 
 
 --
--- TOC entry 177 (class 1259 OID 65584)
+-- TOC entry 197 (class 1259 OID 57659)
 -- Name: process_role_map_process_role_map_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE process_role_map_process_role_map_id_seq
+CREATE SEQUENCE public.process_role_map_process_role_map_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -749,14 +751,14 @@ CREATE SEQUENCE process_role_map_process_role_map_id_seq
     CACHE 1;
 
 
-ALTER TABLE process_role_map_process_role_map_id_seq OWNER TO postgres;
+ALTER TABLE public.process_role_map_process_role_map_id_seq OWNER TO postgres;
 
 --
--- TOC entry 178 (class 1259 OID 65586)
+-- TOC entry 198 (class 1259 OID 57661)
 -- Name: process_role_map_process_role_map_id_seq1; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE process_role_map_process_role_map_id_seq1
+CREATE SEQUENCE public.process_role_map_process_role_map_id_seq1
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -764,36 +766,36 @@ CREATE SEQUENCE process_role_map_process_role_map_id_seq1
     CACHE 1;
 
 
-ALTER TABLE process_role_map_process_role_map_id_seq1 OWNER TO postgres;
+ALTER TABLE public.process_role_map_process_role_map_id_seq1 OWNER TO postgres;
 
 --
--- TOC entry 2107 (class 0 OID 0)
--- Dependencies: 178
+-- TOC entry 2295 (class 0 OID 0)
+-- Dependencies: 198
 -- Name: process_role_map_process_role_map_id_seq1; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE process_role_map_process_role_map_id_seq1 OWNED BY process_role_map.process_role_map_id;
+ALTER SEQUENCE public.process_role_map_process_role_map_id_seq1 OWNED BY public.process_role_map.process_role_map_id;
 
 
 --
--- TOC entry 179 (class 1259 OID 65588)
--- Name: role; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 199 (class 1259 OID 57663)
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE role (
+CREATE TABLE public.role (
     role_id integer DEFAULT nextval(('public.roles_role_id_seq'::text)::regclass) NOT NULL,
     role_name character varying(30)
 );
 
 
-ALTER TABLE role OWNER TO postgres;
+ALTER TABLE public.role OWNER TO postgres;
 
 --
--- TOC entry 186 (class 1259 OID 81926)
+-- TOC entry 200 (class 1259 OID 57667)
 -- Name: process_role_map_view; Type: VIEW; Schema: public; Owner: postgres
 --
 
-CREATE VIEW process_role_map_view AS
+CREATE VIEW public.process_role_map_view AS
  SELECT pr.process_role_map_id,
     pr.process_id,
     pr.description AS user_description,
@@ -808,34 +810,34 @@ CREATE VIEW process_role_map_view AS
     ir.role_id AS next_role_id,
     irp.role_name AS previous_role_name,
     irp.role_id AS previous_role_id
-   FROM ((((process_role_map pr
-     JOIN process p ON ((pr.process_id = p.process_id)))
-     JOIN role r ON ((pr.role_id = r.role_id)))
+   FROM ((((public.process_role_map pr
+     JOIN public.process p ON ((pr.process_id = p.process_id)))
+     JOIN public.role r ON ((pr.role_id = r.role_id)))
      LEFT JOIN ( SELECT r_1.role_id,
             r_1.role_name,
             prm1.role_level,
             prm1.process_id
-           FROM (role r_1
-             JOIN process_role_map prm1 ON ((r_1.role_id = prm1.role_id)))
+           FROM (public.role r_1
+             JOIN public.process_role_map prm1 ON ((r_1.role_id = prm1.role_id)))
           WHERE (prm1.is_disabled = 'n'::bpchar)) ir ON ((((pr.role_level + 1) = ir.role_level) AND (pr.process_id = ir.process_id))))
      LEFT JOIN ( SELECT r_2.role_id,
             r_2.role_name,
             prm2.role_level,
             prm2.process_id
-           FROM (role r_2
-             JOIN process_role_map prm2 ON ((r_2.role_id = prm2.role_id)))
+           FROM (public.role r_2
+             JOIN public.process_role_map prm2 ON ((r_2.role_id = prm2.role_id)))
           WHERE (prm2.is_disabled = 'n'::bpchar)) irp ON ((((pr.role_level - 1) = irp.role_level) AND (pr.process_id = irp.process_id))))
   WHERE (pr.is_disabled = 'n'::bpchar);
 
 
-ALTER TABLE process_role_map_view OWNER TO postgres;
+ALTER TABLE public.process_role_map_view OWNER TO postgres;
 
 --
--- TOC entry 180 (class 1259 OID 65597)
+-- TOC entry 201 (class 1259 OID 57672)
 -- Name: roles_role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE roles_role_id_seq
+CREATE SEQUENCE public.roles_role_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -843,55 +845,55 @@ CREATE SEQUENCE roles_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE roles_role_id_seq OWNER TO postgres;
+ALTER TABLE public.roles_role_id_seq OWNER TO postgres;
 
 --
--- TOC entry 183 (class 1259 OID 73736)
--- Name: written_application; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 202 (class 1259 OID 57674)
+-- Name: written_application; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE written_application (
+CREATE TABLE public.written_application (
     written_application_id integer NOT NULL,
-    application_id character varying(30),
+    application_id character varying(40),
     body text
 );
 
 
-ALTER TABLE written_application OWNER TO postgres;
+ALTER TABLE public.written_application OWNER TO postgres;
 
 --
--- TOC entry 2108 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 2296 (class 0 OID 0)
+-- Dependencies: 202
 -- Name: COLUMN written_application.written_application_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN written_application.written_application_id IS 'Unique ID  of application written by client';
+COMMENT ON COLUMN public.written_application.written_application_id IS 'Unique ID  of application written by client';
 
 
 --
--- TOC entry 2109 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 2297 (class 0 OID 0)
+-- Dependencies: 202
 -- Name: COLUMN written_application.application_id; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN written_application.application_id IS 'Application Id referenced from application table, works as foreign key.';
+COMMENT ON COLUMN public.written_application.application_id IS 'Application Id referenced from application table, works as foreign key.';
 
 
 --
--- TOC entry 2110 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 2298 (class 0 OID 0)
+-- Dependencies: 202
 -- Name: COLUMN written_application.body; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN written_application.body IS 'Application content or body written by client';
+COMMENT ON COLUMN public.written_application.body IS 'Application content or body written by client';
 
 
 --
--- TOC entry 182 (class 1259 OID 73734)
+-- TOC entry 203 (class 1259 OID 57680)
 -- Name: written_application_written_application_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE written_application_written_application_id_seq
+CREATE SEQUENCE public.written_application_written_application_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -899,121 +901,78 @@ CREATE SEQUENCE written_application_written_application_id_seq
     CACHE 1;
 
 
-ALTER TABLE written_application_written_application_id_seq OWNER TO postgres;
+ALTER TABLE public.written_application_written_application_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2111 (class 0 OID 0)
--- Dependencies: 182
+-- TOC entry 2299 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: written_application_written_application_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE written_application_written_application_id_seq OWNED BY written_application.written_application_id;
+ALTER SEQUENCE public.written_application_written_application_id_seq OWNED BY public.written_application.written_application_id;
 
 
 --
--- TOC entry 1900 (class 2604 OID 73750)
--- Name: document_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2064 (class 2604 OID 57682)
+-- Name: document document_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY document ALTER COLUMN document_id SET DEFAULT nextval('"Document_document_id_seq"'::regclass);
-
-
---
--- TOC entry 1892 (class 2604 OID 65608)
--- Name: process_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY process ALTER COLUMN process_id SET DEFAULT nextval('process_process_id_seq'::regclass);
+ALTER TABLE ONLY public.document ALTER COLUMN document_id SET DEFAULT nextval('public."Document_document_id_seq"'::regclass);
 
 
 --
--- TOC entry 1894 (class 2604 OID 65609)
--- Name: process_role_map_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2074 (class 2604 OID 57683)
+-- Name: process process_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY process_role_map ALTER COLUMN process_role_map_id SET DEFAULT nextval('process_role_map_process_role_map_id_seq1'::regclass);
-
-
---
--- TOC entry 1899 (class 2604 OID 73739)
--- Name: written_application_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY written_application ALTER COLUMN written_application_id SET DEFAULT nextval('written_application_written_application_id_seq'::regclass);
+ALTER TABLE ONLY public.process ALTER COLUMN process_id SET DEFAULT nextval('public.process_process_id_seq'::regclass);
 
 
 --
--- TOC entry 2112 (class 0 OID 0)
--- Dependencies: 184
--- Name: Document_document_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- TOC entry 2076 (class 2604 OID 57684)
+-- Name: process_role_map process_role_map_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"Document_document_id_seq"', 1, false);
+ALTER TABLE ONLY public.process_role_map ALTER COLUMN process_role_map_id SET DEFAULT nextval('public.process_role_map_process_role_map_id_seq1'::regclass);
 
 
 --
--- TOC entry 2036 (class 0 OID 65543)
--- Dependencies: 170
+-- TOC entry 2078 (class 2604 OID 57685)
+-- Name: written_application written_application_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.written_application ALTER COLUMN written_application_id SET DEFAULT nextval('public.written_application_written_application_id_seq'::regclass);
+
+
+--
+-- TOC entry 2226 (class 0 OID 57604)
+-- Dependencies: 187
 -- Data for Name: application; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY application (application_id, application_for, case_type, case_no, case_year, petitioner, respondent, certificate_type_id, document, application_written, order_date, create_at, user_id, is_order, case_no_reference, case_type_reference, case_year_reference) FROM stdin;
-5751c3ca-dd5d-4882-b7bb-ea8d2cec5125	urgent_copy	148	21	2015	Tomba	Chaoba	1	\N		2019-10-10	\N	\N	y	\N	\N	\N
-47056b25-02d8-47c8-a837-aace9e8327ab	urgent_copy	86	12	2019	hryj	jrtjr	1	\N		2019-10-10	\N	\N	y	\N	\N	\N
-d9f84441-5ded-4310-9e03-fb06962126a7	ordinary_copy	63	15	2019	chaonu	chaothoi	1	\N		2019-11-24	2019-11-20 13:59:39	6881f81b-fce5-4f4e-8ba6-1a2c4d259388	y	\N	\N	\N
-32b912b1-e9a7-448a-b957-bc69a28d8c1a	ordinary_copy	150	32	2017	thoibi	thoiba	1	\N		2019-11-14	2019-11-20 15:30:40		y	\N	\N	\N
-ec2ce8c2-b38b-4576-932d-2876a3deef2f	ordinary_copy	150	32	2017	thoibi	thoiba	1	\N		2019-11-14	2019-11-20 15:31:42		y	\N	\N	\N
-dd812bfc-c4da-47d8-85a0-c3ad20c2c940	ordinary_copy	150	5	2017	Nganthoiba	Onida	1	\N		2019-11-16	2019-11-20 16:00:14	bd20f847-8de4-4068-95de-4b0ccd04ba59	y	\N	\N	\N
-439b2eeb-840b-440f-afd3-3c93b5eb0151	ordinary_copy	152	23	2019	Chaothoi	Manithoi	1	\N		2019-11-08	2019-11-24 18:22:18	613e8200-5906-4cb7-a8d3-d3b84f2f2b98	y	\N	\N	\N
-204502d3-844e-4904-ace6-e82d24cffb43	ordinary_copy	152	23	2019	Chaothoi	Manithoi	1	\N		2019-11-08	2019-11-24 18:22:31	613e8200-5906-4cb7-a8d3-d3b84f2f2b98	y	\N	\N	\N
-855438f7-155b-48d1-bde8-a5060a217108	ordinary_copy	152	23	2019	Chaothoi	Manithoi	1	\N		2019-11-08	2019-11-24 18:23:38	613e8200-5906-4cb7-a8d3-d3b84f2f2b98	y	\N	\N	\N
-ee1acae3-231e-4912-b70b-d2a84c88efe0	urgent_copy	148	201	2015	cdsac	csac	2	\N		\N	\N	\N	n	\N	\N	\N
-185c3004-f606-46de-ab75-9ebc477a0d23	ordinary_copy	150	26	2019	Test1	Test2	2	\N	\N	\N	\N	\N	n	\N	\N	\N
-2b47529a-3c3a-4227-8725-711afec89ad6	ordinary_copy	150	26	2019	Test1	Test2	2	\N	\N	\N	\N	\N	n	\N	\N	\N
-bea821d0-da85-47d1-a72b-c06af012bdfc	ordinary_copy	148	25	2019	Tony	Chombi	2	\N	<p>Hi Dear</p>	\N	\N	\N	n	\N	\N	\N
-a57f8f7f-d616-4b12-8d49-b35118561c42	urgent_copy	42	45	2019	Nganthoiba	Tomchouba	2	\N	<p>Testing</p>	\N	2019-10-15 14:55:55	\N	n	\N	\N	\N
-4a1d92cd-7a04-4a6e-bdc7-2b06faf180d3	urgent_copy	42	45	2019	Nganthoiba	Tomchouba	2	\N	<p>Testing</p>	\N	2019-10-15 14:56:58	\N	n	\N	\N	\N
-6df864ab-88e9-40e7-b139-266bdb1c5f5c	ordinary_copy	152	21	2019	Gokul	Bonny	2	\N	&lt;p&gt;Nothing to &lt;strong&gt;say&lt;/strong&gt;&lt;/p&gt;	\N	2019-10-15 15:29:08	\N	n	\N	\N	\N
-c23bf3ab-4984-4afa-b983-1b7acb09bb98	urgent_copy	152	45	2019	fafa	fasdfdas	2	\N	&lt;p&gt;Here is a simple code &amp;lt;script&amp;gt; alert('Hello'); &amp;lt;/script&amp;gt;&lt;/p&gt;	\N	2019-10-15 15:38:53	\N	n	\N	\N	\N
-cf83319d-0840-4c6c-85a4-c23122fafe6e	ordinary_copy	42	56	2019	gogo	toto	2	\N	&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/REC-html40/loose.dtd&quot;&gt;\n&lt;html&gt;&lt;body&gt;&lt;p&gt;hcsancascb&lt;/p&gt;\r\n&lt;p&gt;ncsacaoca, dcosahco, dcosacoa&lt;/p&gt;\r\n&lt;p&gt;Simple javascript is embeded. &amp;lt;script&amp;gt;alert('Hello Darling');&amp;lt;/script&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;\n	\N	2019-10-15 15:49:57	\N	n	\N	\N	\N
-fc8c2bd8-10bc-4d67-94df-925bc2dc7e8f	urgent_copy	143	25	2019	hbjvj	bg	2	\N	&lt;p&gt;hi everyone, &amp;lt;script type='text/javascript'&amp;gt;alert('hello dear');&amp;lt;/script&amp;gt;&lt;/p&gt;	\N	2019-10-15 16:51:11	\N	n	\N	\N	\N
-7ecb1690-e31c-4268-a043-6f488342958b	urgent_copy	149	43	2019	fffa	faf	2	\N	&lt;p&gt;dsfa fafa afaf&lt;/p&gt;\r\n&lt;p&gt;fafa&lt;/p&gt;	\N	2019-11-11 06:45:10	\N	n	\N	\N	\N
-eea2fab6-1bbd-40d1-b1aa-50101a4ee836	ordinary_copy	148	3	2019	Tomba	Chaoba	2	\N	&lt;p&gt;This is a petition copy. &amp;lt;script&amp;gt;alert(1);&amp;lt;/script&amp;gt;&lt;/p&gt;	2019-11-02	2019-11-11 08:36:38	\N	n	\N	\N	\N
-05f3bbfe-8fab-4e0a-a1ec-3dc421643a4b	ordinary_copy	150	31	2018	Tomba	Chaoba	2	\N	Johnny Johnny Yes Papa	\N	2019-11-20 13:52:26	6881f81b-fce5-4f4e-8ba6-1a2c4d259388	n	\N	\N	\N
-59170990-e46e-4441-b4f3-dd413b6d9737	ordinary_copy	142	14	2014	Manithoiba	Onida	6	\N	Dear Sir,\r\n&amp;amp;nbsp;\r\nI have some problem.	2019-11-17	2019-11-20 16:12:50	bd20f847-8de4-4068-95de-4b0ccd04ba59	n	\N	\N	\N
-27149937-146b-423f-b792-583d8ff29e02	Ordinary Copy	42	12	2019	Nganthoiba	Tomba	5	\N	I don't know how to say	2019-11-02	2019-11-24 18:48:36	613e8200-5906-4cb7-a8d3-d3b84f2f2b98	n	\N	\N	\N
-d4558b70-9d1a-4881-9c49-1b2702468328	Ordinary Copy	93	12	2015	Raghu	Rani	2	\N	Nothing to say	2019-11-02	2019-11-26 11:58:42	76e1d643-99cf-4f5d-b649-f940aa4722fb	n	\N	\N	\N
-bdbd595f-763a-44d8-939e-cc9b4665bfeb	Urgent Copy	153	12	2003	Tonu	Chaoton	1	\N		2019-11-30	2019-11-29 15:13:00	bd20f847-8de4-4068-95de-4b0ccd04ba59	\N	\N	\N	\N
-202889b4-b662-471f-86eb-c9158ea1487d	Ordinary Copy	150	10	2015	vhjvjv	hgchch	1	\N		2019-11-17	2019-11-29 15:48:13	bd20f847-8de4-4068-95de-4b0ccd04ba59	n	\N	\N	\N
-0cd31c6c-a232-4f7e-a20f-5e70c733a67c	Ordinary Copy	151	13	2017	dxfs	gjgygi	2	\N	This is new application	2019-11-03	2019-11-29 16:07:28	bd20f847-8de4-4068-95de-4b0ccd04ba59	n	\N	\N	\N
-1a399cc8-7452-49e6-ba9c-455191684829	Ordinary Copy	62	23	2005	Rani	Tombi	1	\N		2019-11-03	2019-11-30 02:08:40	bd20f847-8de4-4068-95de-4b0ccd04ba59	n	\N	\N	\N
-e1cb4a3c-77ec-4e6b-9e00-1d4072c78073	Ordinary Copy	86	2	2013	fgaga	fafa	1	\N	\N	2019-12-14	2019-12-05 00:22:21	bd20f847-8de4-4068-95de-4b0ccd04ba59	n	12	23	2014
+COPY public.application (application_id, application_for, case_type, case_no, case_year, petitioner, respondent, certificate_type_id, document, application_written, order_date, create_at, user_id, is_order, case_no_reference, case_type_reference, case_year_reference) FROM stdin;
+dc15a9e5-67b2-4a6d-8ea0-0ccbb0aabf0f	Ordinary Copy	63	3	2014	Yaikhomba	Manithoiba	2	\N	\N	2019-12-01	2019-12-05 22:42:32	f238775f-6e77-4df4-871d-7fb6fe8112b9	n	3	150	2013
 \.
 
 
 --
--- TOC entry 2037 (class 0 OID 65556)
--- Dependencies: 171
+-- TOC entry 2227 (class 0 OID 57612)
+-- Dependencies: 188
 -- Data for Name: application_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY application_log (application_log_id, application_id, user_id, action_date, action_name, from_role_id, to_role_id, remark, from_process_id, to_process_id, user_ip) FROM stdin;
-6e57c710-50f7-4f09-b77c-6249e6ca8301	202889b4-b662-471f-86eb-c9158ea1487d	bd20f847-8de4-4068-95de-4b0ccd04ba59	2019-11-29 15:48:13.512532+05:30	creation	14	1	Application is submitted	0	1	\N
-bb23c563-b0f4-4efa-b318-444fd24adc54	1a399cc8-7452-49e6-ba9c-455191684829	bd20f847-8de4-4068-95de-4b0ccd04ba59	2019-11-30 02:08:40.888+05:30	creation	14	3	Application is submitted	0	1	\N
-1aabd8ad-3f7f-4609-aa50-ef860fe75db8	202889b4-b662-471f-86eb-c9158ea1487d	bd20f847-8de4-4068-95de-4b0ccd04ba59	2019-11-29 16:07:28.187611+05:30	creation	14	3	Application is submitted	0	1	\N
-f05158ea-f323-4d83-a67e-5220684182e5	2b3f2f3c-bbe5-4db6-bfb7-2512457c635d	bd20f847-8de4-4068-95de-4b0ccd04ba59	2019-12-05 00:15:07.942+05:30	create	14	3	Application is submitted	8	1	::1
-c1f569ca-4a12-46cf-b24e-afaa96161841	7c858342-e2c5-44be-8ac9-cc7409620f45	bd20f847-8de4-4068-95de-4b0ccd04ba59	2019-12-05 00:17:46.905+05:30	create	14	3	Application is submitted	8	1	::1
-4269f447-93a2-49cc-be37-78516394faf4	e1cb4a3c-77ec-4e6b-9e00-1d4072c78073	bd20f847-8de4-4068-95de-4b0ccd04ba59	2019-12-05 00:22:21.998+05:30	create	14	3	Application is submitted	8	1	::1
+COPY public.application_log (application_log_id, application_id, user_id, action_date, action_name, from_role_id, to_role_id, remark, from_process_id, to_process_id, user_ip) FROM stdin;
+9b030b9e-d021-499c-acf9-a564394580ee	dc15a9e5-67b2-4a6d-8ea0-0ccbb0aabf0f	f238775f-6e77-4df4-871d-7fb6fe8112b9	2019-12-05 22:42:32.808154+05:30	create	14	3	Application is submitted	8	1	127.0.0.1
 \.
 
 
 --
--- TOC entry 2038 (class 0 OID 65566)
--- Dependencies: 172
+-- TOC entry 2228 (class 0 OID 57622)
+-- Dependencies: 189
 -- Data for Name: certificate_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY certificate_type (certificate_type_id, copy_name) FROM stdin;
+COPY public.certificate_type (certificate_type_id, copy_name) FROM stdin;
 1	Order Copy
 2	Petition Copy
 3	Counter Affidavit or Affidavit
@@ -1024,286 +983,80 @@ COPY certificate_type (certificate_type_id, copy_name) FROM stdin;
 
 
 --
--- TOC entry 2051 (class 0 OID 73747)
+-- TOC entry 2224 (class 0 OID 57599)
 -- Dependencies: 185
 -- Data for Name: document; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY document (document_id, application_id, document_path, create_at, delete_at, created_by, document_title, update_at, purpose) FROM stdin;
+COPY public.document (document_id, application_id, document_path, create_at, delete_at, created_by, document_title, update_at, purpose) FROM stdin;
 \.
 
 
 --
--- TOC entry 2039 (class 0 OID 65569)
--- Dependencies: 173
--- Data for Name: login; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2230 (class 0 OID 57644)
+-- Dependencies: 193
+-- Data for Name: logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY login (login_id, login_time, logout_time, expiry, source_ip, device, user_id) FROM stdin;
-PnT0td5vUl2521Pa5o3X5L9lT0Pc5TD39F0l0Y52x503343nP5NI9SF0Gz4E	2019-11-19 10:53:33+05:30	\N	2019-11-19 12:53:33+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-U3W3hsr76zjC5xUj445nUL3454jXUA1gdOG5rYUBuUe4t2xdMs7I83h7Yh3f	2019-11-19 12:14:22+05:30	\N	2019-11-19 14:14:22+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-ix195oZekQ1p3K58kftBKrt78KfXKNkLqUNAJaUSL1J8F35l9o232Klk4klK	2019-11-19 12:15:22+05:30	\N	2019-11-19 14:15:22+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-Trg40Wd5yXNI15roxNckk4dkp51kSDa58f55PNd7kXxxc40x95q0t94TcEBk	2019-11-19 13:48:20+05:30	\N	2019-11-19 15:48:20+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-MQ52GEc5zjeEGVGE11M2FM985vv1TKdn6oeg33jU5dQ59a1n59vwcad6dEjd	2019-11-19 13:54:13+05:30	2019-11-19 14:08:38+05:30	2019-11-19 15:54:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-E21Cl58q5PZ122GGN6055251M36x857191Eco7077EOX0RN1o28pZS32G1d2	2019-11-19 14:11:59+05:30	2019-11-19 14:12:18+05:30	2019-11-19 16:11:59+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-cG1VeRd5nNKbQR5d1bbdF74QMqad1Qkbb9165b4R3QdY1dnR5MMcMCdz193c	2019-11-19 17:56:53+05:30	2019-11-19 18:31:02+05:30	2019-11-19 19:56:53+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-83V3kG25IV175HR4d86ddB5Nt3hs5fOJPKfAtiV5sgCVnG5PjXdHOI9HaV6n	2019-11-19 18:43:03+05:30	2019-11-19 18:50:29+05:30	2019-11-19 20:43:03+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-J9xO5SV2K617qSk3fbOVS656k36jkBNs3tMDk6b6xHD19nsoxnOD8Dcxn8d7	2019-11-19 19:34:25+05:30	2019-11-19 19:46:26+05:30	2019-11-19 21:34:25+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
-fS2IeEp9d7rWW04yQ4z4bYWI7S7p5WSEf2D1930fS81wNw7f1W03721ULSUv	2019-11-19 19:46:34+05:30	2019-11-19 19:52:31+05:30	2019-11-19 21:46:34+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
-26ib0Gbc055nmp4If32d12df1431ebi72tW5LOfgsiab11wL1lAiM11aiThd	2019-11-19 19:52:41+05:30	\N	2019-11-19 21:52:41+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-7xIXLLTuf8J55I1TaX440no04Tdfnu4Jo1dcad1LdQfdYynYx5u9fLJ1Inh6	2019-11-20 08:44:41+05:30	\N	2019-11-20 10:44:41+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-qluNJhgdhhN65mi5OdjlnJHzn7o6Sxn7aC59UIAiMr44hi1VLg143bjNW914	2019-11-20 13:44:09+05:30	2019-11-20 14:03:35+05:30	2019-11-20 15:44:09+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-j64qZI2484ZMhCdd2G4fR08d2Sd2FsGdFMk2rGfZ0C4q42slm4r8d5d0Cq5d	2019-11-20 15:04:00+05:30	\N	2019-11-20 17:04:00+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-XFkXhMxDdU44i4c0ID5zBH6m0XB4z3d4c41H0Mr00M246e4V44UW567V3nX7	2019-11-20 15:37:28+05:30	\N	2019-11-20 18:37:28+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-z1RY4q210Y62Jw86WYbAU2wDdrTj1r7412c8iG1Tcxj8j3jd0548d4vvDWW0	2019-11-20 15:40:40+05:30	\N	2019-11-20 18:40:40+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-4TO753Z372j3nnk7SE4F5P0H45oB4IWCkNd3Ru56nG7XWG213RoZEicec9d5	2019-11-20 15:51:13+05:30	\N	2019-11-20 18:51:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-AS4Lf5hcU5Cw3e1ykhkLn545gJKDaSL9Kwd17CLfdHQ2c1DYwdL7ZI55I3Vz	2019-11-20 16:35:38+05:30	2019-11-20 16:42:12+05:30	2019-11-20 18:35:38+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-0H9AF18b50A6gJ1bMM69j804pVb6Vj6Ab6bdlO8mN3oN6427DugWV72F4d09	2019-11-20 20:11:56+05:30	2019-11-20 20:27:21+05:30	2019-11-20 22:11:56+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-IBt1o93ujCe16eoe2FFeR5NT61NdjQ523i5uk543V7550U0aDM776Uy58uCD	2019-11-20 20:36:38+05:30	2019-11-20 20:45:30+05:30	2019-11-20 22:36:38+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-D7C9V997T2T541e975ljAe7AAshOii9OAOe97hozU5eA2TA2n8qdmUsqC7Y1	2019-11-20 20:49:53+05:30	2019-11-20 20:49:55+05:30	2019-11-20 22:49:53+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-51yl42cna8dV5rdcRcHV2Td9E2u1yJrej9eddnez6Z1S92t2n2eujnoL21er	2019-11-20 22:30:18+05:30	\N	2019-11-21 00:30:18+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-7xRY1ptJ5653f98p48xI7V29s42x559iS2M446V0UY68t762JxtWBx25XWIe	2019-11-20 22:49:04+05:30	2019-11-20 23:04:45+05:30	2019-11-21 00:49:04+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-5DK1q7q9m4b9eeG75vnD58w7qldn56adk6Gdq76775d7lwjbgavwd6DwHm86	2019-11-21 07:00:53+05:30	2019-11-21 07:30:14+05:30	2019-11-21 09:00:53+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-ozMMN8N98g8pqN35ydndV4z3C4dipq71854oH3JdogV2pBs5yE3MJdd8oJ0n	2019-11-22 12:18:52+05:30	2019-11-22 12:19:09+05:30	2019-11-22 14:18:52+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-b6gEVdh4xQw95ErH5e0Lo82j1o55b7qTjAoUEv75XaqR7x29XvJt0N9EQ454	2019-11-22 12:19:15+05:30	\N	2019-11-22 14:19:15+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-fc9dJV43W4w9wW59s8789a374P5753yn93544f3QRQlD4sCFGeQiV839w6ko	2019-11-22 12:55:40+05:30	\N	2019-11-22 14:55:40+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-G158n230ybcCC05sedzy50SVDndb148800l0Tp7eq9e109z6pqnbCc9cxdSV	2019-11-22 12:57:42+05:30	\N	2019-11-22 14:57:42+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-9HZB4d4Km9ZK4N8cnlu08d60x4Wp8939v50csVg9d9H8Esbd64pM0K74178x	2019-11-22 13:03:20+05:30	\N	2019-11-22 15:03:20+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-sxxl7hcb2k5PnB0f5f0fL2TQQhT94WnU1x4k15fh4fQc04001v49Pb2721O9	2019-11-22 13:11:02+05:30	2019-11-22 13:15:12+05:30	2019-11-22 15:11:02+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-7j0994cg7guaWa1gClyH96a7027a0ia5b472c90iZl8ZUMDBc7gMgOc9dObg	2019-11-22 13:15:46+05:30	\N	2019-11-22 15:15:46+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-6if9d78Y9fjz44967vge7HaBy987qsg1f1m9f18544TS85f8Dvx65KTK9mCs	2019-11-22 13:33:49+05:30	2019-11-22 13:47:16+05:30	2019-11-22 15:33:49+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-5Bvu51X74IO4b8BQ7Tlx5UO6HO3c5W981Yv1Oo38vXZno70f1BTW67BTFcL4	2019-11-22 19:27:39+05:30	\N	2019-11-22 21:27:39+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-mRDamzd55e7LnHqn1hPaXQ8jjl8FsW5dxzNu10VNFmWql1ms4p3FF83l1jXd	2019-11-23 06:13:56+05:30	\N	2019-11-23 08:13:56+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	435b8a69-ba10-4ce1-854f-c9cbf5a07cb3
-276d990bxbM47OuL9n3e2O5I88bX145m3t451J91q43dLM6UORRdJ7Wtd4W4	2019-11-23 08:10:51+05:30	\N	2019-11-23 10:10:51+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	435b8a69-ba10-4ce1-854f-c9cbf5a07cb3
-r1RX01V1oc2AShv3j5a9DEFwf9dn5fy1597w0w121un30b5jDOGCi9b9S099	2019-11-24 09:57:35+05:30	2019-11-24 10:42:15+05:30	2019-11-24 11:57:35+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-fv82rN8s671aqPKOW214D6LK5Pp2464iD15iK1XpXV6q56KoOBK4a8D2z4p4	2019-11-24 10:48:08+05:30	2019-11-24 10:50:33+05:30	2019-11-24 12:48:08+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-y6z9Ox5jrFd4wah1aw74l494251HWHuab1xdpMmkfw3dcWWOujjO19WfY54t	2019-11-24 10:50:40+05:30	\N	2019-11-24 12:50:40+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-k7509iYc1WBhuyWbw33EKo5k8kmpL5Lud0an0BbEhQ9Du8c92z1zSbV55K90	2019-11-24 11:07:15+05:30	2019-11-24 11:22:02+05:30	2019-11-24 13:07:15+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-8z1diFbZu7n5q77557U8bROd8py856FJpd7dgQVf75g9k4f567R71TY7AADU	2019-11-24 11:26:57+05:30	2019-11-24 12:30:16+05:30	2019-11-24 13:26:57+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-d5gHfTuqxC2Xb6GDVx8TrugV58ns18rf51uSbWqGsC5fk1V8GV6FT2Qn4naW	2019-11-24 12:30:26+05:30	2019-11-24 12:56:55+05:30	2019-11-24 14:30:26+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-UlHq13aMF5a4b3g711j67xUPe4HlkPXmmq0R5Uc5MeMQ0Z0dcaaskMegX5R8	2019-11-24 13:01:54+05:30	2019-11-24 13:10:14+05:30	2019-11-24 15:01:54+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bea71c9d-c88c-4ce5-a2bb-b0878fa5dfb7
-ddbh609cn7n3Twanlg8Cdh5akU7j5ev7BV5dgs91yqV342d5gno45d3251Xq	2019-11-24 14:44:13+05:30	2019-11-24 14:53:52+05:30	2019-11-24 16:44:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-284K5902dqR1xt4BH1ox1KYsYD54065hj6u81w1fU37rDhy1YGKxskh689U0	2019-11-24 15:06:37+05:30	2019-11-24 15:06:40+05:30	2019-11-24 17:06:37+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-R46dTi485D4n2n5d02cCKX12559KWdR7aD21459KO65ee2K58ejD4562u4af	2019-11-24 15:14:06+05:30	2019-11-24 15:14:23+05:30	2019-11-24 17:14:06+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-aju0em58R53O86Or3n7lVL050uaeLj4r106ByXraTyg1fLrqXOC0zV29710T	2019-11-24 15:37:24+05:30	\N	2019-11-24 17:37:24+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-977MtU5oLo6o8FTf5IOn0nTLf4pfa64M5d715RTO2PTd6pDf75d90LdRo5dl	2019-11-24 18:00:20+05:30	2019-11-24 18:12:28+05:30	2019-11-24 20:00:20+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-ah64607m57Gf295t21af9aB23ve4325hjAd770T4493n9EQ2Q9569L50k3t9	2019-11-24 18:13:06+05:30	2019-11-24 18:20:03+05:30	2019-11-24 20:13:06+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-Xldh3A8b51E1XJ4XdWXVd95KdIh89Gn5J8258z924w9IiUKvvl1PbKwwKV49	2019-11-24 18:20:12+05:30	2019-11-24 18:52:32+05:30	2019-11-24 20:20:12+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-h5dgu4I35K5Oegj50eNdtSD85y7KM8DcetgueVmho257H5NV7C6KoI73KOIV	2019-11-24 18:52:40+05:30	2019-11-24 19:19:55+05:30	2019-11-24 20:52:40+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-eehShuQS6H7dNHaR88dC0dQkBCg8d92q9kuCky95d129qR6g52H98N86kdgS	2019-11-24 19:32:16+05:30	2019-11-24 21:15:03+05:30	2019-11-24 21:32:16+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-1o25S457V0WU3ZQPnSmmeS5143SZf0l2mdV054y8f5EQ255mQZ1UfSW1eXP1	2019-11-24 21:15:26+05:30	2019-11-24 21:18:22+05:30	2019-11-24 23:15:26+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-dB8Woq00D4OgDYdqd9k5d7qWEd1Cd8a0SM89g1quqhkCW5C1gEd882e51dM0	2019-11-24 21:18:35+05:30	2019-11-24 22:09:00+05:30	2019-11-24 23:18:35+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-0pd5Na3l3Zp77pqfd37Ntah6z87d866F63lze3o00qa8hdobp87aTea6o3vh	2019-11-24 22:13:47+05:30	\N	2019-11-25 00:13:47+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-z6b18al19LZ11Z7Ndal1XLtUdhVzK7HKvZ53ykCdtC6Aazp83NYbU7eb37z2	2019-11-24 22:16:36+05:30	2019-11-24 22:19:16+05:30	2019-11-25 00:16:36+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-nh41594r0m69e9HcCd9hjb43rCbq1R0b547r99u4ep421ncq2ewdrh4mbt4I	2019-11-24 22:19:23+05:30	2019-11-24 22:21:10+05:30	2019-11-25 00:19:23+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-104x9T4eOxG31L7GVe4GY7721B41Jfs206Zz0y12Mx3u5wX7GLx2dWdy2dXM	2019-11-24 22:21:16+05:30	2019-11-24 22:24:13+05:30	2019-11-25 00:21:16+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-Mbcd9K845yfL7Lf4Ce478723Y15StC7b5Sq3c673aAqe4ex14M9xO7l368Pv	2019-11-24 22:24:33+05:30	\N	2019-11-25 00:24:33+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-53npQj16GzdMTZN078dwQ7xzaxN7J44pnmb4n14mW67Rwo05z57NodAaxg60	2019-11-24 22:26:45+05:30	2019-11-24 23:01:50+05:30	2019-11-25 00:26:45+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-65v4v4F64vJvvf1fd75j6S4B1f57Cbh055ft1bsc4BdcWd8mmdaw6Ft1am30	2019-11-24 23:02:34+05:30	2019-11-24 23:06:26+05:30	2019-11-25 01:02:34+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-7GiwcvB4Sx98fBSLw1dPv5tE92c23JP8v880F550Bt55P5vK6g253915t595	2019-11-24 23:11:50+05:30	2019-11-24 23:12:04+05:30	2019-11-25 01:11:50+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-02WDu32a1oco3X3xoZ1Q7jnbQZ372QD1x3T365xLQ433XaQ1La4X1L016Tv5	2019-11-24 23:14:32+05:30	2019-11-24 23:26:12+05:30	2019-11-25 01:14:32+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-pl052H7GCc2NYvRvj1GfHw76KjO80aOzxxAh5Wzz5xKSO6rJ5IrrFSiD2x9I	2019-11-25 06:13:02+05:30	2019-11-25 06:23:23+05:30	2019-11-25 08:13:02+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
-57bvJ3T7ZjjHvpAe1541208vzBddn1crnaJn3Yc1y96eLpch2075IC5n7146	2019-11-25 07:21:59+05:30	2019-11-25 07:39:50+05:30	2019-11-25 09:21:59+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-16yJ7ib4JC3Av6ddJ5b301rCWJvCtY5f8qbhbn4W0hbWHyOi4PfSihzihZh7	2019-11-25 07:40:05+05:30	2019-11-25 08:53:48+05:30	2019-11-25 09:40:05+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-h1cc39LhFcSIcmEX63XVomb24Ewbh7bt4tKc3X2j1Xx737m44j8G79I7Q5c9	2019-11-25 08:55:15+05:30	2019-11-25 08:55:34+05:30	2019-11-25 10:55:15+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	0b66ec2b-4663-49e2-a652-46c27ed79d96
-W7sYW285f91Z8O0aBd77H94NNtV315a59l95Jfy6535KHm8Hdh3d6a6n0Ysl	2019-11-25 11:29:10+05:30	2019-11-25 13:20:31+05:30	2019-11-25 13:29:10+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-Q557ZbyEhbQ8k7dPmXPF5Jy3kEg5q19muK8dtbqOYCyuf3669My8iOEF9Tk9	2019-11-25 13:20:51+05:30	2019-11-25 13:59:35+05:30	2019-11-25 15:20:51+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	45238d29-5b11-4125-be39-4ab18266f5de
-e6crRbM1v2bdjb4wzj4Xe5j6Sfd9692XdX0f7536Xd55dJ161Yjv25J9j7FG	2019-11-25 14:07:15+05:30	\N	2019-11-25 16:07:15+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-757d7396bOvW6db6Cupd13dgv0p716M346Oz40La7a36Epa6oeaq6Odq7671	2019-11-25 19:46:04+05:30	2019-11-25 19:50:08+05:30	2019-11-25 21:46:04+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
-7Ycpc44074q1Cxt2NSkNy8oLmu1o42r7q1i6q60YCalB60cUb87qP75776i5	2019-11-25 19:50:16+05:30	2019-11-25 20:53:03+05:30	2019-11-25 21:50:16+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-E5lX50fEF9m1u99dQbM101yUaZa83g91xeV1vEOk0VMdjEUd3Q3x51udky3l	2019-11-25 20:53:18+05:30	\N	2019-11-25 22:53:18+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-285UKu55EkE3U48TFtcZ0Z2MMuKcIHgc55TKcr4UR2kEM3tm9Hd8v4c2F1X2	2019-11-26 06:28:42+05:30	2019-11-26 06:29:43+05:30	2019-11-26 08:28:42+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
-l53zddUUzGOudddWwds08d2bVId140AFnl5p4lOe6ht5FN2F7468gd6bLh27	2019-11-26 06:30:00+05:30	\N	2019-11-26 08:30:00+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-1oY8n36mJHKTf2Ol8J8r83nBp9pgOKJ9j7O91g5ZN2g7J3RyK29ddK9f5687	2019-11-26 08:37:31+05:30	2019-11-26 09:57:32+05:30	2019-11-26 10:37:31+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-4SSZCWO27A2S0567ED01l1V3MSPmWR0kc4JAODBM52ymPM8eL7hShA7VX050	2019-11-26 11:27:52+05:30	2019-11-26 11:28:08+05:30	2019-11-26 13:27:52+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-5YmkO4fiKe40to521lms6Y2Yx5HLb02I3nvt19mY9w2v6cYVnX4LbcGBiO20	2019-11-26 11:28:25+05:30	2019-11-26 11:53:26+05:30	2019-11-26 13:28:25+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-Ueq3HV7iY86Y54YUOU34737zHxo5yuRn3Fou7i48PI33u3c8RHP354TPQTR4	2019-11-26 11:54:19+05:30	\N	2019-11-26 13:54:19+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	76e1d643-99cf-4f5d-b649-f940aa4722fb
-7Fe4KHdyS1P7G1227wwd1I1ydnjHK1F4eE6yk2P9IX1sL859Lr67dwnM78nO	2019-11-26 14:57:00+05:30	\N	2019-11-26 16:57:00+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-ieA83d0cvjd208K9b0SJUjdt8FR9J8e98j00ltM958R4vS8qv2s8diNmD45K	2019-11-27 06:21:38+05:30	2019-11-27 07:14:56+05:30	2019-11-27 08:21:38+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-55R1C3e1ed5Coh0IhdB9zC0SL2r458Idf179zndC721fIF4Q0Q90248C21Bz	2019-11-27 07:26:46+05:30	2019-11-27 07:29:58+05:30	2019-11-27 09:26:46+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-0dI48hQ25iEiaIebdhkc5R12qe1j3Ie57cVU34e595d7dbtTe254Ja0I08bx	2019-11-27 11:59:13+05:30	2019-11-27 13:49:18+05:30	2019-11-27 13:59:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-5DTduaej2aEdjaufNeQY9krdB1rzv7k7T6TueEkxV4wob58H62oke8zxvokU	2019-11-27 14:45:26+05:30	2019-11-27 16:26:16+05:30	2019-11-27 16:45:26+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-66kaVv0v78n6kjTM57K051edw8Cx0D6pjtcxjKKxdx48j0VKD0qv46D6eBj1	2019-11-27 18:11:54+05:30	\N	2019-11-27 20:11:54+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-0Fw4AybgdtePVGAB69a4d4zP75B8w0z3L1040o08797K478g9NVA58xL8d1w	2019-11-27 20:57:55+05:30	2019-11-27 22:08:26+05:30	2019-11-27 22:57:55+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-BhhT36VYuvDfqqapQQ6jju3ahC1at4W6QhlGH94Qx02fWwf0NhwVCqg23teY	2019-11-28 06:22:01+05:30	2019-11-28 07:01:56+05:30	2019-11-28 08:22:01+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-2ndGl2A4840NFAGfy374WGC1d2dp221P77aL5Hl5y5rW08S0KGaz3317i0Gm	2019-11-28 07:02:10+05:30	2019-11-28 08:46:13+05:30	2019-11-28 09:02:10+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-0u0Y15KBg3vtl7ZMAQKKE9aTv15S8v3Sa10ikG09s0vMAa7MMGSSCwPmewCY	2019-11-28 08:47:30+05:30	2019-11-28 10:29:26+05:30	2019-11-28 10:47:30+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-8O6HddWOmfC6f351OC6JdffCC1731Jnm0Q826mCp6267y3m7167mI1nvGf0K	2019-11-28 11:24:39+05:30	2019-11-28 11:54:23+05:30	2019-11-28 13:24:39+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-fm88BeFaAv8OE853kf2O1F42b3a8qZ2ER9uIFq3aH1fRq2F51Vd99zJ51Nck	2019-11-28 12:47:03+05:30	\N	2019-11-28 14:47:03+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-b6o1IdblYXV65DH99xI0T4o6oe24SlD11l229ii25fugg9lc9gST9FCT47Fc	2019-11-28 14:52:46+05:30	2019-11-28 16:18:47+05:30	2019-11-28 16:52:46+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-TS836aVGA4dF6ZS92sDqRZ24UqIeGJMcA14Rx60tG0sc2S665a4lSO086C3c	2019-11-29 08:01:00+05:30	\N	2019-11-29 10:01:00+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-c2gbUn9W8Q7wVU5VU5n89CJUVkGZ4DngU1f8vQ0FyvAG8t5gmDWQn287a41C	2019-11-29 08:42:08+05:30	\N	2019-11-29 10:42:08+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-77HdG7djntY5Gv0s1hGC0QUJGtEU77HsUHy2Hddewnnq38QG93xL675j0n9A	2019-11-29 09:00:37+05:30	2019-11-29 10:15:10+05:30	2019-11-29 11:00:37+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-eREA5F32HgEMT0EcuKz0M4R6y78QUF5z6DAy4zTMObOAk5u15Kd5521sSBT4	2019-11-29 11:38:36+05:30	\N	2019-11-29 13:38:36+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-dG14Dbh44XM98MV0C0L72dQE1oGteQ07D1sTsQ8ao0idIyV795ad76yP552d	2019-11-29 14:29:04+05:30	2019-11-29 14:52:15+05:30	2019-11-29 16:29:04+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-3MveULh1w5PV1dpLJ3e6d4LdahMwel8Av1w18EvyU3M17uWp70ndz37L5H7G	2019-11-29 14:52:22+05:30	2019-11-29 15:13:53+05:30	2019-11-29 16:52:22+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-p69E0Wfrv3FpC8eHcYjL57HJdea0578Fjj71Nfn9Y15eN6vO12eD0olcqt0O	2019-11-29 15:13:58+05:30	2019-11-29 15:20:07+05:30	2019-11-29 17:13:58+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-AI5U3iOUIMj85JII1J08qD9IjSkk6E7f95486i1IOlf9Jl304UH009Ik840V	2019-11-29 15:23:28+05:30	2019-11-29 16:23:40+05:30	2019-11-29 17:23:28+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-111dICnB7r76G7B2ipher38B8lxm17eVTm11HO81sH3QpBmHCo1i5x554Vem	2019-11-29 18:07:54+05:30	\N	2019-11-29 20:07:54+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-aWN7a8w0D5SNff0dPuK5o5ej188DmCeNu9pg1Kgp9TCndu7nTdHl7T5Nz70o	2019-11-30 00:56:40+05:30	2019-11-30 01:00:33+05:30	2019-11-30 02:56:40+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-x107XOX7AY1Hqo22reGA9ar5e7OY5J55E0Xa5OTkOe7Y995gGH2eUukfzoHZ	2019-11-30 01:00:49+05:30	\N	2019-11-30 03:00:49+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-UGYrrLa797n7arF24a5577e7F5aVdjXeMHrQnQAaH9La4Q74zuYIZaG5N394	2019-11-30 01:33:54+05:30	2019-11-30 01:40:47+05:30	2019-11-30 03:33:54+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-Qgnx630AgzR3216O60Vu487d0s0m4E8h3Q4PG7ged0EA0n5xg19E182xa010	2019-11-30 01:41:00+05:30	2019-11-30 02:15:49+05:30	2019-11-30 03:41:00+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-5LEA4X6Kv1A1dzh6IIe2n2SvZ7kvv17enA5Le4e8e7S03AN579B77SnBHtE7	2019-11-30 02:20:32+05:30	2019-11-30 03:08:08+05:30	2019-11-30 04:20:32+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-7CR12I7R9IC82q71A5yP795M19xM1o1qxfRV8Ixg8Cd9L5o9f7188Vg987MS	2019-11-30 03:08:22+05:30	2019-11-30 04:20:45+05:30	2019-11-30 05:08:22+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-H531A1tiF86NA1Ye1U92I6dBtb17e6hLUM6b81vc16h9j75q1YMNYT9UqAeY	2019-11-30 04:21:23+05:30	\N	2019-11-30 06:21:23+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-Y99SV9keIY33ce91qe6DZx5b81x2896dvR6D0718D6n86Zb12qJYWIq3d629	2019-11-30 04:21:24+05:30	\N	2019-11-30 06:21:24+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-eP9oPD39NlY3jec7VJ6eI2KV9YblN757uoT7RzVN5d8d1kJ0u16iNk1H0eDD	2019-12-01 23:34:45+05:30	2019-12-02 01:29:54+05:30	2019-12-02 01:34:45+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-61G20KKi6X1S2tWbd1Ybwtddb21dmbK4612Q1s181uI1bxu2Dif6Gs4UYJdU	2019-12-02 01:34:01+05:30	\N	2019-12-02 03:34:01+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-j61k736jT344L611t78dpt36WSKetz5089S2vBNcC1tbgrAS4q5c11c638Cc	2019-12-03 00:27:41+05:30	2019-12-03 00:29:50+05:30	2019-12-03 02:27:41+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-8Y50YbL4ksbe5XaS9522UrHe7VZEcdM7e2E5dtf926BX7s8a0WR9cRk4NkE8	2019-12-03 01:06:24+05:30	\N	2019-12-03 03:06:24+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-83845354864DRGdYG3V5Yb344XUJ56dQMe5Y3D853915M250eed9YE094e5V	2019-12-03 01:55:21+05:30	\N	2019-12-03 03:55:21+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-61WIj1ijM78j5J9vUSs7p6788ed7p87CnsAT2ee179k3TSe16n37212ky0f0	2019-12-03 01:55:26+05:30	\N	2019-12-03 03:55:26+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-5Tcg3266t47mt7cctA6I6s3t9l35lsT1d7I7mtaA7415O7Gdfcs28OOt4c99	2019-12-03 01:57:03+05:30	\N	2019-12-03 03:57:03+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-49MI3MDMN5M5Nde95D655NZk1dPM357MDO5Zz5OcKDdedDxZM9a5m5eeei53	2019-12-03 01:57:44+05:30	\N	2019-12-03 03:57:44+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-a41erf85b4JTJa0d0q6l5TX2IzlVfH4V1IF5H4dEfV25V5c1lo5l72R3iVb5	2019-12-03 01:58:05+05:30	\N	2019-12-03 03:58:05+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-88mm72752475QP4P1Q5sb7po31192lQ4anP4B447n541Tuh4OO5t4gAN5mma	2019-12-03 02:01:02+05:30	\N	2019-12-03 04:01:02+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-RRXfDRYREtsg9QTte2102SY7EzYDeC8b6ajWEwz5bQbb63cj68GJ3DrlWsfC	2019-12-03 02:07:06+05:30	\N	2019-12-03 04:07:06+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-i30b8e9nxTUJBK1Z3PHCeOF76vb5nB4vw35PH5fF7n5Fv8fHWOPjoJ7abnmU	2019-12-03 02:07:55+05:30	\N	2019-12-03 04:07:55+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-8012O17DYz77pD91Yt2jslQ3fE22K3QdEe0d00CCa1EI8a5j6Iq5f561p979	2019-12-03 02:10:31+05:30	\N	2019-12-03 04:10:31+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-209u52yGVD556yRetu773HL27ggVt375G7K4V1HN155Gt23E7GQY9J13rD7S	2019-12-03 02:11:32+05:30	\N	2019-12-03 04:11:32+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-V83IabAnvl50rIg3ud07m0ccC1umMyVWT4FfmMvdbiX0J3sQVPQ0A9n77GQa	2019-12-03 03:03:33+05:30	\N	2019-12-03 05:03:33+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-2C2A53aKfD73Y67584SVCqdqcI4y7259AIdKIiq3CScc82e6f58l252892U4	2019-12-03 03:04:26+05:30	\N	2019-12-03 05:04:26+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-e2r0E5P3Dt6p1C03mKKy5e315lia038D250739EaJeRxe2P485xa1G7689m3	2019-12-03 03:15:12+05:30	\N	2019-12-03 05:15:12+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-j5W7ooqWH7l7r85wi7Sgb5xj5n3SoWjyfx2j3eH0Ky1S5W7yya215AK5140q	2019-12-03 03:15:23+05:30	\N	2019-12-03 05:15:23+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-39HHe7e5VuOwZtHE9925H9d2T5t5nZYaVzOi1d766i19eH2977Y7w7O72T8i	2019-12-03 03:16:17+05:30	\N	2019-12-03 05:16:17+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-ibMIp30B3XK3PReIdfFMdfq1Cdt2d3X5PdfZ09adaeq3IaMvI5661fF65gx3	2019-12-03 03:18:31+05:30	\N	2019-12-03 05:18:31+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-3ILi1e62rO0FLe7M5JV8eIvYw1Mbr5XU200O9r85U70HJrQYYFRHr6yXVb50	2019-12-03 03:39:25+05:30	\N	2019-12-03 05:39:25+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-UnU4T23UebU1y2u5583j5U5iUY5j6iV33SdvyL1Q83gZ22Qn9SU2ou4g53c1	2019-12-03 03:40:22+05:30	\N	2019-12-03 05:40:22+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-v9c0NsS0Y171er34ar919oz3kBKKxBL874om129N7648LXw06929ytv47532	2019-12-03 03:41:17+05:30	\N	2019-12-03 05:41:17+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-ecyeS95k74mG7Q1C6qTGj4fGC46Cf18071268h44Cd0kcld5Be1PlemB7aEC	2019-12-03 03:42:56+05:30	\N	2019-12-03 05:42:56+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-09s3QujhJ808f7Fe548dQJgzH5295819Y9k4Rh36aE96SIeq359Srf8dQdeT	2019-12-03 03:43:56+05:30	\N	2019-12-03 05:43:56+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-5CIe669GyN2b560Sn551j7IX9ynx4Y4G6q5i0eQNd52c2qZy8551v5Gbv9yE	2019-12-03 03:44:29+05:30	\N	2019-12-03 05:44:29+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-9286SdM7b675t948eXW81ypSeh235Q42tkjd8Bdb28HtN894y4k1dIyhsxdH	2019-12-03 03:46:09+05:30	\N	2019-12-03 05:46:09+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-VI39Ye5JSv325T5z6ESvnJrv5i917e7J9z217bdP980J6bdi1b97a8J9b5Iw	2019-12-03 03:49:29+05:30	\N	2019-12-03 05:49:29+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-7cNaq16q5OlcncS855n4qc475l4H2E55e5J02Bf2aZJdNJOJeqde9N1Ba9Ka	2019-12-03 03:51:19+05:30	\N	2019-12-03 05:51:19+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-5OVGhGG5mR5moVS58nmZgX6H9o6OG9cREZ5qR51Re5adGdkahk9QU8p8o56c	2019-12-03 03:52:29+05:30	\N	2019-12-03 05:52:29+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-59LM5sD754AyCX3AVbW94WLXb5fM95fCZ88n6Xf2TWdr5Ldc54WhcW5lD9f7	2019-12-03 03:53:25+05:30	\N	2019-12-03 05:53:25+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-Qj53P3KR110WlWePnQ98583Pf19bieqv58O57875ZzPPe902l4c88s454559	2019-12-03 03:54:00+05:30	\N	2019-12-03 05:54:00+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-20iiiyWp5y4fe3D781sfuBqDsYpAEB8XZd8d5Ui9p262ePSle7diZ332Uxvl	2019-12-03 03:54:19+05:30	\N	2019-12-03 05:54:19+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-d5qdq36W6B2dcC8K1u1BQQ59jI5K8qpL9257Qq5KB48cd1K65K45IAs5v0B2	2019-12-03 03:55:26+05:30	\N	2019-12-03 05:55:26+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-7d8RGqtrf078f95CCaxQ1DQ379d0zXcB8D9I5C9jdoAaq3C9d1CqA7fCA250	2019-12-03 04:03:07+05:30	\N	2019-12-03 06:03:07+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-T2kIVfRQP4z3i38vrefr42VK34Oc9S5WzRQE2z3Q1zE3hEQ1ovVf3h3Ai3zb	2019-12-03 04:05:32+05:30	2019-12-03 04:06:58+05:30	2019-12-03 06:05:32+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-IN5Ih6cTPe1C88x7qQC6a93NkQF2f1CTK6SYv55xE55qThdb886nb2k2P693	2019-12-03 04:07:06+05:30	2019-12-03 04:44:24+05:30	2019-12-03 06:07:06+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-27t5iVNIQd25YXEO72xCc2gN527ul2t3F09Z62Ng32N0q2Eo3j0S0pQdI5Tp	2019-12-03 04:44:29+05:30	\N	2019-12-03 06:44:29+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-80mMmzFmwpd5p0znu5Y6mIu0x8sCm819mSu82uzn1m1G3589nx9pAj989lIB	2019-12-04 00:19:12+05:30	2019-12-04 00:19:22+05:30	2019-12-04 02:19:12+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	06a5227b-a66f-4f83-985c-f04167bc6f30
-R4B4HbwPql6UjbwnB1kt675JA97t7uUpn7bb5314JMk91PQ215AQ5n586L7R	2019-12-04 00:32:38+05:30	2019-12-04 00:43:07+05:30	2019-12-04 02:32:38+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-v5b9JKtKIuO3fvr321n2H2vOTAtP81THWO0vshfPAv50bTx8y13bKwIH2H23	2019-12-04 00:43:13+05:30	2019-12-04 00:46:02+05:30	2019-12-04 02:43:13+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-0bx2yrQ5I11m18vIP871hn44Byy56P7QnyhyyuGZLDdX6IYDR6cd1Nyb8y20	2019-12-04 00:46:18+05:30	2019-12-04 00:53:43+05:30	2019-12-04 02:46:18+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-T4B4p9001Tb55555p5RBHNQ9zzM65Je8X4Hk9J7ee59FGs9mxc1e5hB96hxQ	2019-12-04 01:04:10+05:30	\N	2019-12-04 03:04:10+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-LB3E551ITfJIbJ2BysbKsi1rx9iYm2cM01yefdaqcTX5j44PjB2Pdmc5k8b8	2019-12-04 03:08:07+05:30	\N	2019-12-04 05:08:07+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-04VZ7Z7CEsk59r6eZ9zs5z4d6g0N508vS0x5Hs07GCk8bpZEV81vA898A50x	2019-12-05 00:08:03+05:30	2019-12-05 00:28:46+05:30	2019-12-05 02:08:03+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
-9C29odHoWJe95JuIICwd66M7MXM667uKH19wfsM760w9tXK597euM5997u0w	2019-12-05 00:31:39+05:30	\N	2019-12-05 02:31:39+05:30	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0	bd20f847-8de4-4068-95de-4b0ccd04ba59
+COPY public.logins (login_id, login_time, logout_time, expiry, source_ip, device, user_id) FROM stdin;
+361y0bAL101n79gP1bzSc43qS56zb1mTY411d3Y165gmdP33m163fC0g5553	2019-12-05 20:28:39+05:30	2019-12-05 20:29:19+05:30	2019-12-05 22:28:39+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	c43846c6-69ba-4161-9f06-a5f801791796
+K75bO0y5xb34btQf5vrd5xth5ztul54N27Nkeu73l7rde77u7J5yEted3HQ5	2019-12-05 20:29:27+05:30	\N	2019-12-05 22:29:27+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	c43846c6-69ba-4161-9f06-a5f801791796
+a890580Fc1LuUjJja151825g7J5m95d82w053oq5d5z9e6V1vevD8oevy8qo	2019-12-05 22:40:02+05:30	2019-12-05 22:43:08+05:30	2019-12-06 00:40:02+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	f238775f-6e77-4df4-871d-7fb6fe8112b9
+JWGY64YxTen3VIxYMpbYYbe9P655ljl7dSl7Yh462c64dRl5cY083Y50n66m	2019-12-05 22:43:31+05:30	2019-12-05 23:11:42+05:30	2019-12-06 00:43:31+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	c43846c6-69ba-4161-9f06-a5f801791796
+24QJ9n1Sy14jJc2jDnKsD5PSw2957GQhhx54M1914C51J7vHt12Cwjs1nNH7	2019-12-05 23:12:01+05:30	2019-12-05 23:13:16+05:30	2019-12-06 01:12:01+05:30	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0	9cec8bde-53de-4770-b1d5-91dd67355fac
 \.
 
 
 --
--- TOC entry 2040 (class 0 OID 65572)
--- Dependencies: 174
+-- TOC entry 2231 (class 0 OID 57647)
+-- Dependencies: 194
 -- Data for Name: process; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY process (process_id, process_name, process_description, number_of_role) FROM stdin;
+COPY public.process (process_id, process_name, process_description, number_of_role) FROM stdin;
+8	Application Submission	Application submitted by client	1
+1	receive_not_order	To receive application for not order copy	1
 2	receive_order	To receive application for order copy	1
+3	search_case_body	To search for case body	1
+4	receive_order after case body	Copying section receive application along with case body and forward to CO	1
 5	CS to Jr. AA	Copying Section forwards to Jr. AA	1
 6	notesheet preparation and approval	Notesheet preparations by Jr. AA and approval	5
-8	Application Submission	Application submitted by client	1
-4	receive_order after case body	Copying section receive application along with case body and forward to CO	1
 7	certificate preparation	Certificate preparations by CO and further approval	5
-3	search_case_body	To search for case body	1
-1	receive_not_order	To receive application for not order copy	1
 \.
 
 
 --
--- TOC entry 2113 (class 0 OID 0)
--- Dependencies: 175
--- Name: process_process_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('process_process_id_seq', 1, true);
-
-
---
--- TOC entry 2042 (class 0 OID 65580)
--- Dependencies: 176
+-- TOC entry 2233 (class 0 OID 57655)
+-- Dependencies: 196
 -- Data for Name: process_role_map; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY process_role_map (process_role_map_id, process_id, role_id, role_level, description, is_disabled) FROM stdin;
-50	8	14	1	Application Submission	n
-44	4	2	1	checks the application with case body and forward to Computer Operator	n
-19	2	13	0	test	y
-9	2	5	1	test	y
-10	2	10	3	test	y
-34	2	9	999		y
-42	2	4	999	Searches for case body	y
-8	2	2	1	Receives applications	n
-13	5	7	999	test	y
-12	5	2	1	Receives the application with case body and forward to Jr. AA	n
-15	6	12	0	test	y
-22	6	3	4	test	y
-20	6	7	1	prepares notesheet, and send it along with case body to SP	n
-45	6	13	2	Forwards to Assistant Registrar	n
-23	6	9	3	Forwards to Deputy Registrar Judicial	n
-21	6	11	5	Order for issue of certificate to Computer Operator	n
-5	3	2	999	test	y
-18	3	6	999	test	y
-6	3	1	0	testing	y
-26	3	10	1	test	y
-25	7	3	0	test	y
-29	7	11	999	test	y
-30	7	4	0	test	y
-31	7	1	1	test	y
-24	7	12	1	prepares certificate with relevent documents	n
-32	7	7	2	Reads the certificate	n
-46	7	8	3	Compare the certificate	n
-47	7	13	4	Compare the certificate	n
-48	7	9	5	Verify and send for further process	n
-27	3	11	2	test	y
-28	3	8	999	test	y
-43	3	4	1	Search for case body	n
-1	1	1	0	test	y
-3	1	6	2	test	y
-37	1	13	1		y
-16	1	12	0	prepare report	y
-2	1	2	1	test	y
-35	1	7	3	verifying	y
-17	1	8	999	approval	y
-38	1	5	0	nothing to say	y
-4	1	10	1		y
-7	1	4	999		y
-33	1	11	2	yeye	y
-36	1	3	1	Recieved at RG for signature	n
-14	6	10	4	Forwards to Registrar Judicial	n
+COPY public.process_role_map (process_role_map_id, process_id, role_id, role_level, description, is_disabled) FROM stdin;
+51	1	3	1		n
+52	2	2	1		n
+53	3	4	1	Searching for case body	n
+54	4	2	1	Copying Section forwards to Computer Operator	n
+55	5	2	1	Copying Section forwards to Jr. AA	n
+56	6	7	1	Prepares notesheet	n
+57	6	13	2	Then forwards to Assistant Registrar	n
+58	6	9	3	forwards to Deputy Registrar Judicial	n
+59	6	10	4	forwards to Registrar Judicial	n
+60	6	11	5	order for issue of certificate	n
+61	7	12	1	Starts preparing certificate with relevent documents	n
+62	7	7	2	read the certificate	n
+63	7	8	3	compare the certificate	n
+64	7	13	4	forward to Assistant Registrar	n
+65	7	9	5	complete the final process for issue of the certificate	n
 \.
 
 
 --
--- TOC entry 2114 (class 0 OID 0)
--- Dependencies: 177
--- Name: process_role_map_process_role_map_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('process_role_map_process_role_map_id_seq', 1, true);
-
-
---
--- TOC entry 2115 (class 0 OID 0)
--- Dependencies: 178
--- Name: process_role_map_process_role_map_id_seq1; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('process_role_map_process_role_map_id_seq1', 50, true);
-
-
---
--- TOC entry 2045 (class 0 OID 65588)
--- Dependencies: 179
+-- TOC entry 2236 (class 0 OID 57663)
+-- Dependencies: 199
 -- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY role (role_id, role_name) FROM stdin;
+COPY public.role (role_id, role_name) FROM stdin;
 1	Admin
 2	Copying Section
 4	Judicial 1
@@ -1322,199 +1075,200 @@ COPY role (role_id, role_name) FROM stdin;
 
 
 --
--- TOC entry 2116 (class 0 OID 0)
--- Dependencies: 180
--- Name: roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('roles_role_id_seq', 2, true);
-
-
---
--- TOC entry 2047 (class 0 OID 65599)
--- Dependencies: 181
+-- TOC entry 2229 (class 0 OID 57625)
+-- Dependencies: 190
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY users (user_id, full_name, email, phone_no, role_id, user_password, verify, create_at, update_at, delete_at, profile_image, aadhaar, update_by) FROM stdin;
-18168e47-4805-4549-83e9-4e7560508a87	Gandhi	toman@gmail.com	9089517468	14	51fbc04ef0e7f08642f1b6c222ee24776ddb07cf72a8553dee839ae8d49c56df	f	2019-11-13 19:26:48.946864+05:30	\N	\N	\N	\N	\N
-d1e93117-a1e8-4c13-9ca6-cf6891654a44	Khangembam Mathoungamba	meeraen.kl@gmail.com	9856732169	14	a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3	f	2019-11-15 13:31:02.668418+05:30	\N	\N	\N	\N	\N
-c4ace25e-46b9-46c7-81df-ad8bd0c60dd4	Khangembam Mathoungamba	meeraen_kha@hotmail.com	9856732169	14	a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3	f	2019-11-15 13:34:18.012346+05:30	\N	\N	\N	\N	\N
-f6a40850-6790-4e64-8e2b-563242f7b801	Manimatum	mani@gmail.com	9089517468	14	f61622fdc7ab3ac33b32335b853f9889d486a0c5b2493353470ae3874c8bda0f	f	2019-11-15 22:02:02.384245+05:30	\N	\N	\N	\N	f6a40850-6790-4e64-8e2b-563242f7b801
-34a7fb45-1e01-482a-b516-e835a2c61902	Manimatum	matum@gmail.com	9089517468	14	f61622fdc7ab3ac33b32335b853f9889d486a0c5b2493353470ae3874c8bda0f	f	2019-11-15 22:07:53.730086+05:30	\N	\N	\N	\N	34a7fb45-1e01-482a-b516-e835a2c61902
-ed638c42-e77a-45f3-afdd-4de8ead67b2b	Manithoiba	sana@yahoo.in	9089517468	14	40a1339c959d20d18ce0108f7f9c0a773617f46178643620e0498d1e26f0a318	f	2019-11-16 06:26:41.289759+05:30	\N	\N	\N	\N	ed638c42-e77a-45f3-afdd-4de8ead67b2b
-7c689d57-0f0f-423d-81a1-77b732aa2181	Konsam Malemngalba Singh	lkonsam@gmail.com	9856732169	14	17697f2013ce4e424b29bcac0fddcda92adfef64316eaf320932fcae835ea185	f	2019-11-16 06:40:36.429121+05:30	\N	\N	\N	\N	7c689d57-0f0f-423d-81a1-77b732aa2181
-f07ab32c-3fd1-4840-bed1-021f6e2e8b51	Chongtham Lanchenba	lanchen@yahoo.in	9856732168	14	a3d8c2f102f7528223093cc28ef28fbad2451cc3eda7b60d4b26c2ba3f0841ec	f	2019-11-17 04:28:05+05:30	\N	\N	\N	\N	f07ab32c-3fd1-4840-bed1-021f6e2e8b51
-e9644f7d-fa84-4541-adad-5490e857b546	Chongtham Lanchenba	lanchen@gmail.com	9856732168	14	a3d8c2f102f7528223093cc28ef28fbad2451cc3eda7b60d4b26c2ba3f0841ec	f	2019-11-17 11:03:35.883855+05:30	\N	\N	\N	\N	e9644f7d-fa84-4541-adad-5490e857b546
-ff078086-55a2-4c8b-8f17-7e9ad492d2ce	Laishram Bobby	bobby@gmail.com	9089517463	14	69ff8042237aeef5ddf1ced10e851bc6104e1ebb15a304061dba43ea10106fa9	f	2019-11-17 11:10:53.279926+05:30	\N	\N	\N	\N	ff078086-55a2-4c8b-8f17-7e9ad492d2ce
-54b44ef7-4dba-483b-a533-5655116ca21c	Nameirakpam Shanti	shanti@yahoo.in	9089517463	14	fb1484ec19172fbfc3e662f9ffd80f2add2ec6ed17128cabdffb1eaf9551e3ef	f	2019-11-17 16:40:09.281219+05:30	\N	\N	\N	\N	54b44ef7-4dba-483b-a533-5655116ca21c
-df022cc4-2603-47d8-a5b6-8a5be6d7721e	Laishram Decilla	decilla@gmail.com	9856732165	14	1761280356e84445a31f223047dcb041fadbffe8a72de110344e0d9e2168ab05	f	2019-11-17 17:14:37.884455+05:30	\N	\N	\N	\N	df022cc4-2603-47d8-a5b6-8a5be6d7721e
-10bfdce7-49d1-4a8c-8a4a-741fe90ef9d8	Laishram Devilla	devilla@gmail.com	9856732165	14	f017716a3bc13522d51124f7672ed50c8542b4a7244da9f66a423b7e7b275d90	f	2019-11-17 17:18:31.933214+05:30	\N	\N	\N	\N	10bfdce7-49d1-4a8c-8a4a-741fe90ef9d8
-4a4c72ce-74b0-466a-a5e5-9a9f074f0069	Laishram Devilla	devil@gmail.com	9856732165	14	f017716a3bc13522d51124f7672ed50c8542b4a7244da9f66a423b7e7b275d90	f	2019-11-17 17:20:07.38786+05:30	\N	\N	\N	\N	4a4c72ce-74b0-466a-a5e5-9a9f074f0069
-23093c4a-d655-43d8-b6b1-34844b25f569	Sinam Chandrakanta	chandra@gmail.com	9856732145	14	4a577ac3c017756a7cf2c8689ea5876f168c690497d05ef8e22da2dd13a22c11	f	2019-11-17 17:26:20.866894+05:30	\N	\N	\N	\N	23093c4a-d655-43d8-b6b1-34844b25f569
-46c114a9-dc29-4702-bff0-da82d07e16e5	Irom Sumarjit Singh	sumar@gmail.com	9774785616	14	2835c8aab95343185332e0addf0e03629a73fe7dd06ca0d8e45482bbf84a2ede	f	2019-11-17 17:35:36.464578+05:30	\N	\N	\N	\N	46c114a9-dc29-4702-bff0-da82d07e16e5
-6881f81b-fce5-4f4e-8ba6-1a2c4d259388	Ailan Maibam	ailan@gmail.com	9774785623	14	30a8b99fee9373a811e5db8e8ed3bfa04b713ba631400b4526b7f5ebbc88739e	f	2019-11-17 17:44:47.990397+05:30	\N	\N	\N	\N	6881f81b-fce5-4f4e-8ba6-1a2c4d259388
-7f34810b-4f74-4d7b-9bb5-5bbb2a7f87d3	Yumkhaibam Guneshor	ygune@gmail.com	9856732148	14	ab6b414eee6044f22f684427ce5d6ce174ffef37a0d0ccefedee126ff2fc69f0	f	2019-11-18 20:25:56.116851+05:30	\N	\N	\N	\N	7f34810b-4f74-4d7b-9bb5-5bbb2a7f87d3
-435b8a69-ba10-4ce1-854f-c9cbf5a07cb3	Tombi Sarangthem	tombi@gmail.com	9856732169	14	93b2d0b340396839e1c2cbd8cf4162efdc8188cb0b694d482d6aafb3c2d1fa8e	f	2019-11-23 06:13:10.249067+05:30	\N	\N	\N	\N	\N
-bea71c9d-c88c-4ce5-a2bb-b0878fa5dfb7	Laishram Bonita	boni@yahoo.in	9856732165	14	d3ef6182c947611e380c21f40f21794a1d19a486ae72cae7b9b70c82a1025afe	f	2019-11-24 13:01:37.851419+05:30	\N	\N	\N	\N	\N
-613e8200-5906-4cb7-a8d3-d3b84f2f2b98	Khangenbam Nganthoiba Angom	leecba@gmail.com	9856732169	14	82a3326339cfd75bdc0a667e21957437c58de70a5514aead2f8d2ed93f1fbd90	f	2019-11-13 19:03:37.447547+05:30	2019-11-24 18:52:25+05:30	\N	\N	763384620895	613e8200-5906-4cb7-a8d3-d3b84f2f2b98
-0b66ec2b-4663-49e2-a652-46c27ed79d96	Lanchenbi	lanchenbi@gmail.com	9856732149	14	6e61e1813d192711ae91847a4c6b12438acb3d456b3de380272f0c04279267d2	f	2019-11-25 08:54:57.881342+05:30	\N	\N	\N	\N	\N
-45238d29-5b11-4125-be39-4ab18266f5de	Gandhi	gandhi@gmail.com	9774785616	2	51fbc04ef0e7f08642f1b6c222ee24776ddb07cf72a8553dee839ae8d49c56df	f	2019-11-25 13:19:07.759922+05:30	\N	\N	\N	\N	\N
-76e1d643-99cf-4f5d-b649-f940aa4722fb	Khangenbam Chingkhei Angom	khangembamc@gmail.com	9856732169	14	82a3326339cfd75bdc0a667e21957437c58de70a5514aead2f8d2ed93f1fbd90	f	2019-11-19 19:33:42.417105+05:30	2019-11-25 19:49:03+05:30	\N	\N	\N	76e1d643-99cf-4f5d-b649-f940aa4722fb
-6f97d0f7-3ce4-45c2-bc09-f4ae707dd382	admin	admin@gmail.com	9856732169	1	8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918	f	2019-11-24 15:18:51.637905+05:30	2019-11-29 08:28:49+05:30	\N	\N	456985231782	6f97d0f7-3ce4-45c2-bc09-f4ae707dd382
-06a5227b-a66f-4f83-985c-f04167bc6f30	K. Manipur	manipur@gmail.com	9089517468	14	f61622fdc7ab3ac33b32335b853f9889d486a0c5b2493353470ae3874c8bda0f	f	2019-12-03 01:06:07.506+05:30	\N	\N	\N	\N	\N
-bd20f847-8de4-4068-95de-4b0ccd04ba59	Khangembam Alica	alica@gmail.com	9089517468	14	461fac36809ceb0603fc4d841c6ccebccbeae1d011c915f7cc2b8cebba9e534f	f	2019-11-20 15:36:55.211522+05:30	2019-12-04 00:35:35+05:30	\N	\N	763386420895	bd20f847-8de4-4068-95de-4b0ccd04ba59
+COPY public.users (user_id, full_name, email, phone_no, role_id, user_password, verify, create_at, update_at, delete_at, profile_image, aadhaar, update_by) FROM stdin;
+f238775f-6e77-4df4-871d-7fb6fe8112b9	Khangenbam Nganthoiba	leecba@gmail.com	9089517468	14	82a3326339cfd75bdc0a667e21957437c58de70a5514aead2f8d2ed93f1fbd90	f	2019-12-05 18:58:42.532194+05:30	\N	\N	\N	\N	\N
+9cec8bde-53de-4770-b1d5-91dd67355fac	Tompok	tompok@gmail.com	9856732169	2	ba2df526dd770866fd1ae47fb641e7fbe38a0c5dc86a90ba431519431548c09e	f	2019-12-05 22:56:15.813122+05:30	\N	\N	\N	\N	\N
+c43846c6-69ba-4161-9f06-a5f801791796	Administrator	admin@gmail.com	9856732169	1	8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918	f	2019-12-05 19:01:10.340154+05:30	2019-12-05 23:10:15+05:30	\N	\N	123456789   	c43846c6-69ba-4161-9f06-a5f801791796
 \.
 
 
 --
--- TOC entry 2049 (class 0 OID 73736)
--- Dependencies: 183
+-- TOC entry 2238 (class 0 OID 57674)
+-- Dependencies: 202
 -- Data for Name: written_application; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY written_application (written_application_id, application_id, body) FROM stdin;
+COPY public.written_application (written_application_id, application_id, body) FROM stdin;
+1	dc15a9e5-67b2-4a6d-8ea0-0ccbb0aabf0f	Applying for petition copy
 \.
 
 
 --
--- TOC entry 2117 (class 0 OID 0)
--- Dependencies: 182
+-- TOC entry 2300 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: Document_document_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Document_document_id_seq"', 1, false);
+
+
+--
+-- TOC entry 2301 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: process_process_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.process_process_id_seq', 1, true);
+
+
+--
+-- TOC entry 2302 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: process_role_map_process_role_map_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.process_role_map_process_role_map_id_seq', 1, true);
+
+
+--
+-- TOC entry 2303 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: process_role_map_process_role_map_id_seq1; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.process_role_map_process_role_map_id_seq1', 65, true);
+
+
+--
+-- TOC entry 2304 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.roles_role_id_seq', 2, true);
+
+
+--
+-- TOC entry 2305 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: written_application_written_application_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('written_application_written_application_id_seq', 1, false);
+SELECT pg_catalog.setval('public.written_application_written_application_id_seq', 1, true);
 
 
 --
--- TOC entry 1925 (class 2606 OID 73752)
--- Name: Document_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2080 (class 2606 OID 57687)
+-- Name: document Document_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY document
+ALTER TABLE ONLY public.document
     ADD CONSTRAINT "Document_pkey" PRIMARY KEY (document_id);
 
 
 --
--- TOC entry 1904 (class 2606 OID 65611)
--- Name: applications_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2084 (class 2606 OID 57689)
+-- Name: application_log applications_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY application_log
+ALTER TABLE ONLY public.application_log
     ADD CONSTRAINT applications_log_pkey PRIMARY KEY (application_log_id);
 
 
 --
--- TOC entry 1902 (class 2606 OID 65613)
--- Name: applications_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2082 (class 2606 OID 57691)
+-- Name: application applications_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY application
+ALTER TABLE ONLY public.application
     ADD CONSTRAINT applications_pkey PRIMARY KEY (application_id);
 
 
 --
--- TOC entry 1906 (class 2606 OID 65615)
--- Name: certificate_copy_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2086 (class 2606 OID 57693)
+-- Name: certificate_type certificate_copy_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY certificate_type
+ALTER TABLE ONLY public.certificate_type
     ADD CONSTRAINT certificate_copy_types_pkey PRIMARY KEY (certificate_type_id);
 
 
 --
--- TOC entry 1908 (class 2606 OID 65617)
--- Name: login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2093 (class 2606 OID 57695)
+-- Name: logins login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY login
+ALTER TABLE ONLY public.logins
     ADD CONSTRAINT login_pkey PRIMARY KEY (login_id);
 
 
 --
--- TOC entry 1910 (class 2606 OID 65619)
--- Name: process_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2095 (class 2606 OID 57697)
+-- Name: process process_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY process
+ALTER TABLE ONLY public.process
     ADD CONSTRAINT process_pkey1 PRIMARY KEY (process_id);
 
 
 --
--- TOC entry 1912 (class 2606 OID 65621)
--- Name: process_role_map_Index01; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2097 (class 2606 OID 57699)
+-- Name: process_role_map process_role_map_Index01; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY process_role_map
+ALTER TABLE ONLY public.process_role_map
     ADD CONSTRAINT "process_role_map_Index01" UNIQUE (process_id, role_id);
 
 
 --
--- TOC entry 1914 (class 2606 OID 65623)
--- Name: process_role_map_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2099 (class 2606 OID 57701)
+-- Name: process_role_map process_role_map_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY process_role_map
+ALTER TABLE ONLY public.process_role_map
     ADD CONSTRAINT process_role_map_pkey1 PRIMARY KEY (process_role_map_id);
 
 
 --
--- TOC entry 1916 (class 2606 OID 65625)
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2101 (class 2606 OID 57703)
+-- Name: role roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY public.role
     ADD CONSTRAINT roles_pkey PRIMARY KEY (role_id);
 
 
 --
--- TOC entry 1919 (class 2606 OID 65627)
--- Name: users_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2089 (class 2606 OID 57705)
+-- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY users
+ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_email_unique UNIQUE (email);
 
 
 --
--- TOC entry 1921 (class 2606 OID 65629)
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2091 (class 2606 OID 57707)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY users
+ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
 
 --
--- TOC entry 1923 (class 2606 OID 73744)
--- Name: written_application_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2103 (class 2606 OID 57709)
+-- Name: written_application written_application_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY written_application
+ALTER TABLE ONLY public.written_application
     ADD CONSTRAINT written_application_pkey PRIMARY KEY (written_application_id);
 
 
 --
--- TOC entry 1917 (class 1259 OID 65630)
--- Name: aadhaar_unique; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2087 (class 1259 OID 57710)
+-- Name: aadhaar_unique; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX aadhaar_unique ON users USING btree (aadhaar);
+CREATE INDEX aadhaar_unique ON public.users USING btree (aadhaar);
 
 
---
--- TOC entry 2058 (class 0 OID 0)
--- Dependencies: 5
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
--- Completed on 2019-12-05 00:51:52
+-- Completed on 2019-12-05 23:16:06
 
 --
 -- PostgreSQL database dump complete
