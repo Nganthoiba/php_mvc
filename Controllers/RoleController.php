@@ -15,7 +15,7 @@ class RoleController extends Controller{
     //these modules are only for admin
     public function addRoles(){
         if(!Logins::isAuthenticated() || Logins::getRoleName() != "Admin"){
-            $this->redirectTo();
+            redirectTo();
         }
         $role = new Role();
         $data = $this->_cleanInputs($_POST);
@@ -33,7 +33,7 @@ class RoleController extends Controller{
     /*
     public function edit(){
         if(!Logins::isAuthenticated() || Logins::getRoleName() != "Admin"){
-            $this->redirectTo();
+            redirectTo();
         }
         $param = $this->getParams();
         $role = new roles();
@@ -64,7 +64,7 @@ class RoleController extends Controller{
     */
     public function remove(){
         if(!Logins::isAuthenticated() || Logins::getRoleName() != "Admin"){
-            $this->redirectTo();
+            redirectTo();
         }
         $param = $this->getParams();
         $this->data['msg'] = "";
@@ -86,7 +86,7 @@ class RoleController extends Controller{
     
     public function confirmRemove(){
         if(!Logins::isAuthenticated() || Logins::getRoleName() != "Admin"){
-            $this->redirectTo();
+            redirectTo();
         }
         $this->data['msg'] = "";
         $data = $this->_cleanInputs($_POST);
@@ -108,7 +108,7 @@ class RoleController extends Controller{
     public function processRoleMapping(){
         
         if(Logins::getRoleName()!== "Admin"){
-            $this->redirectTo();// redirecting to proper page
+            redirectTo();// redirecting to proper page
         }
         $input_data = $this->_cleanInputs($_POST);
         if(isset($input_data['action'])){

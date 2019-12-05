@@ -22,7 +22,7 @@ class Logins extends model{
         parent::__construct();
         /*** default values ***/
         $key = "login_id";// setting the key of this model
-        $this->setTable("login");
+        $this->setTable("logins");
         $this->setKey($key);
         /**** table data ****/
         $this->user_id = $user_id;        
@@ -74,7 +74,6 @@ class Logins extends model{
             }
         }
         return ($isValid);
-        //return true;
     }
     /*this function checks whether login id is valid which means user is logged in 
      * otherwise the user is not logged in */
@@ -85,7 +84,7 @@ class Logins extends model{
             $model = new model();//require to create a new object
         }
         $currentDatetime = date('Y-m-d H:i:s');
-        $qry = "select * from login "
+        $qry = "select * from logins "
                 . "where login_id = :login_id "
                 . "and   logout_time IS NULL "
                 . "and   expiry > :curr_datetime";

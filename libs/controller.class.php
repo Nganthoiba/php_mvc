@@ -64,7 +64,19 @@ class Controller {
     public function redirect($controller, $action){
         header("Location: ".Config::get('host')."/".$controller."/".$action);
     }
-    
+    public function redirectTo() {
+        switch (Logins::getRoleName()){
+            case "Applicant":
+                $this->redirect("Application", "index");
+                break;
+            case "Admin":
+                $this->redirect("User", "viewUsers");
+                break;
+            default :
+                //echo "default ".Logins::getRoleName();
+                $this->redirect("default", "testing");
+        }
+    }
     protected function _cleanInputs($data) {
         $clean_input = Array();
         if (is_array($data)) {
@@ -91,18 +103,7 @@ class Controller {
         );
         return ($status[$code])?$status[$code]:$status[500]; 
     }
-    protected function redirectTo() {
-        switch (Logins::getRoleName()){
-            case "Applicant":
-                $this->redirect("Application", "index");
-                break;
-            case "Admin":
-                $this->redirect("User", "viewUsers");
-                break;
-            default :
-                $this->redirect("default", "testing");
-        }
-    }
+    
     
     public function view($view_path=""){
         if($view_path !== ""){

@@ -49,7 +49,7 @@ $roles = $data['roles'];
                                     <option value="">--- Select Role ---</option>
                                     <?php
                                     foreach ($roles as $role){
-                                        echo "<option value='".$role->roles_id."'>".$role->role_name."</option>";
+                                        echo "<option value='".$role->role_id."'>".$role->role_name."</option>";
                                     }
                                     ?>
                                 </select>

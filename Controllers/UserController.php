@@ -48,7 +48,7 @@ class UserController extends Controller{
     }
     public function viewUsers(){
         if(Logins::getRoleName()!="Admin"){
-            $this->redirectTo();
+            redirectTo();
         }
         
         $users = new Users();//creating user model
@@ -74,11 +74,14 @@ class UserController extends Controller{
     }
     public function addUsers(){
         if(!Logins::isAuthenticated()){
-            $this->redirect("account", "login");
+            redirect("account", "login");
         }
+        
         if(Logins::getRoleName()!== "Admin"){
-            $this->redirectTo();//redirecting to the default authorized page
+            redirectTo();//redirecting to the default authorized page
+            //redirect("account", "signup");
         }
+        
         $roles = new Role();
         $res = $roles->read();
         $this->data['roles'] = $res['data'];

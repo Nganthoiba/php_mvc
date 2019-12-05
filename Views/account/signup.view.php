@@ -1,10 +1,11 @@
 <div class="container-fluid">
-        <div class="vertical-center">
+        <div class="">
             <div class="card signup_card">
-                <h3 style="padding: 10px">
-                    <strong>Sign up</strong>
-                </h3>
-                <span style="padding: 10px">Please fill in this form to create an account.</span><hr/>
+                <h5 class="card-header default-color white-text text-center py-3">
+                    <strong>Sign in</strong>
+                    <span style="padding-left: 10px">Please fill in this form to create your account.</span>
+                </h5>
+                
                 <div class="card-body">
                     <form name="sign_up" method="POST" class="needs-validation" novalidate action="signup">
                         <input type="hidden" name="action" value="sign_up" />

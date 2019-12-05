@@ -29,7 +29,7 @@ class AccountController extends Controller{
         //first check whether a user is already logged in, if someone logged in then redirect the page to the home page  
         if(Logins::isAuthenticated()){
             //redirecting to the proper page if already logded in
-            $this->redirectTo();
+            redirectTo();
         }
         $data = $this->_cleanInputs($_POST);
         if(sizeof($data)){
@@ -44,10 +44,11 @@ class AccountController extends Controller{
                 if($resLogin['status'] === true){
                     $_SESSION['user_info'] = $resLogin['data'];
                     //redirecting to the proper page after login
-                    $this->redirectTo();
+                    redirectTo();
+                    
                 }
                 else{
-                    $this->data['login_response'] = "Login failed, please try with proper credentials.".json_encode($resLogin);
+                    $this->data['login_response'] = "Login failed, please try with proper credentials.";
                 }
             }
             else{
@@ -79,7 +80,7 @@ class AccountController extends Controller{
     public function signup(){
         //first check whether a user is already logged in, if someone logged in then redirect the page to the home page
         if(Logins::isAuthenticated()){
-            $this->redirectTo();
+            redirectTo();
         }
         $data = $this->_cleanInputs($_POST);
         if(sizeof($data)){
@@ -160,7 +161,7 @@ class AccountController extends Controller{
                 $user->phone_no = $input_data['phone_no'];
                 $user->aadhaar = $input_data['aadhaar']==""?null:$input_data['aadhaar'];
                 $user->update_at = date('Y-m-d H:i:s');
-                $user->updated_by = $user->user_id;
+                $user->update_by = $user->user_id;
                 try{
                     $res = $user->save();//saving user details
                     $this->data['update_response'] = $res['msg'];//json_encode($res);

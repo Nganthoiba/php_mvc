@@ -6,25 +6,25 @@
  */
 class Users extends model{
     /*** data structures for user***/
-    public  $users_id , 
+    public  $user_id , 
             $full_name ,     
             $email  ,        
             $phone_no  ,     
             $role_id,        
             $user_password,  
             $verify,         
-            $created_at,     
+            $create_at,     
             $update_at,      
             $delete_at,      
             $profile_image,  
             $aadhaar,        
-            $updated_by;    
+            $update_by;    
     
     /***********************/
     public function __construct($data = array()) {
         parent::__construct();
         $this->setTable("users");
-        $this->setKey("users_id");
+        $this->setKey("user_id");
         
         /** setting default values **/
         
@@ -35,18 +35,18 @@ class Users extends model{
             $this->role_id = isset($data['role_id'])?$data['role_id']:0;
             $this->user_password = isset($data['password'])? hash("sha256", $data['password']):"";
             $this->verify = 0;
-            $this->created_at = date('Y-m-d H:i:s');
+            $this->create_at = date('Y-m-d H:i:s');
             $this->update_at = null;
             $this->delete_at = null;
             $this->profile_image = null;
             $this->aadhaar = null;
-            $this->updated_by = isset($data['updated_by'])?$data['updated_by']:$this->users_id;
+            $this->update_by = isset($data['update_by'])?$data['update_by']:$this->user_id;
         }
     }
     
     //populating data in user table
     public function add() {
-        $this->users_id = UUID::v4();
+        $this->user_id = UUID::v4();
         if(!$this->isValidated()){
             return $this->response;
         }
@@ -64,15 +64,15 @@ class Users extends model{
     public function save(){
         $this->verify = ($this->verify == false)?0:1;
         $params = $this->toArray();
-        unset($params['users_id']);
+        unset($params['user_id']);
         //return $params;
-        $cond = array("users_id"=> $this->users_id);
+        $cond = array("user_id"=> $this->user_id);
         return parent::update($params, $cond);
     }
     
     //For removing data
     public function remove(){
-        $cond = array("users_id"=> $this->users_id);
+        $cond = array("user_id"=> $this->user_id);
         return parent::delete($cond);
     }
     //finding a user 
@@ -131,17 +131,17 @@ class Users extends model{
     //convert to associative array
     private function toArray(){
         $arr = array(
-            "users_id" => $this->users_id,
+            "user_id" => $this->user_id,
             "full_name" => $this->full_name,
             "email" => $this->email,
             "phone_no" => $this->phone_no,
             "role_id" => $this->role_id,
             "verify" => $this->verify,
-            "created_at" => $this->created_at,
+            "create_at" => $this->create_at,
             "update_at" => $this->update_at,
             "delete_at" => $this->delete_at,
             "aadhaar" => $this->aadhaar,
-            "updated_by" => $this->updated_by
+            "update_by" => $this->update_by
         );
         return $arr;
     }

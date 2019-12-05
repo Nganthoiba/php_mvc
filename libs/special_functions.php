@@ -90,4 +90,8 @@ function get_client_ip() {
     return $ipaddress;
 }
 
+function redirect($controller, $action){
+    header("Location: ".Config::get('host')."/".$controller."/".$action);
+}
+
 
